@@ -1,0 +1,158 @@
+{
+  "train": {
+    "pr_auc": {
+      "metric_label": "PR-AUC",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "roc_auc": {
+      "metric_label": "ROC-AUC",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "precision": {
+      "metric_label": "Precision",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "recall": {
+      "metric_label": "Recall",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "f1": {
+      "metric_label": "F1 Score",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "false_positive_rate": {
+      "metric_label": "False Positive Rate",
+      "model_a_baseline": 0.0,
+      "model_b_graph": 0.0,
+      "delta": 0.0
+    },
+    "confusion_matrix": {
+      "model_a": {
+        "true_negatives": 1248,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 152
+      },
+      "model_b": {
+        "true_negatives": 1248,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 152
+      }
+    }
+  },
+  "validation": {
+    "pr_auc": {
+      "metric_label": "PR-AUC",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "roc_auc": {
+      "metric_label": "ROC-AUC",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "precision": {
+      "metric_label": "Precision",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "recall": {
+      "metric_label": "Recall",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "f1": {
+      "metric_label": "F1 Score",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "false_positive_rate": {
+      "metric_label": "False Positive Rate",
+      "model_a_baseline": 0.0,
+      "model_b_graph": 0.0,
+      "delta": 0.0
+    },
+    "confusion_matrix": {
+      "model_a": {
+        "true_negatives": 245,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 55
+      },
+      "model_b": {
+        "true_negatives": 245,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 55
+      }
+    }
+  },
+  "held_out_test": {
+    "pr_auc": {
+      "metric_label": "PR-AUC",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "roc_auc": {
+      "metric_label": "ROC-AUC",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "precision": {
+      "metric_label": "Precision",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "recall": {
+      "metric_label": "Recall",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "f1": {
+      "metric_label": "F1 Score",
+      "model_a_baseline": 1.0,
+      "model_b_graph": 1.0,
+      "delta": 0.0
+    },
+    "false_positive_rate": {
+      "metric_label": "False Positive Rate",
+      "model_a_baseline": 0.0,
+      "model_b_graph": 0.0,
+      "delta": 0.0
+    },
+    "confusion_matrix": {
+      "model_a": {
+        "true_negatives": 274,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 26
+      },
+      "model_b": {
+        "true_negatives": 274,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 26
+      }
+    }
+  }
+}

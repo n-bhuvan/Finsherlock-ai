@@ -1,0 +1,19 @@
+split,metric_key,metric_label,model_a_baseline,model_b_graph,delta
+train,pr_auc,PR-AUC,1.0,1.0,0.0
+train,roc_auc,ROC-AUC,1.0,1.0,0.0
+train,precision,Precision,1.0,1.0,0.0
+train,recall,Recall,1.0,1.0,0.0
+train,f1,F1 Score,1.0,1.0,0.0
+train,false_positive_rate,False Positive Rate,0.0,0.0,0.0
+validation,pr_auc,PR-AUC,1.0,1.0,0.0
+validation,roc_auc,ROC-AUC,1.0,1.0,0.0
+validation,precision,Precision,1.0,1.0,0.0
+validation,recall,Recall,1.0,1.0,0.0
+validation,f1,F1 Score,1.0,1.0,0.0
+validation,false_positive_rate,False Positive Rate,0.0,0.0,0.0
+held_out_test,pr_auc,PR-AUC,1.0,1.0,0.0
+held_out_test,roc_auc,ROC-AUC,1.0,1.0,0.0
+held_out_test,precision,Precision,1.0,1.0,0.0
+held_out_test,recall,Recall,1.0,1.0,0.0
+held_out_test,f1,F1 Score,1.0,1.0,0.0
+held_out_test,false_positive_rate,False Positive Rate,0.0,0.0,0.0
