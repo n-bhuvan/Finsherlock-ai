@@ -96,9 +96,9 @@ RingGuard AI is intentionally architected as a **Modular Monolith**.
   - `timeline/`: Chronological event sequencing.
   - `audit/`: Immutable operational decision logs.
 
-### 3. Data & Graph Layer (Planned for Later Stages)
-- **PostgreSQL:** Serves as the authoritative, transactional persistence layer for accounts, transactions, cases, and audit logs.
-- **NetworkX:** In-memory graph computation engine for analyzing shared device footprints, IP clusters, bank account re-use, and community detection algorithms (Louvain / Connected Components).
+### 3. Data & Graph Layer
+- **PostgreSQL (Implemented in Stage 3):** Serves as the authoritative, transactional persistence layer for customers, accounts, devices, IPs, beneficiaries, merchants, transactions, and provenance metadata. Enforces exact decimal financial precision (`Numeric(14, 2)`), timezone-aware timestamps, foreign-key referential integrity, and positive amount check constraints.
+- **NetworkX (Planned for Later Stages):** In-memory graph computation engine for analyzing shared device footprints, IP clusters, bank account re-use, and community detection algorithms (Louvain / Connected Components).
 
 ### 4. ML Risk Model (Planned for Later Stages)
 - **XGBoost & Scikit-learn:** Hybrid risk scoring combining behavioral transaction features with graph centrality/community metrics.
@@ -124,10 +124,9 @@ RingGuard AI is intentionally architected as a **Modular Monolith**.
 
 ---
 
-## Current Status (Stage 1)
+## Current Status (Stage 3 Complete)
 
-In **Stage 1 (Project Foundation)**:
-- Functional backend API endpoint: `GET /health` (`{"status": "ok", "service": "ringguard-backend"}`).
-- Functional frontend UI verifying live connectivity to the backend.
-- Clean scaffolding for all planned modules and directories.
-- Zero fake metrics, zero placeholder cases, zero mock probabilities. Every calculation in subsequent stages will derive from genuine data and models.
+- **Stage 1 (Foundation):** Clean modular monolith architecture, Next.js frontend, FastAPI backend with live `GET /health` connectivity check.
+- **Stage 2 (Synthetic Data Engine):** Reproducible generator with default seed `20260903` producing 7 controlled scenarios and hard negatives.
+- **Stage 3 (PostgreSQL Database):** Authoritative PostgreSQL persistence layer with SQLAlchemy models, Alembic migrations, full dataset import (500 customers, 500 accounts, 2,000 transactions, 100 devices, 150 IPs, 100 beneficiaries, 50 merchants), positive check constraints, and 100% referential integrity validation.
+
