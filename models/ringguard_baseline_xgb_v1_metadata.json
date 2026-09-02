@@ -1,0 +1,150 @@
+{
+  "model_name": "ringguard_baseline_xgb_v1",
+  "model_type": "XGBClassifier",
+  "prediction_unit": "TRANSACTION",
+  "feature_count": 37,
+  "feature_names": [
+    "tx_amount",
+    "tx_log_amount",
+    "tx_hour",
+    "tx_day_of_week",
+    "tx_day_of_month",
+    "tx_is_weekend",
+    "tx_is_night",
+    "tx_is_transfer_p2p",
+    "tx_is_payment_p2m",
+    "tx_channel_upi",
+    "tx_channel_imps",
+    "tx_channel_card",
+    "tx_channel_netbanking",
+    "tx_has_beneficiary",
+    "tx_has_merchant",
+    "beh_account_age_days",
+    "beh_tx_sequence_num",
+    "beh_time_since_last_tx_sec",
+    "beh_is_first_tx",
+    "beh_hist_tx_count",
+    "beh_hist_total_amount",
+    "beh_hist_avg_amount",
+    "beh_hist_max_amount",
+    "beh_hist_std_amount",
+    "beh_amount_to_hist_avg_ratio",
+    "beh_rolling_tx_count_1h",
+    "beh_rolling_amount_1h",
+    "beh_rolling_tx_count_24h",
+    "beh_rolling_amount_24h",
+    "beh_rolling_tx_count_7d",
+    "beh_rolling_amount_7d",
+    "beh_hist_unique_devices",
+    "beh_hist_unique_ips",
+    "beh_hist_unique_beneficiaries",
+    "beh_is_new_device",
+    "beh_is_new_ip",
+    "beh_is_new_beneficiary"
+  ],
+  "graph_features_included": 0,
+  "scale_pos_weight": 8.210526315789474,
+  "xgboost_version": "3.4.1",
+  "configuration": {
+    "n_estimators": 300,
+    "max_depth": 5,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "random_state": 20260903,
+    "n_jobs": -1
+  },
+  "split_info": {
+    "train": {
+      "count": 1400,
+      "ring_count": 152,
+      "legit_count": 1248,
+      "ring_rate": 0.1086,
+      "start_timestamp": "2025-12-31 19:10:18+00:00",
+      "end_timestamp": "2026-02-12 00:49:53+00:00"
+    },
+    "validation": {
+      "count": 300,
+      "ring_count": 55,
+      "legit_count": 245,
+      "ring_rate": 0.1833,
+      "start_timestamp": "2026-02-12 00:50:03+00:00",
+      "end_timestamp": "2026-02-20 19:51:24+00:00"
+    },
+    "test": {
+      "count": 300,
+      "ring_count": 26,
+      "legit_count": 274,
+      "ring_rate": 0.0867,
+      "start_timestamp": "2026-02-20 20:54:48+00:00",
+      "end_timestamp": "2026-03-01 17:45:54+00:00"
+    }
+  },
+  "evaluation_metrics": {
+    "train": {
+      "pr_auc": 1.0,
+      "roc_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "true_negatives": 1248,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 152
+      },
+      "support": {
+        "total": 1400,
+        "positive_count": 152,
+        "negative_count": 1248,
+        "positive_rate": 0.1086
+      }
+    },
+    "validation": {
+      "pr_auc": 1.0,
+      "roc_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "true_negatives": 245,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 55
+      },
+      "support": {
+        "total": 300,
+        "positive_count": 55,
+        "negative_count": 245,
+        "positive_rate": 0.1833
+      }
+    },
+    "held_out_test": {
+      "pr_auc": 1.0,
+      "roc_auc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "false_positive_rate": 0.0,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "true_negatives": 274,
+        "false_positives": 0,
+        "false_negatives": 0,
+        "true_positives": 26
+      },
+      "support": {
+        "total": 300,
+        "positive_count": 26,
+        "negative_count": 274,
+        "positive_rate": 0.0867
+      }
+    }
+  }
+}

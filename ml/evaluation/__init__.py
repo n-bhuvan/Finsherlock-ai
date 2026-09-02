@@ -1,1 +1,5 @@
-"""Model evaluation, calibration, and benchmark metrics module."""
+"""RingGuard AI — Evaluation Package."""
+
+from ml.evaluation.metrics import evaluate_binary_predictions
+
+__all__ = ["evaluate_binary_predictions"]
