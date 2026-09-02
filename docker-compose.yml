@@ -1,0 +1,32 @@
+# ==============================================================================
+# RingGuard AI — Docker Compose (Stage 1: Foundation)
+#
+# NOTE: In Stage 1, this file serves as the container foundation.
+# Database (PostgreSQL) and ML components will be introduced in subsequent stages.
+# ==============================================================================
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ringguard-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ringguard-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
