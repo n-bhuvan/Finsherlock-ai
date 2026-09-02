@@ -1,0 +1,58 @@
+================================================================================
+RINGGUARD AI — SYNTHETIC DATA QUALITY & INTEGRITY REPORT
+================================================================================
+Overall Status:            PASS
+Synthetic Confirmation:    True (Strictly Synthetic)
+
+1. ROW COUNTS & ENTITY SIZES:
+   - customers      : 500 rows
+   - accounts       : 500 rows
+   - devices        : 100 rows
+   - ips            : 150 rows
+   - beneficiaries  : 100 rows
+   - merchants      : 50 rows
+   - transactions   : 2,000 rows
+
+2. REFERENTIAL INTEGRITY & DUPLICATE CHECKS:
+   - customers      : 0 duplicate primary keys
+   - accounts       : 0 duplicate primary keys
+   - devices        : 0 duplicate primary keys
+   - ips            : 0 duplicate primary keys
+   - beneficiaries  : 0 duplicate primary keys
+   - merchants      : 0 duplicate primary keys
+   - transactions   : 0 duplicate primary keys
+   - Foreign key 'account_id': 0 orphan references
+   - Foreign key 'device_id': 0 orphan references
+   - Foreign key 'ip_id': 0 orphan references
+   - Foreign key 'beneficiary_id': 0 orphan references
+   - Foreign key 'merchant_id': 0 orphan references
+
+3. MISSING MANDATORY VALUES:
+   - customers      : 0 nulls
+   - accounts       : 0 nulls
+   - devices        : 0 nulls
+   - ips            : 0 nulls
+   - beneficiaries  : 0 nulls
+   - merchants      : 0 nulls
+   - transactions   : 0 nulls
+
+4. SCENARIO DISTRIBUTION (Transactions):
+   - LEGITIMATE                    : 1,683 txs
+   - LEGITIMATE_LOOKALIKE          : 84 txs
+   - COMBINED_RING                 : 58 txs
+   - SHARED_DEVICE_RING            : 53 txs
+   - COMMON_BENEFICIARY_RING       : 48 txs
+   - RAPID_FUND_DISTRIBUTION_RING  : 48 txs
+   - HISTORICAL_CONNECTION_RING    : 26 txs
+
+5. GROUND TRUTH LABEL DISTRIBUTION (Transactions):
+   - legitimate     : 1,767 txs
+   - ring           : 233 txs
+
+6. TEMPORAL & FINANCIAL RANGES:
+   - Timestamp Window : 2026-01-01T00:40:18 to 2026-03-01T23:15:54
+   - Min Amount       : INR 52.20
+   - Max Amount       : INR 99,500.00
+   - Mean Amount      : INR 5,075.69
+   - Median Amount    : INR 1,074.80
+================================================================================

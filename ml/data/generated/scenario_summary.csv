@@ -1,0 +1,22 @@
+scenario_id,scenario_type,ground_truth_label,description,num_accounts,num_transactions,total_volume,shared_device_id,shared_ip_id,common_beneficiary_id
+SCEN_SHARED_DEVICE_001,SHARED_DEVICE_RING,ring,Coordinated accounts transacting from the same physical device in rapid succession,4,17,256000.0,DEV_000034,IP_000087,BEN_000050
+SCEN_SHARED_DEVICE_002,SHARED_DEVICE_RING,ring,Coordinated accounts transacting from the same physical device in rapid succession,4,16,209700.0,DEV_000098,IP_000114,BEN_000014
+SCEN_SHARED_DEVICE_003,SHARED_DEVICE_RING,ring,Coordinated accounts transacting from the same physical device in rapid succession,5,20,254300.0,DEV_000045,IP_000055,BEN_000026
+SCEN_COMMON_BEN_001,COMMON_BENEFICIARY_RING,ring,Multi-account funnel directing repeated structured payments to a common mule destination,6,20,786300.0,NONE,NONE,BEN_000065
+SCEN_COMMON_BEN_002,COMMON_BENEFICIARY_RING,ring,Multi-account funnel directing repeated structured payments to a common mule destination,5,13,514600.0,NONE,NONE,BEN_000093
+SCEN_COMMON_BEN_003,COMMON_BENEFICIARY_RING,ring,Multi-account funnel directing repeated structured payments to a common mule destination,4,15,638900.0,NONE,NONE,BEN_000047
+SCEN_RAPID_DISTRIB_001,RAPID_FUND_DISTRIBUTION_RING,ring,High-velocity rapid fund dispersal across multiple accounts/beneficiaries in sub-hour window,4,16,345000.0,DEV_000028,IP_000121,MULTI_TARGET
+SCEN_RAPID_DISTRIB_002,RAPID_FUND_DISTRIBUTION_RING,ring,High-velocity rapid fund dispersal across multiple accounts/beneficiaries in sub-hour window,5,20,415000.0,DEV_000041,IP_000092,MULTI_TARGET
+SCEN_RAPID_DISTRIB_003,RAPID_FUND_DISTRIBUTION_RING,ring,High-velocity rapid fund dispersal across multiple accounts/beneficiaries in sub-hour window,3,12,255000.0,DEV_000014,IP_000001,MULTI_TARGET
+SCEN_HIST_CONN_001,HISTORICAL_CONNECTION_RING,ring,Historical device/IP linkage established in early window reactivated for concurrent fund movement,5,10,230500.0,"DEV_000060,DEV_000013",IP_000073,BEN_000029
+SCEN_HIST_CONN_002,HISTORICAL_CONNECTION_RING,ring,Historical device/IP linkage established in early window reactivated for concurrent fund movement,3,6,127500.0,"DEV_000034,DEV_000100",IP_000142,BEN_000050
+SCEN_HIST_CONN_003,HISTORICAL_CONNECTION_RING,ring,Historical device/IP linkage established in early window reactivated for concurrent fund movement,5,10,210500.0,"DEV_000056,DEV_000027",IP_000136,BEN_000061
+SCEN_COMBINED_RING_001,COMBINED_RING,ring,"Multi-signal abuse ring: shared hardware, VPN/hosting IP, common mule sink, sub-minute bursts",7,26,1635995.0,DEV_000013,IP_000019,BEN_000051
+SCEN_COMBINED_RING_002,COMBINED_RING,ring,"Multi-signal abuse ring: shared hardware, VPN/hosting IP, common mule sink, sub-minute bursts",7,18,1141995.0,DEV_000045,IP_000001,BEN_000063
+SCEN_COMBINED_RING_003,COMBINED_RING,ring,"Multi-signal abuse ring: shared hardware, VPN/hosting IP, common mule sink, sub-minute bursts",5,14,842997.0,DEV_000023,IP_000132,BEN_000036
+SCEN_LOOKALIKE_001,LEGITIMATE_LOOKALIKE,legitimate,Legitimate co-workers transacting on separate mobile devices from the same office broadband IP,5,22,30895.0,INDEPENDENT,IP_000032,DIVERSE
+SCEN_LOOKALIKE_002,LEGITIMATE_LOOKALIKE,legitimate,Independent tenants/residents paying a common legitimate landlord or utility society account,4,15,39749.0,INDEPENDENT,INDEPENDENT,BEN_000059
+SCEN_LOOKALIKE_003,LEGITIMATE_LOOKALIKE,legitimate,Legitimate family members sharing a household desktop or tablet for independent personal bills,4,16,26945.0,DEV_000056,IP_000119,DIVERSE
+SCEN_LOOKALIKE_004,LEGITIMATE_LOOKALIKE,legitimate,Legitimate co-workers transacting on separate mobile devices from the same office broadband IP,3,14,19497.0,INDEPENDENT,IP_000049,DIVERSE
+SCEN_LOOKALIKE_005,LEGITIMATE_LOOKALIKE,legitimate,Independent tenants/residents paying a common legitimate landlord or utility society account,4,17,26949.0,INDEPENDENT,INDEPENDENT,BEN_000100
+SCEN_LEGIT_BASELINE,LEGITIMATE,legitimate,Baseline uncoordinated individual consumer transactions across diverse merchants and personal recipients,408,1683,2143059.07,NONE,NONE,NONE

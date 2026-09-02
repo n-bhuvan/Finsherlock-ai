@@ -1,0 +1,61 @@
+{
+  "dataset_name": "ringguard_mvp_v1",
+  "dataset_version": "1.0.0",
+  "generator_version": "0.2.0",
+  "generated_at": "2026-09-03T00:32:21.480909",
+  "random_seed": 20260903,
+  "synthetic": true,
+  "disclaimer": "This dataset is entirely synthetic and does not represent real customer, transaction, or merchant data from Razorpay or any financial institution.",
+  "entity_counts": {
+    "customers": 500,
+    "accounts": 500,
+    "transactions": 2000,
+    "devices": 100,
+    "ips": 150,
+    "beneficiaries": 100,
+    "merchants": 50
+  },
+  "scenario_distribution": {
+    "LEGITIMATE": 1683,
+    "LEGITIMATE_LOOKALIKE": 84,
+    "COMBINED_RING": 58,
+    "SHARED_DEVICE_RING": 53,
+    "COMMON_BENEFICIARY_RING": 48,
+    "RAPID_FUND_DISTRIBUTION_RING": 48,
+    "HISTORICAL_CONNECTION_RING": 26
+  },
+  "label_distribution": {
+    "legitimate": 1767,
+    "ring": 233
+  },
+  "config": {
+    "dataset_name": "ringguard_mvp_v1",
+    "dataset_version": "1.0.0",
+    "generator_version": "0.2.0",
+    "random_seed": 20260903,
+    "synthetic": true,
+    "num_customers": 500,
+    "num_accounts": 500,
+    "target_transactions": 2000,
+    "num_devices": 100,
+    "num_ips": 150,
+    "num_beneficiaries": 100,
+    "num_merchants": 50,
+    "start_date": "2026-01-01T00:00:00",
+    "end_date": "2026-03-01T23:59:59",
+    "scenario_clusters": {
+      "SHARED_DEVICE_RING": 3,
+      "COMMON_BENEFICIARY_RING": 3,
+      "RAPID_FUND_DISTRIBUTION_RING": 3,
+      "HISTORICAL_CONNECTION_RING": 3,
+      "COMBINED_RING": 3,
+      "LEGITIMATE_LOOKALIKE": 5
+    },
+    "output_dir": "ml\\data\\generated\\"
+  },
+  "validation": {
+    "status": "PASS",
+    "errors": 0,
+    "validated_at": "2026-09-03T00:32:21.495002"
+  }
+}

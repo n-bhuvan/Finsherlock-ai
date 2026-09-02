@@ -1,0 +1,7 @@
+# RingGuard AI — ML / Data Engine Dependencies (Stage 2)
+# Minimal: Data manipulation and synthetic identity generation only.
+# No ML/graph/model libraries (XGBoost, NetworkX, Scikit-learn, SHAP) in Stage 2.
+
+pandas>=2.2.0
+numpy>=1.26.0
+faker>=30.0.0

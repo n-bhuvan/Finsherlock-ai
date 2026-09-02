@@ -1,0 +1,51 @@
+merchant_id,merchant_name,merchant_category,merchant_risk_rating
+MER_000001,Zachariah PLC Ecommerce,ECOMMERCE,LOW
+MER_000002,Goda-Pillai Financial,FINANCIAL_SERVICES,MEDIUM
+MER_000003,Baral LLC Utilities,UTILITIES_BILLS,LOW
+MER_000004,Nath and Sons Food,FOOD_GROCERY,LOW
+MER_000005,Rajagopalan and Sons Food,FOOD_GROCERY,LOW
+MER_000006,"Wable, Rao and Kurian Food",FOOD_GROCERY,LOW
+MER_000007,"Patla, Seshadri and Bath Ecommerce",ECOMMERCE,LOW
+MER_000008,"Pai, Madan and Borra Ecommerce",ECOMMERCE,LOW
+MER_000009,Bail-Dutt Ecommerce,ECOMMERCE,LOW
+MER_000010,Bal-Bhatnagar Food,FOOD_GROCERY,LOW
+MER_000011,Sane-Krish Ecommerce,ECOMMERCE,LOW
+MER_000012,"Chhabra, Prabhakar and Contractor Ecommerce",ECOMMERCE,LOW
+MER_000013,"Apte, Gera and Dube Travel",TRAVEL_HOSPITALITY,MEDIUM
+MER_000014,"Yogi, Aurora and Chacko Gaming",GAMING_ENTERTAINMENT,ELEVATED
+MER_000015,Mahal Inc Jewelry,JEWELRY_LUXURY,ELEVATED
+MER_000016,Bhavsar-Jaggi Ecommerce,ECOMMERCE,LOW
+MER_000017,"Baria, Agarwal and Mannan Food",FOOD_GROCERY,LOW
+MER_000018,Joshi-Rattan Utilities,UTILITIES_BILLS,LOW
+MER_000019,Mohanty LLC Utilities,UTILITIES_BILLS,LOW
+MER_000020,"Sharma, Buch and Vohra Travel",TRAVEL_HOSPITALITY,MEDIUM
+MER_000021,Tandon-Varty Jewelry,JEWELRY_LUXURY,ELEVATED
+MER_000022,"Lala, Sandal and Kaul Food",FOOD_GROCERY,LOW
+MER_000023,Wadhwa and Sons Utilities,UTILITIES_BILLS,LOW
+MER_000024,Babu-Malhotra Ecommerce,ECOMMERCE,LOW
+MER_000025,"Bava, Kari and Shetty Travel",TRAVEL_HOSPITALITY,MEDIUM
+MER_000026,Sarna-Gill Food,FOOD_GROCERY,LOW
+MER_000027,"Shere, Saraf and Grover Ecommerce",ECOMMERCE,LOW
+MER_000028,Kapur Inc Gaming,GAMING_ENTERTAINMENT,ELEVATED
+MER_000029,"Shah, Kara and Johal Utilities",UTILITIES_BILLS,LOW
+MER_000030,Sengupta and Sons Ecommerce,ECOMMERCE,LOW
+MER_000031,Mishra-Nayak Jewelry,JEWELRY_LUXURY,ELEVATED
+MER_000032,"Dani, Chadha and Baria Utilities",UTILITIES_BILLS,LOW
+MER_000033,Nath and Sons Ecommerce,ECOMMERCE,LOW
+MER_000034,Merchant-Sathe Gaming,GAMING_ENTERTAINMENT,ELEVATED
+MER_000035,Bala-Hayre Gaming,GAMING_ENTERTAINMENT,ELEVATED
+MER_000036,Bhasin-Gupta Travel,TRAVEL_HOSPITALITY,MEDIUM
+MER_000037,Brar Group Travel,TRAVEL_HOSPITALITY,MEDIUM
+MER_000038,Mittal Ltd Financial,FINANCIAL_SERVICES,MEDIUM
+MER_000039,Murty LLC Food,FOOD_GROCERY,LOW
+MER_000040,"Deshpande, Kata and Sunder Gaming",GAMING_ENTERTAINMENT,ELEVATED
+MER_000041,"Kale, Date and Kannan Utilities",UTILITIES_BILLS,LOW
+MER_000042,"Narayan, Khalsa and Keer Ecommerce",ECOMMERCE,LOW
+MER_000043,Wable Group Utilities,UTILITIES_BILLS,LOW
+MER_000044,Ahuja-Mannan Utilities,UTILITIES_BILLS,LOW
+MER_000045,"Iyengar, Hora and Minhas Ecommerce",ECOMMERCE,LOW
+MER_000046,"Mani, Patil and Kuruvilla Ecommerce",ECOMMERCE,LOW
+MER_000047,"Luthra, Devan and Suri Ecommerce",ECOMMERCE,LOW
+MER_000048,"Srinivas, Palan and Khurana Ecommerce",ECOMMERCE,LOW
+MER_000049,Shetty-Ratti Ecommerce,ECOMMERCE,LOW
+MER_000050,Buch-Sibal Ecommerce,ECOMMERCE,LOW
