@@ -5,11 +5,11 @@ Domain routers are initialized as empty structures ready for upcoming developmen
 """
 
 from fastapi import APIRouter
+from app.api.endpoints.risk import router as risk_endpoints
 
 api_router = APIRouter()
 
-# Planned Domain Routers (Empty in Stage 1 — Foundation Only)
-risk_router = APIRouter(prefix="/risk", tags=["Risk Analysis"])
+# Domain Routers
 cases_router = APIRouter(prefix="/cases", tags=["Case Management"])
 accounts_router = APIRouter(prefix="/accounts", tags=["Account Intelligence"])
 transactions_router = APIRouter(prefix="/transactions", tags=["Transactions Feed"])
@@ -20,7 +20,7 @@ timeline_router = APIRouter(prefix="/timeline", tags=["Timeline Engine"])
 analytics_router = APIRouter(prefix="/analytics", tags=["Business Analytics"])
 
 # Mount routers
-api_router.include_router(risk_router)
+api_router.include_router(risk_endpoints, prefix="/risk", tags=["Risk Analysis"])
 api_router.include_router(cases_router)
 api_router.include_router(accounts_router)
 api_router.include_router(transactions_router)
