@@ -1,0 +1,254 @@
+"""RingGuard AI — Controlled Investigation Endpoints.
+
+Stage 10: Controlled Investigation Tools.
+Exposes bounded, deterministic, read-only investigation tools via REST APIs.
+"""
+
+from typing import Optional
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
+from sqlalchemy.orm import Session
+
+from app.db.session import get_db
+from app.investigation.schemas import ToolExecutionResult, ToolExecutionStatus
+from app.investigation.service import InvestigationService
+
+router = APIRouter()
+
+
+def _handle_result(res: ToolExecutionResult) -> ToolExecutionResult:
+    """Translate internal tool status into proper HTTP response codes."""
+    if res.status == ToolExecutionStatus.NOT_FOUND:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=res.error_details or f"Target '{res.target}' not found.",
+        )
+    if res.status == ToolExecutionStatus.INVALID_INPUT:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=res.error_details or "Invalid input parameter.",
+        )
+    if res.status == ToolExecutionStatus.UNAVAILABLE:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=res.error_details or "Service temporarily unavailable.",
+        )
+    return res
+
+
+# ==============================================================================
+# ACCOUNT INVESTIGATION ENDPOINTS
+# ==============================================================================
+
+@router.get(
+    "/account/{account_id}",
+    response_model=ToolExecutionResult,
+    summary="Get Account Details",
+    description="Tool: get_account — Retrieves factual operational metadata for an account.",
+)
+def api_get_account(
+    account_id: str = Path(..., min_length=3, max_length=64, description="Account ID"),
+    as_of: Optional[str] = Query(None, description="Optional ISO timestamp for point-in-time boundary"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = account_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Account ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(service.get_account(clean_id, as_of=as_of))
+
+
+@router.get(
+    "/account/{account_id}/transactions",
+    response_model=ToolExecutionResult,
+    summary="Get Account Transactions",
+    description="Tool: get_transactions — Retrieves bounded, chronologically sorted transactions for an account.",
+)
+def api_get_transactions(
+    account_id: str = Path(..., min_length=3, max_length=64, description="Account ID"),
+    start_time: Optional[str] = Query(None, description="Optional ISO start timestamp"),
+    end_time: Optional[str] = Query(None, description="Optional ISO end timestamp"),
+    limit: int = Query(50, ge=1, le=100, description="Max transaction records to return (1-100)"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = account_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Account ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(
+        service.get_transactions(clean_id, start_time=start_time, end_time=end_time, limit=limit)
+    )
+
+
+@router.get(
+    "/account/{account_id}/related",
+    response_model=ToolExecutionResult,
+    summary="Find Related Accounts",
+    description="Tool: find_related_accounts — Discovers accounts linked via shared devices, IPs, or common beneficiaries.",
+)
+def api_find_related_accounts(
+    account_id: str = Path(..., min_length=3, max_length=64, description="Account ID"),
+    as_of: Optional[str] = Query(None, description="Optional point-in-time boundary"),
+    limit: int = Query(20, ge=1, le=50, description="Max related accounts to return (1-50)"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = account_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Account ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(service.find_related_accounts(clean_id, as_of=as_of, limit=limit))
+
+
+@router.get(
+    "/account/{account_id}/devices",
+    response_model=ToolExecutionResult,
+    summary="Find Shared Devices",
+    description="Tool: find_shared_devices — Discovers hardware endpoints co-used by this account and other accounts.",
+)
+def api_find_shared_devices(
+    account_id: str = Path(..., min_length=3, max_length=64, description="Account ID"),
+    as_of: Optional[str] = Query(None, description="Optional point-in-time boundary"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = account_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Account ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(service.find_shared_devices(clean_id, as_of=as_of))
+
+
+@router.get(
+    "/account/{account_id}/ips",
+    response_model=ToolExecutionResult,
+    summary="Find Shared IPs",
+    description="Tool: find_shared_ips — Discovers network IP addresses co-used by this account and other accounts.",
+)
+def api_find_shared_ips(
+    account_id: str = Path(..., min_length=3, max_length=64, description="Account ID"),
+    as_of: Optional[str] = Query(None, description="Optional point-in-time boundary"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = account_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Account ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(service.find_shared_ips(clean_id, as_of=as_of))
+
+
+@router.get(
+    "/account/{account_id}/beneficiaries",
+    response_model=ToolExecutionResult,
+    summary="Find Common Beneficiaries",
+    description="Tool: find_common_beneficiaries — Discovers recipients shared between this account and other accounts.",
+)
+def api_find_common_beneficiaries(
+    account_id: str = Path(..., min_length=3, max_length=64, description="Account ID"),
+    as_of: Optional[str] = Query(None, description="Optional point-in-time boundary"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = account_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Account ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(service.find_common_beneficiaries(clean_id, as_of=as_of))
+
+
+@router.get(
+    "/account/{account_id}/fund-flow",
+    response_model=ToolExecutionResult,
+    summary="Trace Fund Flow from Account",
+    description="Tool: trace_fund_flow — Traces verified transaction transfers originating from this account.",
+)
+def api_trace_account_fund_flow(
+    account_id: str = Path(..., min_length=3, max_length=64, description="Account ID"),
+    as_of: Optional[str] = Query(None, description="Optional point-in-time boundary"),
+    max_depth: int = Query(2, ge=1, le=3, description="Max traversal depth (1-3 hops)"),
+    max_results: int = Query(50, ge=1, le=100, description="Max transfer records (1-100)"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = account_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Account ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(
+        service.trace_fund_flow(clean_id, as_of=as_of, max_depth=max_depth, max_results=max_results)
+    )
+
+
+@router.get(
+    "/account/{account_id}/timeline",
+    response_model=ToolExecutionResult,
+    summary="Reconstruct Timeline for Account",
+    description="Tool: reconstruct_timeline — Reconstructs chronological event sequence for this account.",
+)
+def api_reconstruct_account_timeline(
+    account_id: str = Path(..., min_length=3, max_length=64, description="Account ID"),
+    as_of: Optional[str] = Query(None, description="Optional point-in-time boundary"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = account_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Account ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(service.reconstruct_timeline(clean_id, as_of=as_of))
+
+
+# ==============================================================================
+# TRANSACTION INVESTIGATION ENDPOINTS
+# ==============================================================================
+
+@router.get(
+    "/transaction/{transaction_id}/fund-flow",
+    response_model=ToolExecutionResult,
+    summary="Trace Fund Flow from Transaction",
+    description="Tool: trace_fund_flow — Traces verified transaction transfers linked to this payment.",
+)
+def api_trace_transaction_fund_flow(
+    transaction_id: str = Path(..., min_length=3, max_length=64, description="Transaction ID"),
+    as_of: Optional[str] = Query(None, description="Optional point-in-time boundary"),
+    max_depth: int = Query(2, ge=1, le=3, description="Max traversal depth (1-3 hops)"),
+    max_results: int = Query(50, ge=1, le=100, description="Max transfer records (1-100)"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = transaction_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Transaction ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(
+        service.trace_fund_flow(clean_id, as_of=as_of, max_depth=max_depth, max_results=max_results)
+    )
+
+
+@router.get(
+    "/transaction/{transaction_id}/timeline",
+    response_model=ToolExecutionResult,
+    summary="Reconstruct Timeline for Transaction",
+    description="Tool: reconstruct_timeline — Reconstructs chronological event sequence for this transaction context.",
+)
+def api_reconstruct_transaction_timeline(
+    transaction_id: str = Path(..., min_length=3, max_length=64, description="Transaction ID"),
+    as_of: Optional[str] = Query(None, description="Optional point-in-time boundary"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = transaction_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Transaction ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(service.reconstruct_timeline(clean_id, as_of=as_of))
+
+
+@router.get(
+    "/transaction/{transaction_id}/risk-features",
+    response_model=ToolExecutionResult,
+    summary="Get Risk Features and Model Output",
+    description="Tool: get_risk_features — Retrieves Stage 8 feature values and derived model risk assessment.",
+)
+def api_get_risk_features(
+    transaction_id: str = Path(..., min_length=3, max_length=64, description="Transaction ID"),
+    model_type: str = Query("graph", description="'graph' (58 features) or 'baseline' (37 features)"),
+    db: Session = Depends(get_db),
+) -> ToolExecutionResult:
+    clean_id = transaction_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Transaction ID cannot be empty or whitespace.")
+    service = InvestigationService(db)
+    return _handle_result(service.get_risk_features(clean_id, model_type=model_type))
