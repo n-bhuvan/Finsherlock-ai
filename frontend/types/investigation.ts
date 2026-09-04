@@ -106,3 +106,51 @@ export interface ToolExecutionResult<T = unknown> {
   error_details?: string | null;
   disclaimer: string;
 }
+
+export interface DossierEvidenceItem {
+  evidence_id: string;
+  evidence_type: string;
+  severity: string;
+  title: string;
+  description: string;
+  related_entities: string[];
+  supporting_transaction_ids: string[];
+  provenance_status: string;
+}
+
+export interface BenignHypothesisItem {
+  hypothesis_id: string;
+  title: string;
+  description: string;
+  triggering_signal: string;
+  status: string;
+  disclaimer: string;
+}
+
+export interface RecommendedInquiryItem {
+  inquiry_id: string;
+  priority: "HIGH" | "MEDIUM" | "LOW";
+  recommended_action: string;
+  target_entity_or_attribute: string;
+  verification_purpose: string;
+}
+
+export interface InvestigatorDossierResponse {
+  case_id: string;
+  transaction_id: string;
+  target_account_id: string;
+  amount: number;
+  timestamp: string;
+  channel: string;
+  status: string;
+  model_a_probability: number;
+  model_b_probability: number;
+  risk_band: string;
+  executive_summary: string;
+  corroborating_evidence_chain: DossierEvidenceItem[];
+  potential_benign_explanations: BenignHypothesisItem[];
+  recommended_follow_up_inquiries: RecommendedInquiryItem[];
+  markdown_dossier: string;
+  disclaimer: string;
+}
+

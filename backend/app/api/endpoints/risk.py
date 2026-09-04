@@ -12,11 +12,13 @@ from sqlalchemy import text
 from app.db.session import get_db
 from app.services.model_service import get_model_service, ModelService
 from app.services.feature_service import get_feature_service, FeatureService, TransactionNotFoundError
+from app.services.feature_isolation_service import get_feature_isolation_service, FeatureIsolationService
 from app.schemas.risk import (
     RiskHealthResponse,
     RiskResponse,
     BaselineRiskResponse,
     NetworkRiskResponse,
+    FeatureIsolationResponse,
     RiskBand,
 )
 
@@ -194,3 +196,34 @@ def get_transaction_network_risk(
         graph_features_count=21,
         graph_context_available=True,
     )
+
+
+@router.get(
+    "/transaction/{transaction_id}/feature-isolation",
+    response_model=FeatureIsolationResponse,
+    summary="Feature-Isolation Sensitivity Analysis",
+    description="Evaluates Model B sensitivity when 21 graph topological features are replaced by isolated-entity baseline values.",
+)
+def get_transaction_feature_isolation(
+    transaction_id: str,
+    db: Session = Depends(get_db),
+    isolation_service: FeatureIsolationService = Depends(get_feature_isolation_service),
+) -> FeatureIsolationResponse:
+    """Evaluates in-silico model sensitivity under isolated graph baseline features."""
+    clean_id = transaction_id.strip() if transaction_id else ""
+    if not clean_id:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Invalid transaction ID")
+
+    try:
+        return isolation_service.evaluate_feature_isolation(db, clean_id)
+    except TransactionNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Transaction '{clean_id}' not found in database.",
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Feature isolation analysis failed: {str(e)}",
+        )
+

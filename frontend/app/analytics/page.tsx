@@ -3,6 +3,7 @@
 import { BarChart3, Database, ShieldAlert, CheckCircle2, Cpu } from "lucide-react";
 import { ModelComparisonTable } from "@/components/analytics/ModelComparisonTable";
 import { FeatureDistributionChart } from "@/components/analytics/FeatureDistributionChart";
+import { BusinessEconomicsPanel } from "@/components/analytics/BusinessEconomicsPanel";
 
 export default function AnalyticsPage() {
   return (
@@ -25,6 +26,9 @@ export default function AnalyticsPage() {
 
       {/* 3. Held-Out Evaluation Benchmark Table (Truthful Delta: 0.0) */}
       <ModelComparisonTable />
+
+      {/* 4. Business Economics & ROI Modeling (Build Spec Section 21) */}
+      <BusinessEconomicsPanel />
 
       {/* 4. Operational Value Analysis */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

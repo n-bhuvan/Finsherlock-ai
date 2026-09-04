@@ -9,8 +9,14 @@ from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.investigation.schemas import ToolExecutionResult, ToolExecutionStatus
+from app.investigation.schemas import (
+    ToolExecutionResult,
+    ToolExecutionStatus,
+    InvestigatorDossierResponse,
+)
 from app.investigation.service import InvestigationService
+from app.services.dossier_service import get_dossier_service, DossierService
+from app.services.feature_service import TransactionNotFoundError
 
 router = APIRouter()
 
@@ -252,3 +258,34 @@ def api_get_risk_features(
         raise HTTPException(status_code=422, detail="Transaction ID cannot be empty or whitespace.")
     service = InvestigationService(db)
     return _handle_result(service.get_risk_features(clean_id, model_type=model_type))
+
+
+@router.get(
+    "/transaction/{transaction_id}/dossier",
+    response_model=InvestigatorDossierResponse,
+    summary="Generate Investigator Dossier",
+    description="Synthesizes a deterministic post-hoc case brief, corroborating evidence chain, potential benign explanations, and recommended inquiries.",
+)
+def api_get_transaction_dossier(
+    transaction_id: str = Path(..., min_length=3, max_length=64, description="Transaction ID"),
+    db: Session = Depends(get_db),
+    dossier_service: DossierService = Depends(get_dossier_service),
+) -> InvestigatorDossierResponse:
+    """Generates structured deterministic case brief for human risk investigators."""
+    clean_id = transaction_id.strip() if transaction_id else ""
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Transaction ID cannot be empty or whitespace.")
+
+    try:
+        return dossier_service.generate_dossier(db, clean_id)
+    except TransactionNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Transaction '{clean_id}' not found in database.",
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Dossier generation failed: {str(e)}",
+        )
+

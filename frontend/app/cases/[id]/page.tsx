@@ -22,6 +22,8 @@ import { SessionAuditEntry } from "@/types/audit";
 
 import { CaseHeader } from "@/components/cases/CaseHeader";
 import { RiskComparison } from "@/components/cases/RiskComparison";
+import { FeatureIsolationCard } from "@/components/cases/FeatureIsolationCard";
+import { InvestigatorDossierPanel } from "@/components/cases/InvestigatorDossierPanel";
 import { CaseSelector } from "@/components/cases/CaseSelector";
 import { HumanDecision } from "@/components/cases/HumanDecision";
 import { EvidenceList } from "@/components/evidence/EvidenceList";
@@ -324,7 +326,10 @@ export default function CaseInvestigationPage({ params }: PageProps) {
         loading={loading}
       />
 
-      {/* 4. Core Investigation Workspace: Graph & Tools | Evidence & Timeline */}
+      {/* 4. Model Feature-Isolation Sensitivity Analysis */}
+      <FeatureIsolationCard transactionId={transactionId} />
+
+      {/* 5. Core Investigation Workspace: Graph & Tools | Evidence & Timeline */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         {/* Left Column: Evidence Graph & Controlled Investigation Tools (7 cols) */}
         <div className="xl:col-span-7 space-y-6">
@@ -357,7 +362,10 @@ export default function CaseInvestigationPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* 5. Human Decision Review Area (Non-Persisted Boundary) */}
+      {/* 6. Synthesized Investigator Dossier (Deterministic Executive Brief) */}
+      <InvestigatorDossierPanel transactionId={transactionId} />
+
+      {/* 7. Human Decision Review Area (Non-Persisted Boundary) */}
       <HumanDecision />
     </div>
   );

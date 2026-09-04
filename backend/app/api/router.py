@@ -10,6 +10,7 @@ from app.api.endpoints.risk import router as risk_endpoints
 from app.api.endpoints.evidence import router as evidence_endpoints
 from app.api.endpoints.timeline import router as timeline_endpoints
 from app.api.endpoints.investigation import router as investigation_endpoints
+from app.api.endpoints.analytics import router as analytics_endpoints
 
 api_router = APIRouter()
 
@@ -19,6 +20,7 @@ accounts_router = APIRouter(prefix="/accounts", tags=["Account Intelligence"])
 transactions_router = APIRouter(prefix="/transactions", tags=["Transactions Feed"])
 networks_router = APIRouter(prefix="/networks", tags=["Entity Network Graph"])
 analytics_router = APIRouter(prefix="/analytics", tags=["Business Analytics"])
+analytics_router.include_router(analytics_endpoints)
 
 # Mount active routers
 api_router.include_router(risk_endpoints, prefix="/risk", tags=["Risk Analysis"])

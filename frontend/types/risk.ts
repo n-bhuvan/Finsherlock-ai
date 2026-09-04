@@ -58,3 +58,32 @@ export interface NetworkRiskResponse extends BaseRiskAssessmentResponse {
 }
 
 export type RiskResponse = NetworkRiskResponse;
+
+export interface GraphAttributionItem {
+  feature_name: string;
+  feature_group: string;
+  importance_rank_in_model_b: number;
+  original_value: number;
+  isolated_value: number;
+  corroborating_evidence_id?: string | null;
+  corroborating_evidence_type?: string | null;
+  provenance_status: "VERIFIED" | "FEATURE_ONLY";
+}
+
+export interface FeatureIsolationResponse {
+  transaction_id: string;
+  original_probability: number;
+  isolated_probability: number;
+  delta: number;
+  percentage_point_delta: number;
+  risk_band_original: RiskBand;
+  risk_band_isolated: RiskBand;
+  isolated_features_count: number;
+  isolated_features: string[];
+  baseline_values_used: Record<string, number>;
+  attributions: GraphAttributionItem[];
+  methodology: string;
+  limitations: string[];
+  disclaimer: string;
+}
+

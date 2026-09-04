@@ -159,3 +159,73 @@ class RiskFeaturesResult(BaseModel):
     decision_threshold: float = 0.50
     risk_band: str
     note: str = "Derived Machine Learning model evaluation. Contextual risk assessment only, not direct proof of fraud."
+
+
+# ==============================================================================
+# STAGE 12: DETERMINISTIC SYNTHESIZED INVESTIGATOR DOSSIER SCHEMAS
+# ==============================================================================
+
+class DossierEvidenceItem(BaseModel):
+    """Structured evidence item linked to verified data records."""
+    evidence_id: str = Field(..., description="Stage 9 deterministic evidence identifier")
+    evidence_type: str = Field(..., description="Observed signal type")
+    severity: str = Field(..., description="Assessed priority/severity")
+    title: str = Field(..., description="Concise factual headline")
+    description: str = Field(..., description="Detailed factual observation")
+    related_entities: List[str] = Field(default_factory=list, description="Verified accounts, devices, IPs")
+    supporting_transaction_ids: List[str] = Field(default_factory=list, description="Underlying transactions")
+    provenance_status: str = Field("VERIFIED", description="Provenance anchor status")
+
+
+class BenignHypothesisItem(BaseModel):
+    """Potential benign alternative explanation requiring human verification."""
+    hypothesis_id: str = Field(..., description="Deterministic hypothesis identifier")
+    title: str = Field(..., description="Headline of the benign scenario")
+    description: str = Field(..., description="Explanation of how observed data could have a legitimate origin")
+    triggering_signal: str = Field(..., description="Observed pattern prompting this hypothesis")
+    status: str = Field("HYPOTHESIS", description="Always HYPOTHESIS, never asserted as fact")
+    disclaimer: str = Field(
+        "Potential Benign Explanation — Additional verification required.",
+        description="Mandatory hypothesis classification banner"
+    )
+
+
+class RecommendedInquiryItem(BaseModel):
+    """Strictly non-autonomous investigative inquiry for human risk analysts."""
+    inquiry_id: str = Field(..., description="Deterministic inquiry identifier")
+    priority: str = Field(..., description="Triage priority: HIGH, MEDIUM, LOW")
+    recommended_action: str = Field(..., description="Specific investigative or verification step")
+    target_entity_or_attribute: str = Field(..., description="Target entity or attribute to inspect")
+    verification_purpose: str = Field(..., description="Investigative hypothesis being tested")
+
+
+class InvestigatorDossierResponse(BaseModel):
+    """Unified deterministic post-hoc case brief for risk investigations."""
+    case_id: str = Field(..., description="Deterministic case identifier (e.g. CASE_TXN_00000203)")
+    transaction_id: str = Field(..., description="Primary investigated transaction ID")
+    target_account_id: str = Field(..., description="Originating account ID")
+    amount: float = Field(..., description="Transaction amount in INR")
+    timestamp: str = Field(..., description="Point-in-time timestamp")
+    channel: str = Field(..., description="Payment channel (UPI, IMPS, NETBANKING, CARD)")
+    status: str = Field("COMPLETED", description="Transaction processing status")
+    model_a_probability: float = Field(..., ge=0.0, le=1.0, description="Model A baseline probability")
+    model_b_probability: float = Field(..., ge=0.0, le=1.0, description="Model B network-enhanced probability")
+    risk_band: str = Field(..., description="Categorical presentation risk band")
+    executive_summary: str = Field(..., description="Synthesized factual case brief")
+    corroborating_evidence_chain: List[DossierEvidenceItem] = Field(
+        default_factory=list, description="Top verified evidence items"
+    )
+    potential_benign_explanations: List[BenignHypothesisItem] = Field(
+        default_factory=list, description="Alternative legitimate hypotheses"
+    )
+    recommended_follow_up_inquiries: List[RecommendedInquiryItem] = Field(
+        default_factory=list, description="Human analyst verification checklist"
+    )
+    markdown_dossier: str = Field(
+        ..., description="Pre-formatted Markdown document ready for 1-click clipboard copying"
+    )
+    disclaimer: str = Field(
+        "Analytical investigation dossier prepared for human risk analysts. Contains no automated blocking, throttling, or autonomous enforcement actions.",
+        description="Regulatory boundary statement"
+    )
+
