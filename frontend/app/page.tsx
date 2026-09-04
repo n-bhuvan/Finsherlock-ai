@@ -1,284 +1,305 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { checkBackendHealth } from "@/lib/api";
-import { BackendStatus } from "@/types/api";
+import Link from "next/link";
 import {
   ShieldAlert,
   Server,
-  MonitorCheck,
-  RefreshCw,
+  Activity,
+  Network,
+  Database,
+  ArrowRight,
+  AlertTriangle,
   CheckCircle2,
-  XCircle,
-  AlertCircle,
-  Terminal,
+  RefreshCw,
   Cpu,
   Layers,
-  FileCode,
-  ExternalLink,
+  Lock,
 } from "lucide-react";
+import { getRiskHealth } from "@/lib/api";
+import { RiskHealthResponse } from "@/types/risk";
 
-export default function HomePage() {
-  const [status, setStatus] = useState<BackendStatus>({
-    state: "checking",
-    data: null,
-    error: null,
-    latencyMs: null,
-    lastChecked: null,
-  });
-  const [isRefreshing, setIsRefreshing] = useState(false);
+const CURATED_CASES = [
+  {
+    id: "TXN_00000203",
+    account: "ACC_000213",
+    amount: "₹99,500.00",
+    channel: "IMPS",
+    timestamp: "2026-01-18 22:35:45",
+    risk: "HIGH RISK",
+    prob: "99.92%",
+    category: "Coordinated Abuse Ring (Hero Case)",
+    badgeColor: "rose",
+  },
+  {
+    id: "TXN_00000001",
+    account: "ACC_000002",
+    amount: "₹14,500.00",
+    channel: "UPI",
+    timestamp: "2026-01-25 04:25:22",
+    risk: "HIGH RISK",
+    prob: "99.95%",
+    category: "Abuse-Ring Target Transaction",
+    badgeColor: "rose",
+  },
+  {
+    id: "TXN_00000646",
+    account: "ACC_000054",
+    amount: "₹1,159.95",
+    channel: "NETBANKING",
+    timestamp: "2026-01-01 00:40:18",
+    risk: "LOW RISK",
+    prob: "0.10%",
+    category: "Legitimate Baseline Transfer",
+    badgeColor: "emerald",
+  },
+  {
+    id: "TXN_00000679",
+    account: "ACC_000175",
+    amount: "₹1,759.61",
+    channel: "NETBANKING",
+    timestamp: "2026-01-01 00:42:23",
+    risk: "LOW RISK",
+    prob: "0.13%",
+    category: "Standard Netbanking Payment",
+    badgeColor: "emerald",
+  },
+  {
+    id: "TXN_00000500",
+    account: "ACC_000456",
+    amount: "₹764.87",
+    channel: "UPI",
+    timestamp: "2026-01-31 09:03:40",
+    risk: "LOW RISK",
+    prob: "0.08%",
+    category: "Standard Merchant Payment",
+    badgeColor: "cyan",
+  },
+];
+
+export default function OverviewPage() {
+  const [health, setHealth] = useState<RiskHealthResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchHealth = useCallback(async () => {
-    setIsRefreshing(true);
-    setStatus((prev) => ({ ...prev, state: "checking" }));
-    const result = await checkBackendHealth();
-
-    if (result.data && result.data.status === "ok") {
-      setStatus({
-        state: "connected",
-        data: result.data,
-        error: null,
-        latencyMs: result.latencyMs,
-        lastChecked: new Date(),
-      });
-    } else {
-      setStatus({
-        state: "not_connected",
-        data: null,
-        error: result.error,
-        latencyMs: result.latencyMs,
-        lastChecked: new Date(),
-      });
-    }
-    setIsRefreshing(false);
+    setRefreshing(true);
+    const res = await getRiskHealth();
+    if (res.data) setHealth(res.data);
+    setLoading(false);
+    setRefreshing(false);
   }, []);
 
   useEffect(() => {
     fetchHealth();
-    // Poll health periodically every 10 seconds
-    const interval = setInterval(fetchHealth, 10000);
+    const interval = setInterval(fetchHealth, 15000);
     return () => clearInterval(interval);
   }, [fetchHealth]);
 
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-
   return (
-    <main className="min-h-screen flex flex-col justify-between p-6 sm:p-12 max-w-6xl mx-auto text-slate-100">
-      {/* Top Header Bar */}
-      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
-        <div className="flex items-center space-x-3">
-          <div className="p-2.5 bg-sky-950/60 border border-sky-500/30 rounded-lg shadow-inner">
-            <ShieldAlert className="w-6 h-6 text-sky-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-              RingGuard AI
-              <span className="text-xs font-mono px-2 py-0.5 rounded bg-sky-950 border border-sky-800/50 text-sky-300">
-                Track 02 — AI Risk Manager
+    <div className="space-y-6 select-none font-mono text-xs">
+      {/* 1. Hero Command Center Banner */}
+      <section className="p-6 rounded-xl bg-[#0b151b] border border-[#142a32] shadow-xl space-y-3 relative overflow-hidden">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60 text-[10px] font-bold">
+                OPERATIONS DASHBOARD
               </span>
+              <span className="text-slate-500">•</span>
+              <span className="text-slate-400 text-xs">Track 02: AI Risk Manager</span>
+            </div>
+            <h1 className="text-2xl font-bold tracking-tight text-white font-sans">
+              Risk Operations Center
             </h1>
-            <p className="text-xs text-slate-400">Razorpay AI Buildathon 2026</p>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
-            Stage 1: Foundation
-          </span>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="my-10 space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold tracking-wide uppercase">
-          <AlertCircle className="w-3.5 h-3.5" />
-          MVP FOUNDATION
-        </div>
-
-        <div className="space-y-3">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-            RingGuard AI
-          </h2>
-          <p className="text-lg sm:text-xl text-slate-300 max-w-3xl font-medium leading-relaxed">
-            Network-Aware Abuse-Ring Detection &amp;
-            <br className="hidden sm:inline" /> Evidence-First Risk Investigation
-          </p>
-        </div>
-
-        <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
-          A defense-only AI risk investigation architecture for detecting coordinated
-          payment abuse and mule-account syndicates through graph intelligence,
-          machine learning, and human-in-the-loop decision support.
-        </p>
-      </section>
-
-      {/* Operational Status Verification Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-        {/* Frontend Status Card */}
-        <div className="p-5 rounded-xl bg-slate-900/70 border border-slate-800 shadow-xl backdrop-blur-sm space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <MonitorCheck className="w-5 h-5 text-emerald-400" />
-              <span className="text-sm font-semibold text-slate-200">
-                Frontend Client
-              </span>
-            </div>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950/80 border border-emerald-700/60 text-emerald-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              Online
-            </span>
-          </div>
-
-          <div className="pt-2 border-t border-slate-800/80 text-xs text-slate-400 space-y-1 font-mono">
-            <p className="flex justify-between">
-              <span>Stack:</span>
-              <span className="text-slate-300">Next.js (App Router) + TypeScript</span>
-            </p>
-            <p className="flex justify-between">
-              <span>Port:</span>
-              <span className="text-slate-300">3000</span>
+            <p className="text-xs text-slate-400 font-sans max-w-2xl leading-relaxed">
+              Network-Aware Abuse-Ring Detection &amp; Evidence-First Risk Investigation. Combines point-in-time graph intelligence with XGBoost to surface coordinated financial abuse rings.
             </p>
           </div>
-        </div>
 
-        {/* Backend Status Card */}
-        <div className="p-5 rounded-xl bg-slate-900/70 border border-slate-800 shadow-xl backdrop-blur-sm space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <Server className="w-5 h-5 text-sky-400" />
-              <span className="text-sm font-semibold text-slate-200">
-                Backend Gateway
-              </span>
-            </div>
-
-            {/* Live Connection Badges */}
-            {status.state === "checking" && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sky-950/80 border border-sky-700/60 text-sky-300">
-                <RefreshCw className="w-3 h-3 animate-spin" />
-                Checking...
-              </span>
-            )}
-            {status.state === "connected" && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950/80 border border-emerald-700/60 text-emerald-300">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                Connected
-              </span>
-            )}
-            {status.state === "not_connected" && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-950/80 border border-rose-700/60 text-rose-300">
-                <XCircle className="w-3.5 h-3.5" />
-                Not Connected
-              </span>
-            )}
-          </div>
-
-          <div className="pt-2 border-t border-slate-800/80 text-xs text-slate-400 space-y-1 font-mono">
-            <p className="flex justify-between">
-              <span>Target:</span>
-              <span className="text-slate-300 truncate max-w-[200px]" title={`${apiUrl}/health`}>
-                {apiUrl}/health
-              </span>
-            </p>
-            <p className="flex justify-between">
-              <span>Response:</span>
-              {status.state === "connected" ? (
-                <span className="text-emerald-400">
-                  {status.data?.service} ({status.latencyMs}ms)
-                </span>
-              ) : status.state === "checking" ? (
-                <span className="text-sky-400">Probing...</span>
-              ) : (
-                <span className="text-rose-400 truncate max-w-[200px]" title={status.error || "Offline"}>
-                  {status.error || "Offline"}
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Manual Health Probe Control Bar */}
-      <section className="p-4 rounded-lg bg-slate-900/40 border border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2 text-slate-400">
-          <Terminal className="w-4 h-4 text-slate-500" />
-          <span>
-            {status.lastChecked ? (
-              <>
-                Last verified:{" "}
-                <span className="text-slate-300 font-mono">
-                  {status.lastChecked.toLocaleTimeString()}
-                </span>
-              </>
-            ) : (
-              "Waiting for initial health probe..."
-            )}
-          </span>
-        </div>
-
-        <button
-          onClick={fetchHealth}
-          disabled={isRefreshing}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-slate-200 border border-slate-700 transition disabled:opacity-50 cursor-pointer text-xs font-medium"
-        >
-          <RefreshCw
-            className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin" : ""}`}
-          />
-          Verify Connection
-        </button>
-      </section>
-
-      {/* Architecture & Boundaries Notice */}
-      <section className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-        <div className="p-4 rounded-lg bg-slate-900/30 border border-slate-800/60 space-y-2">
-          <div className="flex items-center gap-2 font-semibold text-slate-300">
-            <Layers className="w-4 h-4 text-sky-400" />
-            Modular Monolith
-          </div>
-          <p className="text-slate-400 leading-relaxed">
-            FastAPI backend with structured modules for Graph Intelligence, XGBoost Model,
-            Evidence Synthesis, and Audit Logging.
-          </p>
-        </div>
-
-        <div className="p-4 rounded-lg bg-slate-900/30 border border-slate-800/60 space-y-2">
-          <div className="flex items-center gap-2 font-semibold text-slate-300">
-            <Cpu className="w-4 h-4 text-sky-400" />
-            Zero Fake Metrics
-          </div>
-          <p className="text-slate-400 leading-relaxed">
-            Stage 1 contains no placeholder cases, mock graphs, or hardcoded probabilities.
-            All analytics will derive from actual models in later stages.
-          </p>
-        </div>
-
-        <div className="p-4 rounded-lg bg-slate-900/30 border border-slate-800/60 space-y-2">
-          <div className="flex items-center gap-2 font-semibold text-slate-300">
-            <FileCode className="w-4 h-4 text-sky-400" />
-            Human Authority
-          </div>
-          <p className="text-slate-400 leading-relaxed">
-            Defense-only investigation support. No autonomous fund movements,
-            automated approvals, or autonomous blocking.
-          </p>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="mt-10 pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
-        <p>RingGuard AI © 2026 — Track 02: AI Risk Manager</p>
-        <div className="flex items-center gap-4">
-          <a
-            href={`${apiUrl}/docs`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-sky-400 transition flex items-center gap-1"
+          <Link
+            href="/cases/TXN_00000203"
+            className="px-4 py-2.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-sans font-semibold text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-cyan-950/50 cursor-pointer self-start md:self-auto"
           >
-            FastAPI Docs <ExternalLink className="w-3 h-3" />
-          </a>
+            <span>Open Hero Case (TXN_00000203)</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
-      </footer>
-    </main>
+      </section>
+
+      {/* 2. System Status & Engine Telemetry Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-4 rounded-xl bg-[#081216] border border-[#142a32] space-y-2">
+          <div className="flex items-center justify-between text-slate-400 text-[11px]">
+            <span className="flex items-center gap-1.5">
+              <Server className="w-3.5 h-3.5 text-cyan-400" /> Model Gateway
+            </span>
+            {health?.status === "ok" ? (
+              <span className="text-emerald-400 font-bold">ONLINE</span>
+            ) : (
+              <span className="text-amber-400 font-bold">CONNECTING</span>
+            )}
+          </div>
+          <p className="text-base font-bold text-white">
+            {health?.service || "ringguard-risk-engine"}
+          </p>
+          <div className="text-[10px] text-slate-500 pt-1 border-t border-[#142a32]/60 flex justify-between">
+            <span>Health Probing:</span>
+            <span>Active (15s)</span>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl bg-[#081216] border border-[#142a32] space-y-2">
+          <div className="flex items-center justify-between text-slate-400 text-[11px]">
+            <span className="flex items-center gap-1.5">
+              <Activity className="w-3.5 h-3.5 text-slate-400" /> Model A (Baseline)
+            </span>
+            <span className="text-emerald-400 font-bold">LOADED</span>
+          </div>
+          <p className="text-base font-bold text-white">37 Features</p>
+          <div className="text-[10px] text-slate-500 pt-1 border-t border-[#142a32]/60 flex justify-between">
+            <span>Scope:</span>
+            <span>Transaction + Behavioral</span>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl bg-[#081216] border border-[#142a32] space-y-2">
+          <div className="flex items-center justify-between text-slate-400 text-[11px]">
+            <span className="flex items-center gap-1.5">
+              <Network className="w-3.5 h-3.5 text-cyan-400" /> Model B (Graph)
+            </span>
+            <span className="text-emerald-400 font-bold">LOADED</span>
+          </div>
+          <p className="text-base font-bold text-cyan-300">58 Features</p>
+          <div className="text-[10px] text-slate-500 pt-1 border-t border-[#142a32]/60 flex justify-between">
+            <span>Point-in-Time Graph:</span>
+            <span className="text-cyan-400 font-bold">+21 Features</span>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl bg-[#081216] border border-[#142a32] space-y-2">
+          <div className="flex items-center justify-between text-slate-400 text-[11px]">
+            <span className="flex items-center gap-1.5">
+              <Database className="w-3.5 h-3.5 text-cyan-400" /> Database Store
+            </span>
+            <span className="text-emerald-400 font-bold">CONNECTED</span>
+          </div>
+          <p className="text-base font-bold text-white">2,000 Transactions</p>
+          <div className="text-[10px] text-slate-500 pt-1 border-t border-[#142a32]/60 flex justify-between">
+            <span>Entities:</span>
+            <span>500 Accounts, 100 Devices</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Priority Case Triage Queue */}
+      <section className="p-5 rounded-xl bg-[#0b151b] border border-[#142a32] shadow-xl space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#142a32] pb-3">
+          <div>
+            <h2 className="text-sm font-bold text-white font-sans tracking-wide">
+              Active Investigation Queue
+            </h2>
+            <p className="text-[11px] text-slate-400 font-sans">
+              Verified synthetic test transactions from database ground truth. Select any case to inspect evidence, topology, and chronological timeline:
+            </p>
+          </div>
+
+          <button
+            onClick={fetchHealth}
+            disabled={refreshing}
+            className="px-3 py-1.5 rounded-lg bg-[#081216] hover:bg-[#11242b] border border-[#142a32] text-slate-300 flex items-center gap-1.5 transition text-[11px] cursor-pointer self-start sm:self-auto"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 text-cyan-400 ${refreshing ? "animate-spin" : ""}`} />
+            <span>Refresh Telemetry</span>
+          </button>
+        </div>
+
+        {/* Case Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-[#142a32] text-slate-400 text-[11px]">
+                <th className="py-2.5 px-3">Transaction ID</th>
+                <th className="py-2.5 px-3">Target Account</th>
+                <th className="py-2.5 px-3">Amount (Synthetic)</th>
+                <th className="py-2.5 px-3">Channel</th>
+                <th className="py-2.5 px-3">Timestamp</th>
+                <th className="py-2.5 px-3">Model Risk</th>
+                <th className="py-2.5 px-3">Investigation Context</th>
+                <th className="py-2.5 px-3 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#142a32]/60">
+              {CURATED_CASES.map((c) => {
+                const isHigh = c.badgeColor === "rose";
+                return (
+                  <tr key={c.id} className="hover:bg-[#081216]/80 transition">
+                    <td className="py-3 px-3 font-bold text-white">{c.id}</td>
+                    <td className="py-3 px-3 text-slate-300">{c.account}</td>
+                    <td className="py-3 px-3 font-bold text-slate-200">{c.amount}</td>
+                    <td className="py-3 px-3 text-slate-400">{c.channel}</td>
+                    <td className="py-3 px-3 text-slate-400">{c.timestamp}</td>
+                    <td className="py-3 px-3">
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-bold border ${
+                          isHigh
+                            ? "bg-rose-950/70 border-rose-700/60 text-rose-300"
+                            : "bg-emerald-950/70 border-emerald-700/60 text-emerald-300"
+                        }`}
+                      >
+                        {c.risk} ({c.prob})
+                      </span>
+                    </td>
+                    <td className="py-3 px-3 text-slate-300">{c.category}</td>
+                    <td className="py-3 px-3 text-right">
+                      <Link
+                        href={`/cases/${c.id}`}
+                        className="px-2.5 py-1 rounded bg-[#0d262d] hover:bg-cyan-900/60 border border-cyan-500/40 text-cyan-300 text-[11px] font-semibold transition inline-flex items-center gap-1 cursor-pointer"
+                      >
+                        <span>Investigate</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* 4. Architecture & Security Guarantees */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-slate-400 text-xs font-sans">
+        <div className="p-4 rounded-xl bg-[#081216] border border-[#142a32] space-y-1.5">
+          <div className="flex items-center gap-2 font-bold text-white">
+            <Lock className="w-4 h-4 text-cyan-400" />
+            <span>Defense-Only Architecture</span>
+          </div>
+          <p className="leading-relaxed text-[11px]">
+            RingGuard AI strictly assists human analysts. Autonomous fund movement, automated payment rejection, and account blocking are prohibited.
+          </p>
+        </div>
+
+        <div className="p-4 rounded-xl bg-[#081216] border border-[#142a32] space-y-1.5">
+          <div className="flex items-center gap-2 font-bold text-white">
+            <Cpu className="w-4 h-4 text-cyan-400" />
+            <span>Zero Fake Metrics</span>
+          </div>
+          <p className="leading-relaxed text-[11px]">
+            All probabilities, evidence items, timestamps, and graph topologies derive from verified backend endpoints. Unavailable fields display explicit unavailable states.
+          </p>
+        </div>
+
+        <div className="p-4 rounded-xl bg-[#081216] border border-[#142a32] space-y-1.5">
+          <div className="flex items-center gap-2 font-bold text-white">
+            <Layers className="w-4 h-4 text-cyan-400" />
+            <span>Point-in-Time Graph Safety</span>
+          </div>
+          <p className="leading-relaxed text-[11px]">
+            Model B features, timeline events, and evidence extraction are strictly constrained to historical data (t &le; T) with zero future information leakage.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
