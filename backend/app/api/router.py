@@ -13,6 +13,7 @@ from app.api.endpoints.investigation import router as investigation_endpoints
 from app.api.endpoints.analytics import router as analytics_endpoints
 from app.api.endpoints.explanation import router as explanation_endpoints
 from app.api.endpoints.audit import router as audit_endpoints
+from app.api.endpoints.anomaly import router as anomaly_endpoints
 
 api_router = APIRouter()
 
@@ -31,6 +32,7 @@ api_router.include_router(timeline_endpoints, prefix="/timeline", tags=["Timelin
 api_router.include_router(investigation_endpoints, prefix="/investigation", tags=["Investigation Tools"])
 api_router.include_router(explanation_endpoints, prefix="/investigation/explanation", tags=["Forensic AI Explanation"])
 api_router.include_router(audit_endpoints, prefix="/audit", tags=["Security & Audit"])
+api_router.include_router(anomaly_endpoints, prefix="/anomaly", tags=["Systemic Risk Anomaly"])
 
 # Mount upcoming domain routers
 api_router.include_router(cases_router)
