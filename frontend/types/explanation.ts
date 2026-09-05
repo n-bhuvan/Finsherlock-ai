@@ -119,3 +119,43 @@ export interface SecurityStatusResponse {
   controls: SecurityControlItem[];
   disclaimer: string;
 }
+
+export type FeedbackCategory =
+  | "EXPLANATION_USEFUL"
+  | "INSUFFICIENT_EVIDENCE"
+  | "MISLEADING_EXPLANATION"
+  | "OUTCOME_CONFIRMED"
+  | "OUTCOME_CONTRADICTED";
+
+export interface AnalystFeedbackRequest {
+  transaction_id: string;
+  category: FeedbackCategory;
+  analyst_id: string;
+  notes: string;
+  rating: number;
+}
+
+export interface AnalystFeedbackResponse {
+  feedback_id: string;
+  transaction_id: string;
+  category: FeedbackCategory;
+  analyst_id: string;
+  notes: string;
+  rating: number;
+  timestamp: string;
+  status: string;
+  human_review_required: boolean;
+  audit_record_hash: string;
+  disclaimer: string;
+}
+
+export interface FeedbackSummaryResponse {
+  status: string;
+  summary: {
+    total_feedback_count: number;
+    category_distribution: Record<string, number>;
+    average_rating: number;
+    recent_feedback: AnalystFeedbackResponse[];
+  };
+  disclaimer: string;
+}

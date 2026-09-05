@@ -9,6 +9,7 @@ import { CalibrationPanel } from "@/components/analytics/CalibrationPanel";
 import { ThresholdPolicyPanel } from "@/components/analytics/ThresholdPolicyPanel";
 import { ColdStartPanel } from "@/components/analytics/ColdStartPanel";
 import { InvestigationEfficiencyPanel } from "@/components/analytics/InvestigationEfficiencyPanel";
+import { DriftMonitoringPanel } from "@/components/monitoring/DriftMonitoringPanel";
 
 export default function AnalyticsPage() {
   return (
@@ -46,6 +47,9 @@ export default function AnalyticsPage() {
 
       {/* 7.5. Investigation Efficiency & Business Impact (Stage 15) */}
       <InvestigationEfficiencyPanel />
+
+      {/* 7.6. Distribution Drift & Stability Monitoring (Stage 20) */}
+      <DriftMonitoringPanel />
 
       {/* 8. Business Economics & ROI Modeling (Build Spec Section 21) */}
       <BusinessEconomicsPanel />

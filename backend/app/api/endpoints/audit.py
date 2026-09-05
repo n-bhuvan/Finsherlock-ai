@@ -8,6 +8,11 @@ from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, Query
 
 from app.audit.service import HashChainedAuditService
+from app.audit.feedback import (
+    AnalystFeedbackRequest,
+    AnalystFeedbackResponse,
+    AnalystFeedbackService,
+)
 
 router = APIRouter()
 
@@ -88,4 +93,53 @@ def get_security_status() -> Dict[str, Any]:
             },
         ],
         "disclaimer": "All security controls are deterministically enforced at the backend gateway.",
+    }
+
+
+# ==============================================================================
+# STAGE 21: ANALYST FEEDBACK & GOVERNANCE TELEMETRY
+# ==============================================================================
+
+@router.post(
+    "/feedback",
+    response_model=AnalystFeedbackResponse,
+    summary="Record Human Risk Analyst Feedback",
+    description="Captures human review feedback, sanitizes content, and registers it in the tamper-evident audit trail.",
+)
+def submit_analyst_feedback(payload: AnalystFeedbackRequest) -> AnalystFeedbackResponse:
+    """Submit human analyst case review feedback."""
+    service = AnalystFeedbackService()
+    return service.record_feedback(payload)
+
+
+@router.get(
+    "/feedback/{transaction_id}",
+    response_model=List[AnalystFeedbackResponse],
+    summary="Get Feedback for a Transaction",
+    description="Retrieve all recorded human analyst feedback entries for a specific transaction.",
+)
+def get_transaction_feedback(transaction_id: str) -> List[AnalystFeedbackResponse]:
+    """Retrieve historical analyst feedback for a specific transaction."""
+    service = AnalystFeedbackService()
+    return service.get_feedback(transaction_id=transaction_id)
+
+
+@router.get(
+    "/feedback",
+    summary="Get Global Analyst Feedback Summary & Trail",
+    description="Retrieve aggregated analyst feedback statistics and chronological feedback entries.",
+)
+def get_feedback_trail(
+    limit: int = Query(50, ge=1, le=500, description="Max feedback entries to return"),
+) -> Dict[str, Any]:
+    """Retrieve global feedback summary and chronological trail."""
+    service = AnalystFeedbackService()
+    entries = service.get_feedback(limit=limit)
+    summary = service.get_feedback_summary()
+    return {
+        "status": "Available",
+        "summary": summary,
+        "returned_count": len(entries),
+        "feedback_entries": entries,
+        "disclaimer": "Analyst feedback recorded as governance telemetry. Zero autonomous risk or model mutation.",
     }

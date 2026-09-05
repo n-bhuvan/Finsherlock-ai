@@ -16,7 +16,7 @@ from app.api.endpoints.audit import router as audit_endpoints
 from app.api.endpoints.anomaly import router as anomaly_endpoints
 from app.api.endpoints.prioritization import router as prioritization_endpoints
 from app.api.endpoints.counterfactual import router as counterfactual_endpoints
-from app.api.endpoints.policy import router as policy_endpoints
+from app.api.endpoints.monitoring import router as monitoring_endpoints
 
 api_router = APIRouter()
 
@@ -38,7 +38,7 @@ api_router.include_router(audit_endpoints, prefix="/audit", tags=["Security & Au
 api_router.include_router(anomaly_endpoints, prefix="/anomaly", tags=["Systemic Risk Anomaly"])
 api_router.include_router(prioritization_endpoints, prefix="/prioritization", tags=["Portfolio Prioritization"])
 api_router.include_router(counterfactual_endpoints, prefix="/counterfactual", tags=["Counterfactual Analysis"])
-api_router.include_router(policy_endpoints, prefix="/policy", tags=["Risk Policy Engine"])
+api_router.include_router(monitoring_endpoints, prefix="/monitoring", tags=["Monitoring & Verification"])
 
 # Mount upcoming domain routers
 api_router.include_router(cases_router)

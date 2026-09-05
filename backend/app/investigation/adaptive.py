@@ -90,12 +90,7 @@ CORE_STRUCTURAL_TOOLS: Set[str] = {
 class AdaptiveInvestigationEngine:
     """Stage 17 deterministic uncertainty-driven investigation engine."""
 
-    def __init__(
-        self,
-        db: Session,
-        models_dir: Optional[Path] = None,
-        calibrator: Optional[RiskCalibrator] = None,
-    ):
+    def __init__(self, db: Session, models_dir: Optional[Path] = None):
         self.db = db
         self.inv_service = InvestigationService(db)
         self.model_service = get_model_service()
@@ -108,13 +103,8 @@ class AdaptiveInvestigationEngine:
             repo_root = current_dir.parents[2]
             self.models_dir = repo_root / "models"
 
-        self._calibrator_b: Optional[RiskCalibrator] = calibrator
-        if self._calibrator_b is None:
-            self._load_calibrators()
-
-        # Cached Stage 15 and Stage 16 services for context integration
-        self._anom_svc: Optional[Any] = None
-        self._prio_svc: Optional[Any] = None
+        self._calibrator_b: Optional[RiskCalibrator] = None
+        self._load_calibrators()
 
     def _load_calibrators(self) -> None:
         """Load frozen post-hoc Model B calibrator if available."""
@@ -443,7 +433,6 @@ class AdaptiveInvestigationEngine:
         transaction_id: str,
         max_steps: int = 5,
         tool_budget: float = 150.0,
-        include_context: bool = True,
     ) -> AdaptiveInvestigationResponse:
         """Execute a complete Stage 17 uncertainty-driven investigation session."""
         clean_id = transaction_id.strip()
@@ -635,30 +624,25 @@ class AdaptiveInvestigationEngine:
         exp_value: Optional[float] = None
         prio_rank: Optional[int] = None
 
-        if include_context:
-            try:
-                if self._anom_svc is None:
-                    from app.anomaly.service import SystemicAnomalyService
-                    self._anom_svc = SystemicAnomalyService(self.db)
-                anom_res = self._anom_svc.analyze_transaction(clean_id)
-                sys_anom_score = anom_res.systemic_anomaly_score
-            except Exception:
-                sys_anom_score = None
+        try:
+            from app.anomaly.service import SystemicAnomalyService
+            anom_svc = SystemicAnomalyService(self.db)
+            anom_res = anom_svc.analyze_transaction(clean_id)
+            sys_anom_score = anom_res.systemic_anomaly_score
+        except Exception:
+            sys_anom_score = None
 
-            try:
-                if self._prio_svc is None:
-                    from app.prioritization.service import PortfolioPrioritizationService
-                    self._prio_svc = PortfolioPrioritizationService(
-                        self.db, calibrator=self._calibrator_b, anomaly_service=self._anom_svc
-                    )
-                prio_res = self._prio_svc.prioritize_transaction(clean_id)
-                prio_score = prio_res.priority_score
-                exp_value = prio_res.expected_value
-                prio_rank = prio_res.priority_rank
-            except Exception:
-                prio_score = None
-                exp_value = None
-                prio_rank = None
+        try:
+            from app.prioritization.service import PortfolioPrioritizationService
+            prio_svc = PortfolioPrioritizationService(self.db)
+            prio_res = prio_svc.prioritize_transaction(clean_id)
+            prio_score = prio_res.priority_score
+            exp_value = prio_res.expected_value
+            prio_rank = prio_res.priority_rank
+        except Exception:
+            prio_score = None
+            exp_value = None
+            prio_rank = None
 
         total_reduction = round(initial_u - current_u, 4)
         rel_reduction = round((initial_u - current_u) / initial_u, 4) if initial_u > 0 else 0.0

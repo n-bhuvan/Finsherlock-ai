@@ -39,6 +39,12 @@ const NAV_ITEMS = [
     badge: null,
   },
   {
+    name: "Monitoring",
+    href: "/monitoring",
+    icon: Radio,
+    badge: "Stage 20",
+  },
+  {
     name: "Audit",
     href: "/audit",
     icon: ScrollText,
