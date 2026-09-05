@@ -27,12 +27,18 @@ from ml.evaluation.cold_start import determine_graph_confidence
 class PortfolioPrioritizationService:
     """Deterministic portfolio prioritization and expected-value reasoning service."""
 
-    def __init__(self, db: Optional[Session] = None, models_dir: Optional[Path] = None):
+    def __init__(
+        self,
+        db: Optional[Session] = None,
+        models_dir: Optional[Path] = None,
+        calibrator: Optional[RiskCalibrator] = None,
+        anomaly_service: Optional[SystemicAnomalyService] = None,
+    ):
         self.db = db or SessionLocal()
         self._owns_session = db is None
         self.model_service = get_model_service()
         self.feature_service = get_feature_service()
-        self.anomaly_service = SystemicAnomalyService(self.db)
+        self.anomaly_service = anomaly_service or SystemicAnomalyService(self.db)
         self.economic_assumptions = EconomicAssumptions()
 
         if models_dir:
@@ -42,8 +48,9 @@ class PortfolioPrioritizationService:
             repo_root = current_dir.parents[2]
             self.models_dir = repo_root / "models"
 
-        self._calibrator_b: Optional[RiskCalibrator] = None
-        self._load_calibrator()
+        self._calibrator_b: Optional[RiskCalibrator] = calibrator
+        if self._calibrator_b is None:
+            self._load_calibrator()
 
     def close(self):
         """Close database session if self-owned."""

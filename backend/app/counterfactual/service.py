@@ -128,6 +128,7 @@ class CounterfactualAttributionService:
         model_service: Optional[ModelService] = None,
         feature_service: Optional[FeatureService] = None,
         models_dir: Optional[Path] = None,
+        calibrator: Optional[RiskCalibrator] = None,
     ):
         self.db = db
         self.model_service = model_service or get_model_service()
@@ -139,8 +140,9 @@ class CounterfactualAttributionService:
             current_dir = Path(__file__).resolve().parent
             self.models_dir = current_dir.parents[2] / "models"
 
-        self._calibrator_b: Optional[RiskCalibrator] = None
-        self._load_calibrator()
+        self._calibrator_b: Optional[RiskCalibrator] = calibrator
+        if self._calibrator_b is None:
+            self._load_calibrator()
 
     def _load_calibrator(self) -> None:
         """Load frozen post-hoc Model B calibrator if available."""

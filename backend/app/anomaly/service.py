@@ -38,10 +38,10 @@ from app.anomaly.schemas import (
 class SystemicAnomalyService:
     """Deterministic multi-scope anomaly detection engine operating on verified data."""
 
-    def __init__(self, db: Optional[Session] = None):
+    def __init__(self, db: Optional[Session] = None, evidence_engine: Optional[EvidenceEngine] = None):
         self.db = db or SessionLocal()
         self._owns_session = db is None
-        self.evidence_engine = EvidenceEngine(self.db)
+        self.evidence_engine = evidence_engine or EvidenceEngine(self.db)
         self.graph_service = GraphService.get_instance()
 
     def close(self):
