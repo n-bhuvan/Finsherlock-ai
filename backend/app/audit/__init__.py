@@ -1,1 +1,1 @@
-"""Immutable decision audit logging and compliance tracking package."""
+"""RingGuard AI — Stage 16 Hash-Chained Audit Logging Module."""

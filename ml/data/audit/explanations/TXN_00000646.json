@@ -1,0 +1,96 @@
+{
+  "transaction_id": "TXN_00000646",
+  "account_id": "ACC_000054",
+  "executive_summary": "Factual case brief for transaction TXN_00000646 (₹1,159.95, account ACC_000054). Evaluated with Model A (0.10%) and network-enhanced Model B (0.10%), producing a calibrated risk of 0.08% (LOW band). Observed corroborations include Model Risk Assessment Context.",
+  "risk_assessment_narrative": "Model A baseline risk is 0.10%. Inclusion of 58 graph topology features in Model B yields 0.10%, calibrated to 0.08% via Stage 14 Platt scaling. Graph confidence is rated UNAVAILABLE. All risk scores are permanently locked and cannot be altered.",
+  "model_a_probability": 0.0010350854136049747,
+  "model_b_probability": 0.0010260512353852391,
+  "calibrated_risk": 0.0007739782146356351,
+  "risk_band": "LOW",
+  "graph_confidence": "UNAVAILABLE",
+  "structured_claims": [
+    {
+      "claim_id": "CLAIM_01",
+      "statement": "Transaction TXN_00000646 transferred ₹1,159.95 from account ACC_000054 at 2026-01-01T00:40:18+05:30.",
+      "evidence_ids": [
+        "EVD_MODEL_TXN_00000646"
+      ],
+      "claim_type": "FACT",
+      "is_grounded": true,
+      "validation_notes": "VERIFIED: All cited evidence_ids verified by EvidenceEngine."
+    },
+    {
+      "claim_id": "CLAIM_02",
+      "statement": "Model B network graph probability (0.10%) exceeds Model A baseline (0.10%), indicating significant multi-hop risk amplification.",
+      "evidence_ids": [],
+      "claim_type": "INTERPRETATION",
+      "is_grounded": true,
+      "validation_notes": "ACCEPTED: Contextual INTERPRETATION."
+    },
+    {
+      "claim_id": "CLAIM_03",
+      "statement": "Model Risk Assessment Context: Derived Stage 7 Graph-Enhanced Model evaluation: estimated ring probability = 0.0010 (Risk Band: LOW, Decision Threshold: 0.50). Contextual model assessment only, not direct proof of fraud.",
+      "evidence_ids": [
+        "EVD_MODEL_TXN_00000646"
+      ],
+      "claim_type": "FACT",
+      "is_grounded": true,
+      "validation_notes": "VERIFIED: All cited evidence_ids verified by EvidenceEngine."
+    },
+    {
+      "claim_id": "CLAIM_04",
+      "statement": "Forensic explanation is bounded by point-in-time observational data as of 2026-01-01T00:40:18+05:30; graph coverage is UNAVAILABLE.",
+      "evidence_ids": [],
+      "claim_type": "LIMITATION",
+      "is_grounded": true,
+      "validation_notes": "ACCEPTED: Contextual LIMITATION."
+    }
+  ],
+  "evidence_summaries": [
+    {
+      "evidence_id": "EVD_MODEL_TXN_00000646",
+      "evidence_type": "MODEL_RISK_CONTEXT",
+      "claim_statement": "Model Risk Assessment Context (INFO severity). Derived Stage 7 Graph-Enhanced Model evaluation: estimated ring probability = 0.0010 (Risk Band: LOW, Decision Threshold: 0.50). Contextual model assessment only, not direct proof of fraud.",
+      "is_grounded": true,
+      "grounding_source": "EvidenceEngine:MODEL_RISK_CONTEXT"
+    }
+  ],
+  "topological_ring_interpretation": "Network analysis identified 1 structural risk indicators connecting account ACC_000054 to known high-velocity endpoints. Graph topology indicates directed fund concentration and co-used endpoints.",
+  "benign_alternative_hypotheses": [
+    {
+      "hypothesis_id": "HYP_TXN_00000646_01",
+      "title": "Routine Consumer Transaction with Cluster Interaction",
+      "rationale": "Account exhibits standard payment frequency within normative consumer velocity parameters.",
+      "triggering_evidence_id": "EVD_MODEL_TXN_00000646",
+      "is_grounded": true
+    }
+  ],
+  "recommended_human_verification_questions": [
+    "Verify whether customer recognizes beneficiary account details and purpose of transfer.",
+    "Confirm physical possession of registered hardware device during transaction execution."
+  ],
+  "uncertainty_and_limitations": "Investigative uncertainty is governed by graph confidence (UNAVAILABLE) and empirical evidence sufficiency. All findings represent automated decision support only. Human risk analyst approval is strictly mandatory.",
+  "grounding_validation": {
+    "total_claims": 4,
+    "total_fact_claims": 2,
+    "grounded_fact_claims": 2,
+    "unsupported_claims_rejected": 0,
+    "grounding_ratio": 1.0,
+    "is_fully_grounded": true,
+    "rejection_reasons": []
+  },
+  "metadata": {
+    "provider": "deterministic_fallback",
+    "model": "ringguard-deterministic-rules-v1",
+    "prompt_version": "v1.0.0-grounded-forensic",
+    "temperature": 0.1,
+    "latency_ms": 34.96,
+    "is_fallback": true,
+    "fallback_reason": "Deterministic fallback requested by client.",
+    "prompt_sha256": "d255c8272fb3913d27e5c5437388861e472d9936f57202bfd24f5af2cab88527",
+    "response_sha256": "bfa2af391a74ddd317338a2060f9a4e8b76affdbdae14bade2ee7fd8e56fcf2b"
+  },
+  "audit_id": "AUD_EXP_CEC872C075CF",
+  "human_approval_required": true,
+  "disclaimer": "Factual forensic explanation generated for decision support. Does not constitute an autonomous decision or financial action."
+}

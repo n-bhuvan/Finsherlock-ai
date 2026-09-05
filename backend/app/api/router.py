@@ -11,6 +11,8 @@ from app.api.endpoints.evidence import router as evidence_endpoints
 from app.api.endpoints.timeline import router as timeline_endpoints
 from app.api.endpoints.investigation import router as investigation_endpoints
 from app.api.endpoints.analytics import router as analytics_endpoints
+from app.api.endpoints.explanation import router as explanation_endpoints
+from app.api.endpoints.audit import router as audit_endpoints
 
 api_router = APIRouter()
 
@@ -27,6 +29,8 @@ api_router.include_router(risk_endpoints, prefix="/risk", tags=["Risk Analysis"]
 api_router.include_router(evidence_endpoints, prefix="/evidence", tags=["Evidence Engine"])
 api_router.include_router(timeline_endpoints, prefix="/timeline", tags=["Timeline Engine"])
 api_router.include_router(investigation_endpoints, prefix="/investigation", tags=["Investigation Tools"])
+api_router.include_router(explanation_endpoints, prefix="/investigation/explanation", tags=["Forensic AI Explanation"])
+api_router.include_router(audit_endpoints, prefix="/audit", tags=["Security & Audit"])
 
 # Mount upcoming domain routers
 api_router.include_router(cases_router)

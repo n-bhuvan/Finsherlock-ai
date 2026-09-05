@@ -1,0 +1,154 @@
+{
+  "transaction_id": "TXN_00000203",
+  "account_id": "ACC_000213",
+  "executive_summary": "Factual case brief for transaction TXN_00000203 (₹99,500.00, account ACC_000213). Evaluated with Model A (99.94%) and network-enhanced Model B (99.92%), producing a calibrated risk of 99.80% (HIGH band). Observed corroborations include Rapid Transaction Burst Velocity, Indirect Multi-Hop Syndicate Connection.",
+  "risk_assessment_narrative": "Model A baseline risk is 99.94%. Inclusion of 58 graph topology features in Model B yields 99.92%, calibrated to 99.80% via Stage 14 Platt scaling. Graph confidence is rated LIMITED. All risk scores are permanently locked and cannot be altered.",
+  "model_a_probability": 0.9993860721588135,
+  "model_b_probability": 0.9992089867591858,
+  "calibrated_risk": 0.9979603112291286,
+  "risk_band": "HIGH",
+  "graph_confidence": "LIMITED",
+  "structured_claims": [
+    {
+      "claim_id": "CLAIM_01",
+      "statement": "Transaction TXN_00000203 transferred ₹99,500.00 from account ACC_000213 at 2026-01-18T22:35:45+05:30.",
+      "evidence_ids": [
+        "EVD_RAPID_TXN_00000203_ACC_000213"
+      ],
+      "claim_type": "FACT",
+      "is_grounded": true,
+      "validation_notes": "VERIFIED: All cited evidence_ids verified by EvidenceEngine."
+    },
+    {
+      "claim_id": "CLAIM_02",
+      "statement": "Model B network graph probability (99.92%) exceeds Model A baseline (99.94%), indicating significant multi-hop risk amplification.",
+      "evidence_ids": [],
+      "claim_type": "INTERPRETATION",
+      "is_grounded": true,
+      "validation_notes": "ACCEPTED: Contextual INTERPRETATION."
+    },
+    {
+      "claim_id": "CLAIM_03",
+      "statement": "Rapid Transaction Burst Velocity: Account 'ACC_000213' performed 2 transactions within 1 hour and 2 transactions (totaling INR 149,499.00) within 24 hours up to 2026-01-18T22:35:45+05:30.",
+      "evidence_ids": [
+        "EVD_RAPID_TXN_00000203_ACC_000213"
+      ],
+      "claim_type": "FACT",
+      "is_grounded": true,
+      "validation_notes": "VERIFIED: All cited evidence_ids verified by EvidenceEngine."
+    },
+    {
+      "claim_id": "CLAIM_04",
+      "statement": "Indirect Multi-Hop Syndicate Connection: Account 'ACC_000213' connects indirectly (2 hops) to 5 additional account(s) (ACC_000104, ACC_000116, ACC_000163, ACC_000239, ACC_000246) through secondary shared devices or infrastructure up to 2026-01-18T22:35:45+05:30.",
+      "evidence_ids": [
+        "EVD_MULTIHOP_TXN_00000203_ACC_000213"
+      ],
+      "claim_type": "FACT",
+      "is_grounded": true,
+      "validation_notes": "VERIFIED: All cited evidence_ids verified by EvidenceEngine."
+    },
+    {
+      "claim_id": "CLAIM_05",
+      "statement": "Shared Device Detected: Device 'DEV_000045' was used by 3 distinct accounts (ACC_000213 and ACC_000039, ACC_000413) across 4 transactions up to point-in-time 2026-01-18T22:35:45+05:30.",
+      "evidence_ids": [
+        "EVD_DEV_TXN_00000203_DEV_000045"
+      ],
+      "claim_type": "FACT",
+      "is_grounded": true,
+      "validation_notes": "VERIFIED: All cited evidence_ids verified by EvidenceEngine."
+    },
+    {
+      "claim_id": "CLAIM_06",
+      "statement": "Directly Linked Account Cluster: Account 'ACC_000213' is directly linked to 2 other account(s) (ACC_000039, ACC_000413) via shared devices, IP addresses, or common beneficiaries up to point-in-time 2026-01-18T22:35:45+05:30.",
+      "evidence_ids": [
+        "EVD_REL_TXN_00000203_ACC_000213"
+      ],
+      "claim_type": "FACT",
+      "is_grounded": true,
+      "validation_notes": "VERIFIED: All cited evidence_ids verified by EvidenceEngine."
+    },
+    {
+      "claim_id": "CLAIM_07",
+      "statement": "Forensic explanation is bounded by point-in-time observational data as of 2026-01-18T22:35:45+05:30; graph coverage is LIMITED.",
+      "evidence_ids": [],
+      "claim_type": "LIMITATION",
+      "is_grounded": true,
+      "validation_notes": "ACCEPTED: Contextual LIMITATION."
+    }
+  ],
+  "evidence_summaries": [
+    {
+      "evidence_id": "EVD_RAPID_TXN_00000203_ACC_000213",
+      "evidence_type": "RAPID_FUND_FLOW",
+      "claim_statement": "Rapid Transaction Burst Velocity (MEDIUM severity). Account 'ACC_000213' performed 2 transactions within 1 hour and 2 transactions (totaling INR 149,499.00) within 24 hours up to 2026-01-18T22:35:45+05:30.",
+      "is_grounded": true,
+      "grounding_source": "EvidenceEngine:RAPID_FUND_FLOW"
+    },
+    {
+      "evidence_id": "EVD_MULTIHOP_TXN_00000203_ACC_000213",
+      "evidence_type": "MULTI_HOP_CONNECTION",
+      "claim_statement": "Indirect Multi-Hop Syndicate Connection (HIGH severity). Account 'ACC_000213' connects indirectly (2 hops) to 5 additional account(s) (ACC_000104, ACC_000116, ACC_000163, ACC_000239, ACC_000246) through secondary shared devices or infrastructure up to 2026-01-18T22:35:45+05:30.",
+      "is_grounded": true,
+      "grounding_source": "EvidenceEngine:MULTI_HOP_CONNECTION"
+    },
+    {
+      "evidence_id": "EVD_DEV_TXN_00000203_DEV_000045",
+      "evidence_type": "SHARED_DEVICE",
+      "claim_statement": "Shared Device Detected (HIGH severity). Device 'DEV_000045' was used by 3 distinct accounts (ACC_000213 and ACC_000039, ACC_000413) across 4 transactions up to point-in-time 2026-01-18T22:35:45+05:30.",
+      "is_grounded": true,
+      "grounding_source": "EvidenceEngine:SHARED_DEVICE"
+    },
+    {
+      "evidence_id": "EVD_REL_TXN_00000203_ACC_000213",
+      "evidence_type": "RELATED_ACCOUNT",
+      "claim_statement": "Directly Linked Account Cluster (MEDIUM severity). Account 'ACC_000213' is directly linked to 2 other account(s) (ACC_000039, ACC_000413) via shared devices, IP addresses, or common beneficiaries up to point-in-time 2026-01-18T22:35:45+05:30.",
+      "is_grounded": true,
+      "grounding_source": "EvidenceEngine:RELATED_ACCOUNT"
+    },
+    {
+      "evidence_id": "EVD_AMT_TXN_00000203",
+      "evidence_type": "LARGE_INCOMING_TRANSACTION",
+      "claim_statement": "High-Value Transaction Spike (HIGH severity). Transaction amount INR 99,500.00 is unusually high compared to the account's historical average of INR 49,999.00 (2.0x multiplier) prior to 2026-01-18T22:35:45+05:30.",
+      "is_grounded": true,
+      "grounding_source": "EvidenceEngine:LARGE_INCOMING_TRANSACTION"
+    }
+  ],
+  "topological_ring_interpretation": "Network analysis identified 6 structural risk indicators connecting account ACC_000213 to known high-velocity endpoints. Graph topology indicates directed fund concentration and co-used endpoints.",
+  "benign_alternative_hypotheses": [
+    {
+      "hypothesis_id": "HYP_TXN_00000203_1",
+      "title": "Household or Kiosk Hardware Co-Usage",
+      "rationale": "Shared device hardware fingerprint may represent multiple family members or public terminal use.",
+      "triggering_evidence_id": "EVD_DEV_TXN_00000203_DEV_000045",
+      "is_grounded": true
+    }
+  ],
+  "recommended_human_verification_questions": [
+    "Verify whether customer recognizes beneficiary account details and purpose of transfer.",
+    "Confirm physical possession of registered hardware device during transaction execution."
+  ],
+  "uncertainty_and_limitations": "Investigative uncertainty is governed by graph confidence (LIMITED) and empirical evidence sufficiency. All findings represent automated decision support only. Human risk analyst approval is strictly mandatory.",
+  "grounding_validation": {
+    "total_claims": 7,
+    "total_fact_claims": 5,
+    "grounded_fact_claims": 5,
+    "unsupported_claims_rejected": 0,
+    "grounding_ratio": 1.0,
+    "is_fully_grounded": true,
+    "rejection_reasons": []
+  },
+  "metadata": {
+    "provider": "deterministic_fallback",
+    "model": "ringguard-deterministic-rules-v1",
+    "prompt_version": "v1.0.0-grounded-forensic",
+    "temperature": 0.1,
+    "latency_ms": 35.51,
+    "is_fallback": true,
+    "fallback_reason": "Deterministic fallback requested by client.",
+    "prompt_sha256": "6e962b833657b0beea6d154f59f99865084f22b4ab83625e0d9435b03478ba1e",
+    "response_sha256": "70708a938ff3fa9a6638b643db667fd18eaf0a99ad63e9c1e4a59b84f64626ed"
+  },
+  "audit_id": "AUD_EXP_F61A4205B5B1",
+  "human_approval_required": true,
+  "disclaimer": "Factual forensic explanation generated for decision support. Does not constitute an autonomous decision or financial action."
+}

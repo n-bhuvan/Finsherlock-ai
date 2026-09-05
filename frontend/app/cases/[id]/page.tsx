@@ -25,6 +25,7 @@ import { RiskComparison } from "@/components/cases/RiskComparison";
 import { FeatureIsolationCard } from "@/components/cases/FeatureIsolationCard";
 import { InvestigationAgentPanel } from "@/components/cases/InvestigationAgentPanel";
 import { InvestigatorDossierPanel } from "@/components/cases/InvestigatorDossierPanel";
+import { AIExplanationPanel } from "@/components/cases/AIExplanationPanel";
 import { CaseSelector } from "@/components/cases/CaseSelector";
 import { HumanDecision } from "@/components/cases/HumanDecision";
 import { EvidenceList } from "@/components/evidence/EvidenceList";
@@ -368,6 +369,9 @@ export default function CaseInvestigationPage({ params }: PageProps) {
 
       {/* 6. Synthesized Investigator Dossier (Deterministic Executive Brief) */}
       <InvestigatorDossierPanel transactionId={transactionId} />
+
+      {/* 6.5. LLM Forensic Explanation & Grounded Security Review (Stage 16) */}
+      <AIExplanationPanel transactionId={transactionId} />
 
       {/* 7. Human Decision Review Area (Non-Persisted Boundary) */}
       <HumanDecision />

@@ -13,6 +13,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { SessionAuditEntry } from "@/types/audit";
+import { ExplanationAuditView } from "@/components/audit/ExplanationAuditView";
 
 export default function AuditPage() {
   const [entries, setEntries] = useState<SessionAuditEntry[]>([]);
@@ -160,6 +161,9 @@ export default function AuditPage() {
           </div>
         )}
       </section>
+
+      {/* 3. Stage 16: Cryptographic Explanation Audit Trail & Security Controls */}
+      <ExplanationAuditView />
     </div>
   );
 }
