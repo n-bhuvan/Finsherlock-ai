@@ -3,10 +3,22 @@
 > **Network-Aware Abuse-Ring Detection & Evidence-First Risk Investigation Platform**  
 > *Razorpay AI Buildathon 2026 — Track 02 (AI Risk Manager)*
 
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-129%20passed-emerald.svg)](backend/tests)
+[![Backend Tests](https://img.shields.io/badge/backend%20tests-197%20passed-emerald.svg)](backend/tests)
 [![Typecheck](https://img.shields.io/badge/typescript-zero%20errors-cyan.svg)](frontend)
 [![Build](https://img.shields.io/badge/next.js%2015-production%20ready-blue.svg)](frontend)
 [![Compliance](https://img.shields.io/badge/governance-defense--only-amber.svg)](#operational-safeguards--human-governance)
+[![Status](https://img.shields.io/badge/status-submission--ready%20prototype-purple.svg)](#project-positioning--synthetic-data-disclosure)
+
+---
+
+## Project Positioning & Synthetic Data Disclosure
+
+> [!IMPORTANT]
+> **Prototype & Synthetic Data Notice:**  
+> RingGuard AI is a **submission-ready prototype / research-grade defensive risk investigation system built entirely on synthetic data**.  
+> - **Zero Real Customer PII:** RingGuard AI does not use, ingest, or expose real Razorpay customer or merchant transaction data. All accounts, entities, transactions, and IPs are synthetically generated.
+> - **Simulated Economics:** All business-value figures, modeled loss avoided, and ROI metrics are **simulated, modeled, and assumption-based**.
+> - **Defense-Only Decision Support:** The system operates strictly as an investigative decision-support tool for human risk analysts with zero autonomous payment blocking or account freezing authority.
 
 ---
 
@@ -19,9 +31,12 @@ Coordinated fraud syndicates and mule networks exploit traditional payment gatew
 2. **Dual Model Evaluation:** Compares localized baseline indicators (Model A, 37 features) against network-enhanced topology (Model B, 58 features).
 3. **Deterministic Evidence Engine:** Extracts verified, ranked evidence signals with exact database provenance.
 4. **Deterministic Investigator Dossier:** Condenses 8 fragmented manual review queries into a unified 30-second executive brief with 1-click Markdown export.
-5. **Transparent Business Economics:** Models net financial value using the Track 02 standard formula:
-   $$\text{Net Value Saved} = \text{Estimated Fraud Loss Avoided} - \text{Customer Friction Cost} - \text{Investigation Cost}$$
-6. **Strict Defense-Only Boundaries:** Enforces human-in-the-loop governance with zero autonomous account freezing or fund blocking.
+5. **Bounded Uncertainty-Driven Investigation (Stage 15):** Dynamically optimizes tool invocation order using Expected Information Gain and explicit stopping policies.
+6. **Evidence-Grounded Forensic Explanation (Stage 16):** Synthesizes claim-level grounded narrative explanations backed by 7 layers of prompt-injection defense.
+7. **Cryptographic Append-Oriented Audit Trail (Stage 16):** Logs explanation provenance in a tamper-evident SHA-256 hash chain.
+8. **Transparent Business Economics:** Models net financial value using the Track 02 standard formula:
+   $$\text{Modeled Net Value Saved} = \text{Modeled Loss Avoided} - (\text{FP} \times C_{\text{FP}}) - ((\text{TP} + \text{FP}) \times C_{\text{inv}})$$
+9. **Strict Defense-Only Boundaries:** Enforces human-in-the-loop governance with zero autonomous account freezing or fund blocking.
 
 ---
 
@@ -80,30 +95,48 @@ To experience the platform during live evaluation, run `start_demo.bat` or follo
 | **3** | **`TXN_00000646`** | `ACC_000054` | `₹1,159.95` | `legitimate` | `0.10%` | `0.10%` | **Low-Risk Control Case:** Legitimate netbanking payment, singleton graph component, zero shared endpoints. |
 | **4** | **`TXN_00000500`** | `ACC_000456` | `₹764.87` | `legitimate` | `0.07%` | `0.08%` | **Low-Risk Control Case:** Everyday peer UPI transfer, baseline behavior, low risk. |
 
-### Demonstration Script
-1. **Navigate to Hero Case (`TXN_00000203`):**
-   - URL: `http://localhost:3000/cases/TXN_00000203`
-   - Observe **Case Header**: Target Account `ACC_000213`, Amount `₹99,500.00`, IMPS, Risk Band: **HIGH**.
-   - Observe **Risk Comparison**: Model A `99.94%`, Model B `99.92%`.
-2. **Inspect Model Feature-Isolation Sensitivity Analysis:**
-   - Scroll to **Model Feature-Isolation Sensitivity Analysis**.
-   - Observe that neutralizing 21 graph topological features evaluates the model under an isolated-entity baseline ($P_{\text{isolated}} = 99.92\%$, $\Delta = -0.00$ pp).
-   - Review the explicit scientific disclosure: *"In-silico model sensitivity analysis, not a causal claim."*
-   - Review **Provenance-Grounded Evidence Mapping** linking top graph features (`g_shared_device_accounts_count`) to Stage 9 verified evidence records (`EVD_DEV_ACC_000213_DEV_000045`).
-3. **Inspect Entity Network Topology:**
-   - Explore the central node `TXN_00000203` connected to `ACC_000213`, hardware endpoint `DEV_000045`, and peer accounts.
-4. **Review & Export Synthesized Investigator Dossier:**
-   - Scroll to **Synthesized Investigator Dossier**.
-   - Review the factual Executive Case Brief, Corroborating Evidence Chain, and Potential Benign Explanations (classified as hypotheses with mandatory notice: *"Additional verification required"*).
-   - Click **"Copy Investigator Dossier (Markdown)"** for instant export into ticketing systems.
-5. **Explore Business Economics & ROI Modeling:**
-   - Navigate to `http://localhost:3000/analytics`.
-   - Review **Tier 1 Observed Benchmark Data** (₹78,64,287 fraud exposure, 233 ring transactions, 72 ring accounts).
-   - Adjust **Tier 2 Operational Assumptions** (Interception Rate 85%, Cost per Case ₹350, Friction per FP ₹1,200).
-   - Observe **Tier 3 Derived Economic Estimates**: **₹66,03,094 Net Value Saved** with an **80.98x ROI Multiple**.
-6. **Compare Low-Risk Control Case (`TXN_00000646`):**
-   - Click `TXN_00000646` in the Case Selector bar.
-   - Observe immediate low risk classification (`0.10%`), singleton graph component, and absence of co-usage alerts.
+### 15-Step End-to-End Judge Demonstration Script
+
+1. **Select Suspicious Transaction (`TXN_00000203`):**
+   - URL: `http://localhost:3000/cases/TXN_00000203` (or click `TXN_00000203` in the Case Quick Selector).
+   - Observe **Case Header**: Target Account `ACC_000213`, Amount `₹99,500.00`, Channel `IMPS`, Status `SUCCESS`.
+2. **Review High Risk Scoring:**
+   - Model A Baseline: `99.94%`, Model B Network Graph: `99.92%`. Calibrated Risk: `0.9980`, Risk Band: **`HIGH`**.
+3. **Inspect Connected Entity Network Topology:**
+   - Explore the central node `TXN_00000203` connected to `ACC_000213`, shared hardware `DEV_000045`, and adjacent syndicate accounts.
+4. **Examine Deterministic Evidence Engine:**
+   - Review 6 verified evidence records: `EVD_RAPID_TXN_...` (burst velocity), `EVD_MULTIHOP_...` (indirect links), `EVD_DEV_...` (shared hardware).
+5. **Run Bounded Investigation (Stage 15 Agent):**
+   - Scroll to **Investigation Agent Panel**. Review candidate read-only tools and simulated tool budgets (₹150 max budget).
+   - Click **"Run Bounded Investigation"** to observe dynamic tool execution ranked by Expected Information Gain.
+6. **Observe Uncertainty Reduction Trace:**
+   - Watch initial investigative uncertainty ($u_0 = 0.1986$) decrease monotonically with each tool invocation to final state ($u_t = 0.1002$).
+7. **Verify Explicit Stopping Policy:**
+   - Observe the stopping badge: **`Sufficient Evidence Gathered`** (`SUFFICIENT_EVIDENCE`), proving the agent terminates deterministically without runaway tool calls.
+8. **Inspect Case Prioritization & Next-Best-Action:**
+   - Triage action classified as **`HOLD_FOR_REVIEW`** with prioritized ranking score based on:
+     $$\text{Priority} = 0.35 \times \text{Risk} + 0.30 \times \text{Exposure} + 0.20 \times \text{Uncertainty} + 0.15 \times \text{NetworkLeverage}$$
+9. **Review Modeled Business Economics:**
+   - On the Case page or Analytics Dashboard (`/analytics`), view the verified Track 02 formula:
+     $$\text{Modeled Net Value Saved} = ₹11,70,872.45 - ₹0.00 - ₹9,100.00 = \mathbf{₹11,61,772.45}$$
+10. **Generate Evidence-Grounded AI Explanation (Stage 16):**
+    - Scroll to **Evidence-Grounded AI Forensic Explanation**.
+    - Click **"Generate AI Forensic Explanation"** to synthesize a grounded case brief via `POST /api/investigation/explanation/generate`.
+11. **Verify Structured Claim Grounding:**
+    - Expand the claim matrix: every **`FACT`** claim cites exact verified evidence IDs (`EVD_DEV_...`, `EVD_RAPID_...`).
+    - Grounding ratio is **1.00 (100% grounded)** with zero ungrounded factual hallucinations.
+12. **Review 7-Layer Prompt-Injection Defense:**
+    - Observe that dynamic inputs are enclosed in `<UNTRUSTED_DATA>` boundaries, pre-execution regex scanning neutralized adversarial payloads, and Pydantic schemas enforce output structure.
+13. **Inspect Cryptographic Audit Hash Chain:**
+    - Navigate to `/audit` (or inspect Audit ID on the Case page).
+    - Review the verified SHA-256 link: $\text{record\_hash} = \text{SHA256}(\text{prev\_hash} + \text{canonical\_payload})$.
+    - Notice authoritative limitation: *"Detects record tampering, interior deletion and reordering; external checkpointing is required to detect final-tail deletion/truncation."*
+14. **Enforce Human Governance & Defense-Only Boundary:**
+    - Observe the mandatory **`Human Approval Required`** banner and non-enforcement warning. Zero automated account freezing or fund movement is permitted.
+15. **Demonstrate Low-Risk Controls (`TXN_00000646` & `TXN_00000500`):**
+    - Click `TXN_00000646` in the Case Selector bar: Netbanking transfer, `0.10%` risk, singleton graph, zero co-usage.
+    - Click `TXN_00000500`: UPI peer payment, `0.08%` risk, standard profile.
+    - Confirms RingGuard AI discriminates legitimate low-risk commerce from fraud rings.
 
 ---
 
@@ -243,6 +276,79 @@ Thresholds are optimized across discrete policy scenarios strictly on `Val-Thres
 
 ---
 
+## Stage 15: Investigation Efficiency + Business Impact
+
+Stage 15 introduces a **bounded uncertainty-driven investigation agent** and a **deterministic case prioritization engine** that optimizes the sequence and depth of read-only investigation queries while strictly preventing runaway execution.
+
+### 1. Investigative Uncertainty Heuristic & Dynamic State
+- **Deterministic Uncertainty State ($u_t \in [0.05, 0.95]$):** Initialized from calibrated risk proximity to $0.50$ (maximum decision ambiguity) modulated by graph confidence:
+  $$u_0 = 1.0 - 2 \cdot |p_{\text{calibrated}} - 0.50| + \Delta_{\text{graph}}$$
+- **Dynamic Evidence Updates:**
+  - Supporting evidence: decreases uncertainty proportional to signal severity.
+  - Conflicting/contradictory evidence: increases uncertainty to trigger deeper human inspection.
+  - Empty/zero-hit queries: leave uncertainty unchanged and penalize tool redundancy.
+- **Expected Information Gain (EIG):** Tools are selected greedily based on expected utility:
+  $$\text{EIG}(T) = \frac{\text{Relevance} \times \text{RemainingUncertainty}}{1 + \text{Cost}(T)} \times \text{RedundancyPenalty}$$
+
+### 2. Guardrails & Explicit Stopping Conditions
+The investigation stops deterministically upon the first satisfied condition:
+1. `SUFFICIENT_EVIDENCE`: At least 2 verified high-severity evidence items collected.
+2. `UNCERTAINTY_LOW_ENOUGH`: $u_t \le 0.15$ (decision ambiguity resolved).
+3. `INVESTIGATION_COST_TOO_HIGH`: Accumulated tool queries reach budget limit (₹150 max).
+4. `MAX_STEPS_REACHED`: Maximum bounded iterations ($N=5$) reached.
+5. `CONFLICTING_EVIDENCE_ESCALATION`: Opposing high-severity evidence detected, immediately escalating to human review.
+
+### 3. Sliced Investigation Efficiency Benchmark ($N=300$)
+
+| Evaluation Slice | Sample Count | Avg Steps | Initial Uncertainty | Final Uncertainty | Avg Uncertainty Reduction | Avg Tool Cost | Top Stopping Reason |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Overall (Held-Out Test)** | `300` | `0.72` | `0.1022` | `0.0694` | `0.0328` | ₹28.57 | `UNCERTAINTY_LOW_ENOUGH` (197) |
+| **Ring Fraud Cases** | `26` | `2.12` | `0.1986` | `0.1002` | `0.0984` | ₹82.69 | `SUFFICIENT_EVIDENCE` (25) |
+| **Hard-Negative Cases** | `30` | `0.47` | `0.0854` | `0.0638` | `0.0216` | ₹18.00 | `UNCERTAINTY_LOW_ENOUGH` (24) |
+| **Cold-Start Cases** | `61` | `0.54` | `0.1142` | `0.0811` | `0.0331` | ₹22.13 | `UNCERTAINTY_LOW_ENOUGH` (48) |
+
+> [!NOTE]
+> **Workflow Compression Disclosure:** Figures describe structural workflow compression and simulated query optimization under bounded stopping policies, rather than a measured human analyst clock-time experiment.
+
+---
+
+## Stage 16: LLM Explanation + Audit + Security
+
+Stage 16 delivers **evidence-grounded AI forensic case explanations** with enterprise-grade defensive guardrails, cryptographic provenance, and strict retrieval-only semantics.
+
+### 1. Provider-Agnostic Architecture & Zero-Network Fallback
+- **`BaseLLMProvider`**: Pluggable abstraction supporting `GeminiLLMProvider` (when configured with API credentials) and `DeterministicFallbackProvider`.
+- **Deterministic Safe Fallback**: Zero-network offline fallback guarantees 100% operational availability on provider unavailability, timeout, malformed output, or prompt injection.
+
+### 2. True Claim-Level Grounding
+- Explanations decompose into explicit typed claim objects (`FACT`, `INTERPRETATION`, `LIMITATION`):
+  - Every **`FACT`** claim **must** cite at least one verified evidence ID from the Stage 9 `EvidenceEngine`.
+  - Hallucinated or unsupported fact claims are strictly rejected and replaced with deterministic verified text.
+- **Formal Grounding Ratio:** Enforces $\text{Grounding Ratio} = 1.00$ on all accepted outputs.
+
+### 3. Layered Prompt-Injection Defense
+Security is enforced through **7 defensive layers** rather than regex scanning alone:
+1. **Untrusted-Data Boundary**: All dynamic transaction and evidence text is encapsulated inside `<UNTRUSTED_DATA>...</UNTRUSTED_DATA>` blocks.
+2. **System Instructions**: Strict immutable system prompts framing the model's forensic task.
+3. **Input Scanning**: Pre-execution regex detection of known injection phrases, role spoofing, and delimiter escapes.
+4. **Structured Schemas**: Enforced Pydantic response models preventing arbitrary output structures.
+5. **Claim Grounding**: Mandatory verification of factual claims against database evidence IDs.
+6. **Output Sanitization**: Neutralization of XSS, HTML tags, scripts, and accidental secret leakage.
+7. **Deterministic Fallback**: Automatic routing to verified deterministic offline generators upon any detected injection or anomaly.
+
+### 4. Cryptographic Append-Oriented Audit Trail
+- Stored chronologically in `ml/data/audit/explanation_audit_log.jsonl`.
+- Cryptographic hash formula:
+  $$\text{record\_hash} = \text{SHA256}(\text{previous\_record\_hash} + \text{canonical\_payload\_json})$$
+- **Authoritative Security Limitation Notice:**
+  > *"Detects record tampering, interior deletion and reordering; external checkpointing is required to detect final-tail deletion/truncation."*
+
+### 5. Strict Retrieval-Only GET Semantics
+- **`GET /api/investigation/explanation/{id}`**: Strictly read-only from saved explanation storage. Does **not** invoke Gemini, does not generate explanations, does not append audit records, and does not mutate storage. Returns HTTP 404 if not previously generated.
+- **`POST /api/investigation/explanation/generate`**: The single, explicit entry point that generates explanations, verifies grounding, and appends to the audit log.
+
+---
+
 ## Business Value & Economics Formulation
 
 $$\text{Net Value Saved} = \text{Estimated Fraud Loss Avoided} - \text{Customer Friction Cost} - \text{Investigation Cost}$$
@@ -314,7 +420,7 @@ npm run start
 
 #### 3. Automated Test Execution & Stage 14 Verification
 ```bash
-# Run all backend unit & regression tests (146 tests):
+# Run all backend unit & regression tests (197 tests):
 backend\venv\Scripts\pytest backend\tests\ -v
 
 # Run Stage 14 Cold-Start, Calibration & Threshold Evaluation Pipeline:

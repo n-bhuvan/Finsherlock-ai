@@ -142,13 +142,13 @@
     "model": "ringguard-deterministic-rules-v1",
     "prompt_version": "v1.0.0-grounded-forensic",
     "temperature": 0.1,
-    "latency_ms": 35.51,
+    "latency_ms": 38.27,
     "is_fallback": true,
     "fallback_reason": "Deterministic fallback requested by client.",
     "prompt_sha256": "6e962b833657b0beea6d154f59f99865084f22b4ab83625e0d9435b03478ba1e",
     "response_sha256": "70708a938ff3fa9a6638b643db667fd18eaf0a99ad63e9c1e4a59b84f64626ed"
   },
-  "audit_id": "AUD_EXP_F61A4205B5B1",
+  "audit_id": "AUD_EXP_08950B3DA0C0",
   "human_approval_required": true,
   "disclaimer": "Factual forensic explanation generated for decision support. Does not constitute an autonomous decision or financial action."
 }

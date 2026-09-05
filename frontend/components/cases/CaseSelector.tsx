@@ -50,7 +50,7 @@ export function CaseSelector({ currentTransactionId }: CaseSelectorProps) {
 
       {CASES.map((c) => {
         const isSelected = c.id === currentTransactionId;
-        const isRisk = c.badge === "HIGH RISK";
+        const isRisk = c.color === "rose";
 
         return (
           <button

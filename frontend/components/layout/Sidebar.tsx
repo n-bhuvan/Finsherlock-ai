@@ -22,7 +22,7 @@ const NAV_ITEMS = [
   },
   {
     name: "Cases",
-    href: "/cases/TXN_00000646",
+    href: "/cases/TXN_00000203",
     icon: FolderGit2,
     badge: "Hero",
   },
@@ -138,9 +138,12 @@ export function Sidebar() {
           </div>
         </div>
 
-        <div className="text-[10px] text-slate-400 text-center flex items-center justify-center gap-1">
-          <Cpu className="w-3 h-3 text-cyan-400" />
-          <span>Track 02 — AI Risk Manager</span>
+        <div className="text-[10px] text-slate-400 text-center flex flex-col items-center justify-center gap-0.5">
+          <div className="flex items-center gap-1 text-slate-400">
+            <Cpu className="w-3 h-3 text-cyan-400" />
+            <span>Track 02 — AI Risk Manager</span>
+          </div>
+          <span className="text-[9px] text-amber-400/80 font-mono">Synthetic Data Prototype</span>
         </div>
       </div>
     </aside>
