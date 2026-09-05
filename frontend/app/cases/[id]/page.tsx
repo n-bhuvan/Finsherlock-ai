@@ -27,6 +27,7 @@ import { InvestigationAgentPanel } from "@/components/cases/InvestigationAgentPa
 import { InvestigatorDossierPanel } from "@/components/cases/InvestigatorDossierPanel";
 import { AIExplanationPanel } from "@/components/cases/AIExplanationPanel";
 import { SystemicRiskPanel } from "@/components/cases/SystemicRiskPanel";
+import { PortfolioPriorityCard } from "@/components/cases/PortfolioPriorityCard";
 import { CaseSelector } from "@/components/cases/CaseSelector";
 import { HumanDecision } from "@/components/cases/HumanDecision";
 import { EvidenceList } from "@/components/evidence/EvidenceList";
@@ -334,6 +335,9 @@ export default function CaseInvestigationPage({ params }: PageProps) {
 
       {/* 4.5. Systemic Risk Anomaly Detection (V2 Stage 15) */}
       <SystemicRiskPanel transactionId={transactionId} />
+
+      {/* 4.6. Portfolio Risk Prioritization & Expected Value (V2 Stage 16) */}
+      <PortfolioPriorityCard transactionId={transactionId} />
 
       {/* 5. Core Investigation Workspace: Graph & Tools | Evidence & Timeline */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
