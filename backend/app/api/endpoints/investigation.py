@@ -17,9 +17,12 @@ from app.investigation.schemas import (
     RunInvestigationRequest,
     CasePrioritizationResponse,
     InvestigationEfficiencyResponse,
+    AdaptiveInvestigationResponse,
+    AdaptiveBenchmarkResponse,
 )
 from app.investigation.service import InvestigationService
 from app.investigation.agent import InvestigationAgent
+from app.investigation.adaptive import AdaptiveInvestigationEngine
 from app.investigation.prioritization import CasePrioritizationService
 from app.investigation.efficiency import InvestigationEfficiencyService
 from app.services.dossier_service import get_dossier_service, DossierService
@@ -396,5 +399,71 @@ def api_get_investigation_state(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to retrieve investigation state: {str(e)}",
         )
+
+
+# ==============================================================================
+# STAGE 17: ADAPTIVE UNCERTAINTY-DRIVEN INVESTIGATION ENDPOINTS
+# ==============================================================================
+
+@router.get(
+    "/transaction/{transaction_id}/adaptive",
+    response_model=AdaptiveInvestigationResponse,
+    summary="Run Stage 17 Adaptive Uncertainty Investigation",
+    description="Executes deterministic uncertainty-driven investigation tracking EIG, tool cost, and explicit stopping criteria.",
+)
+def api_get_adaptive_investigation(
+    transaction_id: str = Path(..., min_length=3, max_length=64, description="Transaction ID"),
+    max_steps: int = Query(5, ge=1, le=9, description="Maximum investigation steps"),
+    tool_budget: float = Query(150.0, ge=15.0, le=500.0, description="Maximum tool budget in INR"),
+    db: Session = Depends(get_db),
+) -> AdaptiveInvestigationResponse:
+    clean_id = transaction_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Transaction ID cannot be empty or whitespace.")
+
+    try:
+        engine = AdaptiveInvestigationEngine(db)
+        return engine.run_investigation(clean_id, max_steps=max_steps, tool_budget=tool_budget)
+    except TransactionNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Transaction '{clean_id}' not found in database.",
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Adaptive investigation failed: {str(e)}",
+        )
+
+
+@router.get(
+    "/adaptive/benchmark",
+    response_model=AdaptiveBenchmarkResponse,
+    summary="Get Stage 17 Adaptive Investigation Benchmark",
+    description="Returns held-out test evaluation metrics across slices comparing V1 historical and Stage 17 performance.",
+)
+def api_get_adaptive_benchmark() -> Dict[str, Any]:
+    import json
+    from pathlib import Path
+    bench_file = Path(__file__).resolve().parents[3] / "ml" / "data" / "evaluation" / "stage17_investigation_benchmark.json"
+    if not bench_file.exists():
+        return {
+            "status": "Unavailable",
+            "metadata": {},
+            "slices": {},
+            "comparison_with_v1": {},
+            "methodology_notes": "Benchmark evaluation not yet executed. Run scripts/run_stage17_evaluation.py.",
+            "disclaimer": "Stage 17 benchmark evaluated on held-out test partition.",
+        }
+    try:
+        with open(bench_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to load Stage 17 benchmark: {str(e)}",
+        )
+
 
 

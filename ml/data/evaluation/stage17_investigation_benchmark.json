@@ -1,0 +1,146 @@
+{
+  "status": "Available",
+  "metadata": {
+    "stage": 17,
+    "title": "Stage 17 Adaptive Uncertainty-Driven Investigation Benchmark",
+    "evaluation_date": "2026-09-05T20:14:48+0530",
+    "sample_size": 300,
+    "max_tool_budget_inr": 150.0,
+    "max_steps": 5
+  },
+  "slices": {
+    "overall": {
+      "slice_name": "Overall (Held-Out Test)",
+      "sample_count": 300,
+      "average_steps": 0.78,
+      "median_steps": 0.0,
+      "average_initial_uncertainty": 0.1022,
+      "average_final_uncertainty": 0.0676,
+      "average_uncertainty_reduction": 0.0346,
+      "relative_uncertainty_reduction": 0.3386,
+      "average_tool_cost": 29.87,
+      "evidence_sufficiency_rate": 0.3233,
+      "budget_compliance_rate": 1.0,
+      "stopping_reason_distribution": {
+        "SUFFICIENT_EVIDENCE": 97,
+        "UNCERTAINTY_LOW_ENOUGH": 197,
+        "MAX_INVESTIGATION_STEPS": 6
+      }
+    },
+    "ring_fraud": {
+      "slice_name": "Ring Fraud Cases",
+      "sample_count": 26,
+      "average_steps": 2.12,
+      "median_steps": 2.0,
+      "average_initial_uncertainty": 0.1986,
+      "average_final_uncertainty": 0.0922,
+      "average_uncertainty_reduction": 0.1064,
+      "relative_uncertainty_reduction": 0.5358,
+      "average_tool_cost": 82.69,
+      "evidence_sufficiency_rate": 0.9615,
+      "budget_compliance_rate": 1.0,
+      "stopping_reason_distribution": {
+        "SUFFICIENT_EVIDENCE": 25,
+        "UNCERTAINTY_LOW_ENOUGH": 1
+      }
+    },
+    "hard_negatives": {
+      "slice_name": "Hard Negatives (High Exposure)",
+      "sample_count": 30,
+      "average_steps": 0.57,
+      "median_steps": 0.0,
+      "average_initial_uncertainty": 0.0854,
+      "average_final_uncertainty": 0.0633,
+      "average_uncertainty_reduction": 0.0221,
+      "relative_uncertainty_reduction": 0.2588,
+      "average_tool_cost": 20.83,
+      "evidence_sufficiency_rate": 0.2,
+      "budget_compliance_rate": 1.0,
+      "stopping_reason_distribution": {
+        "UNCERTAINTY_LOW_ENOUGH": 23,
+        "SUFFICIENT_EVIDENCE": 6,
+        "MAX_INVESTIGATION_STEPS": 1
+      }
+    },
+    "cold_start": {
+      "slice_name": "Cold Start (Limited Graph)",
+      "sample_count": 103,
+      "average_steps": 2.28,
+      "median_steps": 2.0,
+      "average_initial_uncertainty": 0.202,
+      "average_final_uncertainty": 0.1012,
+      "average_uncertainty_reduction": 0.1008,
+      "relative_uncertainty_reduction": 0.499,
+      "average_tool_cost": 86.99,
+      "evidence_sufficiency_rate": 0.9417,
+      "budget_compliance_rate": 1.0,
+      "stopping_reason_distribution": {
+        "SUFFICIENT_EVIDENCE": 97,
+        "MAX_INVESTIGATION_STEPS": 6
+      }
+    },
+    "mature": {
+      "slice_name": "Mature (Verified Graph)",
+      "sample_count": 197,
+      "average_steps": 0.0,
+      "median_steps": 0.0,
+      "average_initial_uncertainty": 0.05,
+      "average_final_uncertainty": 0.05,
+      "average_uncertainty_reduction": 0.0,
+      "relative_uncertainty_reduction": 0.0,
+      "average_tool_cost": 0.0,
+      "evidence_sufficiency_rate": 0.0,
+      "budget_compliance_rate": 1.0,
+      "stopping_reason_distribution": {
+        "UNCERTAINTY_LOW_ENOUGH": 197
+      }
+    },
+    "ambiguous": {
+      "slice_name": "Ambiguous Cases (0.30 <= p <= 0.70)",
+      "sample_count": 0,
+      "average_steps": 0.0,
+      "median_steps": 0.0,
+      "average_initial_uncertainty": 0.05,
+      "average_final_uncertainty": 0.05,
+      "average_uncertainty_reduction": 0.0,
+      "relative_uncertainty_reduction": 0.0,
+      "average_tool_cost": 0.0,
+      "evidence_sufficiency_rate": 0.0,
+      "budget_compliance_rate": 1.0,
+      "stopping_reason_distribution": {}
+    }
+  },
+  "comparison_with_v1": {
+    "v1_overall": {
+      "average_steps": 0.72,
+      "average_tool_cost": 28.57,
+      "average_initial_uncertainty": 0.1022,
+      "average_final_uncertainty": 0.0694,
+      "average_uncertainty_reduction": 0.0328
+    },
+    "v1_ring_fraud": {
+      "average_steps": 2.12,
+      "average_tool_cost": 82.69,
+      "average_initial_uncertainty": 0.1986,
+      "average_final_uncertainty": 0.1002,
+      "average_uncertainty_reduction": 0.0984
+    },
+    "stage17_overall": {
+      "average_steps": 0.78,
+      "average_tool_cost": 29.87,
+      "average_initial_uncertainty": 0.1022,
+      "average_final_uncertainty": 0.0676,
+      "average_uncertainty_reduction": 0.0346
+    },
+    "stage17_ring_fraud": {
+      "average_steps": 2.12,
+      "average_tool_cost": 82.69,
+      "average_initial_uncertainty": 0.1986,
+      "average_final_uncertainty": 0.0922,
+      "average_uncertainty_reduction": 0.1064
+    },
+    "methodology_compatibility": "Identical held-out test partition (N=300), identical tool costs and budget (max INR 150.0), identical initial uncertainty heuristic."
+  },
+  "methodology_notes": "Evaluated across all 300 held-out test transactions from the chronological split. Slice memberships derived dynamically from metadata. Strict point-in-time temporal boundaries applied to all tool queries.",
+  "disclaimer": "Simulated benchmark evaluation on synthetic transactions. Read-only defense-only decision support."
+}

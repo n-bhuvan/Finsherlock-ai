@@ -301,4 +301,60 @@ export interface RunInvestigationRequest {
   interception_rate?: number;
 }
 
+// ==============================================================================
+// STAGE 17: ADAPTIVE UNCERTAINTY-DRIVEN INVESTIGATION TYPES
+// ==============================================================================
+
+export type EvidenceQuality = "STRONG" | "WEAK_OR_EMPTY" | "CONFLICTING";
+
+export interface AdaptiveInvestigationStep {
+  step_number: number;
+  tool_name: string;
+  target_id: string;
+  tool_cost: number;
+  estimated_information_gain: number;
+  actual_information_yield: number;
+  uncertainty_before: number;
+  uncertainty_after: number;
+  uncertainty_reduction: number;
+  evidence_count: number;
+  evidence_ids: string[];
+  evidence_quality: EvidenceQuality;
+  step_rationale: string;
+  timestamp: string;
+}
+
+export interface AdaptiveInvestigationResponse {
+  transaction_id: string;
+  account_id: string;
+  timestamp: string;
+  exposure_amount: number;
+  calibrated_risk_score: number;
+  model_b_raw_probability: number;
+  model_a_raw_probability: number;
+  graph_confidence: string;
+  initial_uncertainty: number;
+  final_uncertainty: number;
+  uncertainty_reduction: number;
+  relative_uncertainty_reduction: number;
+  step_count: number;
+  max_steps: number;
+  total_tool_cost: number;
+  max_tool_budget: number;
+  selected_tools: string[];
+  candidate_tools_remaining: string[];
+  steps: AdaptiveInvestigationStep[];
+  evidence_ids: string[];
+  stop_decision: string;
+  stopping_reason: string;
+  stopping_rationale: string;
+  stage15_systemic_anomaly_score?: number | null;
+  stage16_priority_score?: number | null;
+  stage16_expected_value?: number | null;
+  stage16_priority_rank?: number | null;
+  human_approval_required: boolean;
+  disclaimer: string;
+}
+
+
 

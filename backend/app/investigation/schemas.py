@@ -386,3 +386,107 @@ class RunInvestigationRequest(BaseModel):
     interception_rate: Optional[float] = Field(0.85, ge=0.50, le=1.00, description="Assumed interception rate (50%-100%)")
 
 
+# ==============================================================================
+# STAGE 17: UNCERTAINTY-DRIVEN INVESTIGATION DATA CONTRACTS
+# ==============================================================================
+
+class EvidenceQualityType(str, Enum):
+    """Classification of evidence quality obtained from tool execution."""
+    STRONG = "STRONG"
+    WEAK_OR_EMPTY = "WEAK_OR_EMPTY"
+    CONFLICTING = "CONFLICTING"
+
+
+class AdaptiveInvestigationStep(BaseModel):
+    """Step record within an uncertainty-driven investigation trace."""
+    step_number: int = Field(..., ge=1, le=9, description="1-indexed sequence number of the investigation step.")
+    tool_name: str = Field(..., description="Name of the selected controlled investigation tool.")
+    target_id: str = Field(..., description="Entity ID queried by the tool (account or transaction).")
+    tool_cost: float = Field(..., ge=0.0, description="Simulated tool execution cost in INR.")
+    estimated_information_gain: float = Field(..., ge=0.0, le=1.0, description="Pre-execution deterministic information-gain estimate EIG.")
+    actual_information_yield: float = Field(..., ge=0.0, le=1.0, description="Post-execution measured information yield.")
+    uncertainty_before: float = Field(..., ge=0.05, le=0.95, description="Investigative uncertainty prior to step execution.")
+    uncertainty_after: float = Field(..., ge=0.05, le=0.95, description="Investigative uncertainty updated after step execution.")
+    uncertainty_reduction: float = Field(..., description="Absolute change in uncertainty (U_before - U_after).")
+    evidence_count: int = Field(..., ge=0, description="Count of verified records returned.")
+    evidence_ids: List[str] = Field(default_factory=list, description="Stage 9 genuine evidence IDs linked to discovered records.")
+    evidence_quality: EvidenceQualityType = Field(..., description="Evidence classification: STRONG, WEAK_OR_EMPTY, CONFLICTING.")
+    step_rationale: str = Field(..., description="Concise, non-technical factual explanation of step selection and finding.")
+    timestamp: str = Field(..., description="ISO 8601 execution timestamp.")
+
+
+class AdaptiveInvestigationResponse(BaseModel):
+    """Response envelope for Stage 17 uncertainty-driven investigation session."""
+    transaction_id: str = Field(..., description="Unique transaction ID under investigation.")
+    account_id: str = Field(..., description="Transacting source account ID.")
+    timestamp: str = Field(..., description="Target transaction timestamp (ISO 8601). Point-in-time boundary.")
+    exposure_amount: float = Field(..., ge=0.0, description="Transaction monetary exposure in INR.")
+    calibrated_risk_score: float = Field(..., ge=0.0, le=1.0, description="Model B post-hoc Platt-calibrated risk probability.")
+    model_b_raw_probability: float = Field(..., ge=0.0, le=1.0, description="Model B raw (uncalibrated) risk probability.")
+    model_a_raw_probability: float = Field(..., ge=0.0, le=1.0, description="Model A baseline raw risk probability.")
+    graph_confidence: str = Field(..., description="Stage 14 graph confidence: VERIFIED, LIMITED, UNAVAILABLE.")
+
+    # Uncertainty Tracking
+    initial_uncertainty: float = Field(..., ge=0.05, le=0.95, description="Initial investigative uncertainty U_0.")
+    final_uncertainty: float = Field(..., ge=0.05, le=0.95, description="Final investigative uncertainty U_k after stopping.")
+    uncertainty_reduction: float = Field(..., description="Absolute uncertainty reduction (U_0 - U_k).")
+    relative_uncertainty_reduction: float = Field(..., description="Relative reduction = (U_0 - U_k) / U_0.")
+
+    # Step & Budget Tracking
+    step_count: int = Field(..., ge=0, le=9, description="Total investigation steps executed.")
+    max_steps: int = Field(default=5, description="Maximum allowable steps (5).")
+    total_tool_cost: float = Field(..., ge=0.0, le=150.0, description="Sum of tool execution costs in INR (max ₹150.00).")
+    max_tool_budget: float = Field(default=150.0, description="Maximum allowed tool budget in INR (₹150.00).")
+    selected_tools: List[str] = Field(default_factory=list, description="Ordered sequence of executed tool names.")
+    candidate_tools_remaining: List[str] = Field(default_factory=list, description="Eligible tools remaining unexecuted.")
+
+    # Trace & Evidence
+    steps: List[AdaptiveInvestigationStep] = Field(default_factory=list, description="Chronological step execution trace.")
+    evidence_ids: List[str] = Field(default_factory=list, description="All unique evidence IDs discovered across all steps.")
+
+    # Stopping Decision
+    stop_decision: str = Field(..., description="Investigation termination decision: STOP or CONTINUE.")
+    stopping_reason: str = Field(..., description="Formal stopping condition trigger.")
+    stopping_rationale: str = Field(..., description="Explainable reason why the investigation stopped.")
+
+    # Cross-Stage Integration (Reusing Stages 15 & 16)
+    stage15_systemic_anomaly_score: Optional[float] = Field(None, ge=0.0, le=1.0, description="Stage 15 multi-scope systemic risk anomaly score.")
+    stage16_priority_score: Optional[float] = Field(None, ge=0.0, le=1.0, description="Stage 16 deterministic composite portfolio priority score.")
+    stage16_expected_value: Optional[float] = Field(None, description="Stage 16 decision-theoretic expected value in INR.")
+    stage16_priority_rank: Optional[int] = Field(None, ge=1, description="Stage 16 portfolio priority rank.")
+
+    # Governance & Safety
+    human_approval_required: bool = Field(default=True, description="Strict regulatory requirement: human review mandatory before any action.")
+    disclaimer: str = Field(
+        default="INVESTIGATION DECISION SUPPORT: Read-only investigative uncertainty engine. Does not take autonomous financial or account enforcement actions.",
+        description="Regulatory safety disclaimer."
+    )
+
+
+class AdaptiveBenchmarkSlice(BaseModel):
+    """Efficiency and uncertainty reduction metrics for an evaluation slice in Stage 17."""
+    slice_name: str
+    sample_count: int
+    average_steps: float
+    median_steps: float
+    average_initial_uncertainty: float = Field(..., ge=0.05, le=0.95)
+    average_final_uncertainty: float = Field(..., ge=0.05, le=0.95)
+    average_uncertainty_reduction: float
+    relative_uncertainty_reduction: float
+    average_tool_cost: float
+    evidence_sufficiency_rate: float
+    budget_compliance_rate: float
+    stopping_reason_distribution: Dict[str, int]
+
+
+class AdaptiveBenchmarkResponse(BaseModel):
+    """Response envelope for Stage 17 uncertainty-driven investigation benchmark."""
+    status: str
+    metadata: Dict[str, Any]
+    slices: Dict[str, AdaptiveBenchmarkSlice]
+    comparison_with_v1: Dict[str, Any]
+    methodology_notes: str
+    disclaimer: str
+
+
+
