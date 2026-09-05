@@ -1,0 +1,125 @@
+{
+  "status": "Available",
+  "metadata": {
+    "stage": 15,
+    "title": "Investigation Efficiency + Business Impact Benchmark",
+    "evaluation_date": "2026-09-05T16:15:03.511474",
+    "sample_size": 300,
+    "max_tool_budget_inr": 150.0,
+    "human_review_benchmark_inr": 350.0,
+    "customer_friction_cost_inr": 1200.0,
+    "default_interception_rate": 0.85
+  },
+  "slices": {
+    "overall": {
+      "slice_name": "Overall (Held-Out Test)",
+      "sample_count": 300,
+      "average_steps": 0.72,
+      "median_steps": 0.0,
+      "average_initial_uncertainty": 0.1022,
+      "average_final_uncertainty": 0.0694,
+      "average_uncertainty_reduction": 0.0328,
+      "average_tool_cost": 28.57,
+      "stopping_reason_distribution": {
+        "SUFFICIENT_EVIDENCE": 103,
+        "UNCERTAINTY_LOW_ENOUGH": 197
+      },
+      "action_distribution": {
+        "REQUEST_ADDITIONAL_VERIFICATION": 78,
+        "ALLOW": 196,
+        "HOLD_FOR_REVIEW": 22,
+        "ESCALATE_TO_ANALYST": 3,
+        "MONITOR": 1
+      }
+    },
+    "ring_fraud": {
+      "slice_name": "Ring Fraud Cases",
+      "sample_count": 26,
+      "average_steps": 2.12,
+      "median_steps": 2.0,
+      "average_initial_uncertainty": 0.1986,
+      "average_final_uncertainty": 0.1002,
+      "average_uncertainty_reduction": 0.0984,
+      "average_tool_cost": 82.69,
+      "stopping_reason_distribution": {
+        "SUFFICIENT_EVIDENCE": 25,
+        "UNCERTAINTY_LOW_ENOUGH": 1
+      },
+      "action_distribution": {
+        "HOLD_FOR_REVIEW": 22,
+        "ESCALATE_TO_ANALYST": 3,
+        "MONITOR": 1
+      }
+    },
+    "hard_negatives": {
+      "slice_name": "Hard Negatives (High Exposure)",
+      "sample_count": 30,
+      "average_steps": 0.47,
+      "median_steps": 0.0,
+      "average_initial_uncertainty": 0.0854,
+      "average_final_uncertainty": 0.0638,
+      "average_uncertainty_reduction": 0.0216,
+      "average_tool_cost": 18.67,
+      "stopping_reason_distribution": {
+        "UNCERTAINTY_LOW_ENOUGH": 23,
+        "SUFFICIENT_EVIDENCE": 7
+      },
+      "action_distribution": {
+        "ALLOW": 23,
+        "REQUEST_ADDITIONAL_VERIFICATION": 7
+      }
+    },
+    "cold_start": {
+      "slice_name": "Cold Start (Limited Graph)",
+      "sample_count": 103,
+      "average_steps": 2.11,
+      "median_steps": 2.0,
+      "average_initial_uncertainty": 0.202,
+      "average_final_uncertainty": 0.1065,
+      "average_uncertainty_reduction": 0.0955,
+      "average_tool_cost": 83.2,
+      "stopping_reason_distribution": {
+        "SUFFICIENT_EVIDENCE": 103
+      },
+      "action_distribution": {
+        "REQUEST_ADDITIONAL_VERIFICATION": 78,
+        "HOLD_FOR_REVIEW": 22,
+        "ESCALATE_TO_ANALYST": 3
+      }
+    },
+    "mature": {
+      "slice_name": "Mature (Verified Graph)",
+      "sample_count": 197,
+      "average_steps": 0.0,
+      "median_steps": 0.0,
+      "average_initial_uncertainty": 0.05,
+      "average_final_uncertainty": 0.05,
+      "average_uncertainty_reduction": 0.0,
+      "average_tool_cost": 0.0,
+      "stopping_reason_distribution": {
+        "UNCERTAINTY_LOW_ENOUGH": 197
+      },
+      "action_distribution": {
+        "ALLOW": 196,
+        "MONITOR": 1
+      }
+    }
+  },
+  "workflow_compression_summary": {
+    "total_cases_evaluated": 300,
+    "maximum_unbounded_tool_calls_possible": 2700,
+    "actual_bounded_tool_calls_executed": 217,
+    "workflow_compression_percentage": 91.96,
+    "tool_call_reduction_vs_hypothetical_all_9_tool_execution_pct": 91.96,
+    "average_steps_per_investigation": 0.72,
+    "average_simulated_tool_cost_inr": 28.57,
+    "human_analyst_cost_benchmark_inr": 350.0,
+    "simulated_investigation_cost_savings_percentage": 91.84,
+    "average_initial_uncertainty": 0.1022,
+    "average_final_uncertainty": 0.0694,
+    "average_uncertainty_reduction": 0.0328,
+    "relative_uncertainty_reduction_percentage": 32.09,
+    "cost_distinction_note": "Average simulated tool-query cost reflects operational automated query costs. The \u20b9350 human-review benchmark is a separate modeled cost category for human analyst review time."
+  },
+  "disclaimer": "Investigation efficiency metrics are derived from deterministic playback across verified evaluation slices."
+}

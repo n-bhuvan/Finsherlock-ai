@@ -4,7 +4,7 @@ Stage 10: Controlled Investigation Tools.
 Exposes bounded, deterministic, read-only investigation tools via REST APIs.
 """
 
-from typing import Optional
+from typing import Optional, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from sqlalchemy.orm import Session
 
@@ -13,8 +13,15 @@ from app.investigation.schemas import (
     ToolExecutionResult,
     ToolExecutionStatus,
     InvestigatorDossierResponse,
+    InvestigationStateResponse,
+    RunInvestigationRequest,
+    CasePrioritizationResponse,
+    InvestigationEfficiencyResponse,
 )
 from app.investigation.service import InvestigationService
+from app.investigation.agent import InvestigationAgent
+from app.investigation.prioritization import CasePrioritizationService
+from app.investigation.efficiency import InvestigationEfficiencyService
 from app.services.dossier_service import get_dossier_service, DossierService
 from app.services.feature_service import TransactionNotFoundError
 
@@ -288,4 +295,106 @@ def api_get_transaction_dossier(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Dossier generation failed: {str(e)}",
         )
+
+
+# ==============================================================================
+# STAGE 15: BOUNDED UNCERTAINTY INVESTIGATION AGENT & EFFICIENCY ENDPOINTS
+# ==============================================================================
+
+efficiency_service = InvestigationEfficiencyService()
+
+
+@router.post(
+    "/agent/run",
+    response_model=InvestigationStateResponse,
+    summary="Run Bounded Uncertainty Investigation",
+    description="Executes bounded deterministic investigation based on Expected Information Gain and explicit stopping criteria.",
+)
+def api_run_investigation(
+    req: RunInvestigationRequest,
+    db: Session = Depends(get_db),
+) -> InvestigationStateResponse:
+    clean_id = req.transaction_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Transaction ID cannot be empty or whitespace.")
+
+    try:
+        agent = InvestigationAgent(db)
+        return agent.run_investigation(
+            clean_id,
+            max_steps=req.max_steps or 5,
+            tool_budget=req.tool_budget or 150.0,
+            interception_rate=req.interception_rate or 0.85,
+        )
+    except TransactionNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Transaction '{clean_id}' not found in database.",
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Investigation execution failed: {str(e)}",
+        )
+
+
+@router.get(
+    "/agent/prioritization",
+    response_model=CasePrioritizationResponse,
+    summary="Get Prioritized Case Triage Queue",
+    description="Deterministic triage queue ordered by Calibrated Risk (35%), Exposure (30%), Uncertainty (20%), and Network Leverage (15%).",
+)
+def api_get_case_prioritization(
+    limit: int = Query(20, ge=1, le=100, description="Max cases to return"),
+    db: Session = Depends(get_db),
+) -> CasePrioritizationResponse:
+    try:
+        prio = CasePrioritizationService(db)
+        return prio.prioritize_cases(limit=limit)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Prioritization query failed: {str(e)}",
+        )
+
+
+@router.get(
+    "/agent/efficiency",
+    response_model=InvestigationEfficiencyResponse,
+    summary="Get Sliced Investigation Efficiency Metrics",
+    description="Returns verified offline benchmark metrics on step compression, tool costs, uncertainty reduction, and stopping reason distributions across evaluation slices.",
+)
+def api_get_investigation_efficiency() -> Dict[str, Any]:
+    metrics = efficiency_service.get_efficiency_metrics()
+    return metrics
+
+
+@router.get(
+    "/agent/{transaction_id}/state",
+    response_model=InvestigationStateResponse,
+    summary="Get Investigation State & Trace",
+    description="Retrieves cached investigation state or executes bounded investigation on the fly.",
+)
+def api_get_investigation_state(
+    transaction_id: str = Path(..., min_length=3, max_length=64, description="Transaction ID"),
+    db: Session = Depends(get_db),
+) -> InvestigationStateResponse:
+    clean_id = transaction_id.strip()
+    if not clean_id:
+        raise HTTPException(status_code=422, detail="Transaction ID cannot be empty or whitespace.")
+
+    try:
+        agent = InvestigationAgent(db)
+        return agent.get_investigation_state(clean_id)
+    except TransactionNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Transaction '{clean_id}' not found in database.",
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to retrieve investigation state: {str(e)}",
+        )
+
 

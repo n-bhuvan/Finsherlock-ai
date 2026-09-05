@@ -229,3 +229,160 @@ class InvestigatorDossierResponse(BaseModel):
         description="Regulatory boundary statement"
     )
 
+
+# ==============================================================================
+# STAGE 15: BOUNDED UNCERTAINTY INVESTIGATION AGENT SCHEMAS
+# ==============================================================================
+
+class StoppingReason(str, Enum):
+    """Explicit deterministic stopping reasons for bounded investigation."""
+    SUFFICIENT_EVIDENCE = "SUFFICIENT_EVIDENCE"
+    UNCERTAINTY_LOW_ENOUGH = "UNCERTAINTY_LOW_ENOUGH"
+    INFORMATION_GAIN_TOO_LOW = "INFORMATION_GAIN_TOO_LOW"
+    INVESTIGATION_COST_TOO_HIGH = "INVESTIGATION_COST_TOO_HIGH"
+    EVIDENCE_EXHAUSTED = "EVIDENCE_EXHAUSTED"
+    CONFLICTING_EVIDENCE_REQUIRES_HUMAN_REVIEW = "CONFLICTING_EVIDENCE_REQUIRES_HUMAN_REVIEW"
+    MAX_INVESTIGATION_STEPS = "MAX_INVESTIGATION_STEPS"
+    IN_PROGRESS = "IN_PROGRESS"
+
+
+class NextBestActionType(str, Enum):
+    """Categorical next-best-action recommendations (strictly advisory)."""
+    ALLOW = "ALLOW"
+    MONITOR = "MONITOR"
+    REQUEST_ADDITIONAL_VERIFICATION = "REQUEST_ADDITIONAL_VERIFICATION"
+    HOLD_FOR_REVIEW = "HOLD_FOR_REVIEW"
+    ESCALATE_TO_ANALYST = "ESCALATE_TO_ANALYST"
+
+
+class InvestigationTraceStep(BaseModel):
+    """Auditable record of a single real executed investigation tool step."""
+    step_number: int = Field(..., description="1-indexed sequence number of this investigation step")
+    tool_name: str = Field(..., description="Name of executed controlled tool")
+    target_id: str = Field(..., description="Entity or transaction ID evaluated")
+    simulated_cost: float = Field(..., description="Configured simulated operational query cost in INR")
+    expected_information_gain: float = Field(
+        ..., ge=0.0, le=1.0, description="Pre-execution expected information gain estimate"
+    )
+    selection_reason: str = Field(..., description="Deterministic rationale for choosing this tool")
+    uncertainty_before: float = Field(..., ge=0.05, le=0.95, description="Investigative uncertainty before step in [0.05, 0.95]")
+    uncertainty_after: float = Field(..., ge=0.05, le=0.95, description="Investigative uncertainty after step in [0.05, 0.95]")
+    uncertainty_reduction: float = Field(..., description="Net reduction in investigative uncertainty")
+    tool_status: str = Field(..., description="Status returned by tool (SUCCESS, EMPTY, LIMITED, etc.)")
+    evidence_count: int = Field(..., description="Number of verified factual records or evidence items extracted")
+    evidence_summary: str = Field(..., description="Concise factual description of discovered evidence")
+    timestamp: str = Field(..., description="ISO execution timestamp")
+
+
+class NextBestActionResponse(BaseModel):
+    """Advisory decision support recommendation for human risk investigator."""
+    recommended_action: NextBestActionType = Field(..., description="Recommended action type")
+    confidence_score: float = Field(..., ge=0.0, le=1.0, description="Recommendation confidence level")
+    evidence_sufficiency: str = Field(..., description="Categorical evidence sufficiency: HIGH, MODERATE, LOW")
+    expected_financial_impact: str = Field(..., description="Factual narrative of estimated economic risk/benefit")
+    reason: str = Field(..., description="Core operational justification for recommendation")
+    policy_relevant_factors: List[str] = Field(default_factory=list, description="Key criteria driving recommendation")
+    human_approval_required: bool = Field(
+        True, description="Strict safety flag: human approval is mandatory for any operational/financial action"
+    )
+
+
+class InvestigationStateResponse(BaseModel):
+    """Full state envelope of a bounded uncertainty investigation session."""
+    transaction_id: str = Field(..., description="Investigated transaction ID")
+    account_id: str = Field(..., description="Target account ID")
+    exposure_amount: float = Field(..., description="Transaction exposure amount in INR")
+    model_a_probability: float = Field(..., ge=0.0, le=1.0, description="Uncalibrated Model A baseline probability")
+    model_b_probability: float = Field(..., ge=0.0, le=1.0, description="Uncalibrated Model B graph probability")
+    calibrated_risk: float = Field(..., ge=0.0, le=1.0, description="Stage 14 Platt-calibrated probability")
+    graph_confidence: str = Field(..., description="Stage 14 graph confidence: UNAVAILABLE, LIMITED, VERIFIED")
+    initial_uncertainty: float = Field(
+        ..., ge=0.05, le=0.95, description="Prior investigative-state uncertainty before tool executions, bounded strictly in [0.05, 0.95]"
+    )
+    current_uncertainty: float = Field(
+        ..., ge=0.05, le=0.95, description="Current investigative-state uncertainty after completed steps, bounded strictly in [0.05, 0.95]"
+    )
+    total_uncertainty_reduction: float = Field(..., description="Cumulative reduction in uncertainty")
+    step_count: int = Field(..., description="Number of executed investigation steps")
+    max_steps: int = Field(5, description="Upper bound on investigation steps")
+    total_simulated_tool_cost: float = Field(..., description="Cumulative simulated tool cost in INR")
+    max_tool_budget: float = Field(150.0, description="Upper bound on automated tool budget in INR")
+    stopping_status: str = Field(..., description="'STOPPED' or 'IN_PROGRESS'")
+    stopping_reason: StoppingReason = Field(..., description="Explicit deterministic stopping reason")
+    stopping_rationale: str = Field(..., description="Plain-language explanation of stopping trigger")
+    priority_score: float = Field(..., ge=0.0, le=1.0, description="Deterministic queue prioritization score")
+    trace: List[InvestigationTraceStep] = Field(default_factory=list, description="Ordered real execution trace")
+    evidence_collected: List[Dict[str, Any]] = Field(default_factory=list, description="Factual evidence gathered")
+    tools_executed: List[str] = Field(default_factory=list, description="List of tools already executed")
+    candidate_tools_remaining: List[str] = Field(default_factory=list, description="Tools eligible for execution")
+    next_best_action: NextBestActionResponse = Field(..., description="Advisory recommendation with human approval flag")
+    modeled_economics: Dict[str, Any] = Field(default_factory=dict, description="Stage 12/14 compatible economic estimates")
+    disclaimer: str = Field(
+        "Bounded uncertainty investigation output. Factual analysis only. All next-best-action recommendations are advisory and strictly require human approval.",
+        description="Mandatory defense-only regulatory notice"
+    )
+
+
+class CasePriorityItem(BaseModel):
+    """Prioritized case item for triage queue."""
+    transaction_id: str
+    account_id: str
+    timestamp: str
+    amount: float
+    calibrated_risk: float
+    investigative_uncertainty: float = Field(..., ge=0.05, le=0.95, description="Initial investigative uncertainty in [0.05, 0.95]")
+    network_leverage: float
+    priority_score: float
+    triage_rank: int
+    recommended_action: str
+    priority_reason: str
+
+
+class CasePrioritizationResponse(BaseModel):
+    """Response envelope for case triage prioritization queue."""
+    total_pending_cases: int
+    cases: List[CasePriorityItem]
+    prioritization_formula: str = Field(
+        "Priority = 0.35 * Risk + 0.30 * min(Amount, 100000)/100000 + 0.20 * Uncertainty + 0.15 * min(1.0, g_connected_accounts_count/10.0)",
+        description="Deterministic formula used for case ranking"
+    )
+    disclaimer: str = Field(
+        "Triage prioritization scoring for investigator workflow optimization. Does not execute autonomous decisions.",
+        description="Defense-only disclaimer"
+    )
+
+
+class InvestigationEfficiencySlice(BaseModel):
+    """Efficiency and uncertainty reduction metrics for an evaluation slice."""
+    slice_name: str
+    sample_count: int
+    average_steps: float
+    median_steps: float
+    average_initial_uncertainty: float = Field(..., ge=0.05, le=0.95, description="Average initial uncertainty in [0.05, 0.95]")
+    average_final_uncertainty: float = Field(..., ge=0.05, le=0.95, description="Average final uncertainty in [0.05, 0.95]")
+    average_uncertainty_reduction: float
+    average_tool_cost: float
+    stopping_reason_distribution: Dict[str, int]
+    action_distribution: Dict[str, int]
+
+
+class InvestigationEfficiencyResponse(BaseModel):
+    """Response envelope for Stage 15 sliced investigation efficiency metrics."""
+    status: str
+    metadata: Dict[str, Any]
+    slices: Dict[str, InvestigationEfficiencySlice]
+    workflow_compression_summary: Dict[str, Any]
+    disclaimer: str = Field(
+        "Investigation efficiency metrics are derived from deterministic playback across verified evaluation slices.",
+        description="Disclaimer"
+    )
+
+
+class RunInvestigationRequest(BaseModel):
+    """Request payload to initiate bounded uncertainty investigation."""
+    transaction_id: str = Field(..., min_length=3, max_length=64, description="Transaction ID to investigate")
+    max_steps: Optional[int] = Field(5, ge=1, le=9, description="Maximum allowed investigation steps (1-9)")
+    tool_budget: Optional[float] = Field(150.0, ge=15.0, le=500.0, description="Tool budget in INR")
+    interception_rate: Optional[float] = Field(0.85, ge=0.50, le=1.00, description="Assumed interception rate (50%-100%)")
+
+

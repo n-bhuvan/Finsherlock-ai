@@ -23,6 +23,7 @@ import { SessionAuditEntry } from "@/types/audit";
 import { CaseHeader } from "@/components/cases/CaseHeader";
 import { RiskComparison } from "@/components/cases/RiskComparison";
 import { FeatureIsolationCard } from "@/components/cases/FeatureIsolationCard";
+import { InvestigationAgentPanel } from "@/components/cases/InvestigationAgentPanel";
 import { InvestigatorDossierPanel } from "@/components/cases/InvestigatorDossierPanel";
 import { CaseSelector } from "@/components/cases/CaseSelector";
 import { HumanDecision } from "@/components/cases/HumanDecision";
@@ -361,6 +362,9 @@ export default function CaseInvestigationPage({ params }: PageProps) {
           />
         </div>
       </div>
+
+      {/* 5.5. Bounded Uncertainty-Driven Investigation Agent (Stage 15) */}
+      <InvestigationAgentPanel transactionId={transactionId} />
 
       {/* 6. Synthesized Investigator Dossier (Deterministic Executive Brief) */}
       <InvestigatorDossierPanel transactionId={transactionId} />

@@ -8,6 +8,7 @@ import { BusinessEconomicsPanel } from "@/components/analytics/BusinessEconomics
 import { CalibrationPanel } from "@/components/analytics/CalibrationPanel";
 import { ThresholdPolicyPanel } from "@/components/analytics/ThresholdPolicyPanel";
 import { ColdStartPanel } from "@/components/analytics/ColdStartPanel";
+import { InvestigationEfficiencyPanel } from "@/components/analytics/InvestigationEfficiencyPanel";
 
 export default function AnalyticsPage() {
   return (
@@ -42,6 +43,9 @@ export default function AnalyticsPage() {
 
       {/* 7. Cold-Start Segmentation & Graph Confidence (Stage 14) */}
       <ColdStartPanel />
+
+      {/* 7.5. Investigation Efficiency & Business Impact (Stage 15) */}
+      <InvestigationEfficiencyPanel />
 
       {/* 8. Business Economics & ROI Modeling (Build Spec Section 21) */}
       <BusinessEconomicsPanel />
