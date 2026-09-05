@@ -1,0 +1,419 @@
+{
+  "metadata": {
+    "stage": 14,
+    "title": "Cold-Start Graph Confidence Segmentation & Performance Slices",
+    "unit_of_evaluation": "TRANSACTION",
+    "evaluation_rule": "Model B 58-feature inputs were strictly untouched (zero feature tampering or ungrounded imputation).",
+    "advisory_policy": "Decision-Support Policy: When graph_confidence is LIMITED or UNAVAILABLE, investigators are advised to prioritize transactional and behavioral signals, request Tier-1 identity verification, and perform manual verification before taking action. Automated blocking is never performed autonomously."
+  },
+  "rule_sufficiency_audit": [
+    {
+      "rule_id": "RULE_1_NEW_ACCOUNT",
+      "rule_name": "Account Age <= 3 Days",
+      "description": "Accounts created within 3 days of transaction time",
+      "sample_count": 0,
+      "positive_count": 0,
+      "negative_count": 0,
+      "status": "LIMITED / INSUFFICIENT EVIDENCE (N=0)",
+      "sufficiency": "INSUFFICIENT"
+    },
+    {
+      "rule_id": "RULE_2_LOW_VELOCITY",
+      "rule_name": "Historical Tx Count <= 2",
+      "description": "Accounts with 2 or fewer prior transactions",
+      "sample_count": 1356,
+      "positive_count": 192,
+      "negative_count": 1164,
+      "status": "EVALUATED (N=1356)",
+      "sufficiency": "SUFFICIENT"
+    },
+    {
+      "rule_id": "RULE_3_FIRST_TRANSACTION",
+      "rule_name": "First Account Transaction",
+      "description": "Account's very first observed transaction",
+      "sample_count": 497,
+      "positive_count": 72,
+      "negative_count": 425,
+      "status": "EVALUATED (N=497)",
+      "sufficiency": "SUFFICIENT"
+    },
+    {
+      "rule_id": "RULE_4_ISOLATED_GRAPH",
+      "rule_name": "Isolated Co-usage Graph",
+      "description": "Accounts with zero connected accounts in co-usage graph",
+      "sample_count": 61,
+      "positive_count": 3,
+      "negative_count": 58,
+      "status": "EVALUATED (N=61)",
+      "sufficiency": "SUFFICIENT"
+    }
+  ],
+  "full_dataset_evaluation": {
+    "total_samples": 2000,
+    "confidence_distribution": {
+      "UNAVAILABLE": 61,
+      "LIMITED": 1295,
+      "VERIFIED": 644
+    },
+    "slices": {
+      "overall": {
+        "sample_count": 2000,
+        "positive_count": 233,
+        "negative_count": 1767,
+        "threshold": 0.7,
+        "model_a": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 1767,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 233
+          },
+          "support": {
+            "total": 2000,
+            "positive_count": 233,
+            "negative_count": 1767,
+            "positive_rate": 0.1165
+          }
+        },
+        "model_b": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 1767,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 233
+          },
+          "support": {
+            "total": 2000,
+            "positive_count": 233,
+            "negative_count": 1767,
+            "positive_rate": 0.1165
+          }
+        },
+        "deltas": {
+          "pr_auc_delta": 0.0,
+          "roc_auc_delta": 0.0,
+          "precision_delta": 0.0,
+          "recall_delta": 0.0,
+          "f1_delta": 0.0,
+          "fpr_delta": 0.0,
+          "fp_delta": 0,
+          "tp_delta": 0
+        }
+      },
+      "cold_start": {
+        "sample_count": 1356,
+        "positive_count": 192,
+        "negative_count": 1164,
+        "threshold": 0.7,
+        "model_a": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 1164,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 192
+          },
+          "support": {
+            "total": 1356,
+            "positive_count": 192,
+            "negative_count": 1164,
+            "positive_rate": 0.1416
+          }
+        },
+        "model_b": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 1164,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 192
+          },
+          "support": {
+            "total": 1356,
+            "positive_count": 192,
+            "negative_count": 1164,
+            "positive_rate": 0.1416
+          }
+        },
+        "deltas": {
+          "pr_auc_delta": 0.0,
+          "roc_auc_delta": 0.0,
+          "precision_delta": 0.0,
+          "recall_delta": 0.0,
+          "f1_delta": 0.0,
+          "fpr_delta": 0.0,
+          "fp_delta": 0,
+          "tp_delta": 0
+        }
+      },
+      "mature": {
+        "sample_count": 644,
+        "positive_count": 41,
+        "negative_count": 603,
+        "threshold": 0.7,
+        "model_a": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 603,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 41
+          },
+          "support": {
+            "total": 644,
+            "positive_count": 41,
+            "negative_count": 603,
+            "positive_rate": 0.0637
+          }
+        },
+        "model_b": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 603,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 41
+          },
+          "support": {
+            "total": 644,
+            "positive_count": 41,
+            "negative_count": 603,
+            "positive_rate": 0.0637
+          }
+        },
+        "deltas": {
+          "pr_auc_delta": 0.0,
+          "roc_auc_delta": 0.0,
+          "precision_delta": 0.0,
+          "recall_delta": 0.0,
+          "f1_delta": 0.0,
+          "fpr_delta": 0.0,
+          "fp_delta": 0,
+          "tp_delta": 0
+        }
+      }
+    }
+  },
+  "held_out_test_evaluation": {
+    "total_samples": 300,
+    "confidence_distribution": {
+      "UNAVAILABLE": 0,
+      "LIMITED": 103,
+      "VERIFIED": 197
+    },
+    "slices": {
+      "overall": {
+        "sample_count": 300,
+        "positive_count": 26,
+        "negative_count": 274,
+        "threshold": 0.7,
+        "model_a": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 274,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 26
+          },
+          "support": {
+            "total": 300,
+            "positive_count": 26,
+            "negative_count": 274,
+            "positive_rate": 0.0867
+          }
+        },
+        "model_b": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 274,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 26
+          },
+          "support": {
+            "total": 300,
+            "positive_count": 26,
+            "negative_count": 274,
+            "positive_rate": 0.0867
+          }
+        },
+        "deltas": {
+          "pr_auc_delta": 0.0,
+          "roc_auc_delta": 0.0,
+          "precision_delta": 0.0,
+          "recall_delta": 0.0,
+          "f1_delta": 0.0,
+          "fpr_delta": 0.0,
+          "fp_delta": 0,
+          "tp_delta": 0
+        }
+      },
+      "cold_start": {
+        "sample_count": 103,
+        "positive_count": 25,
+        "negative_count": 78,
+        "threshold": 0.7,
+        "model_a": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 78,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 25
+          },
+          "support": {
+            "total": 103,
+            "positive_count": 25,
+            "negative_count": 78,
+            "positive_rate": 0.2427
+          }
+        },
+        "model_b": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 78,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 25
+          },
+          "support": {
+            "total": 103,
+            "positive_count": 25,
+            "negative_count": 78,
+            "positive_rate": 0.2427
+          }
+        },
+        "deltas": {
+          "pr_auc_delta": 0.0,
+          "roc_auc_delta": 0.0,
+          "precision_delta": 0.0,
+          "recall_delta": 0.0,
+          "f1_delta": 0.0,
+          "fpr_delta": 0.0,
+          "fp_delta": 0,
+          "tp_delta": 0
+        }
+      },
+      "mature": {
+        "sample_count": 197,
+        "positive_count": 1,
+        "negative_count": 196,
+        "threshold": 0.7,
+        "model_a": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 196,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 1
+          },
+          "support": {
+            "total": 197,
+            "positive_count": 1,
+            "negative_count": 196,
+            "positive_rate": 0.0051
+          }
+        },
+        "model_b": {
+          "pr_auc": 1.0,
+          "roc_auc": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "false_positive_rate": 0.0,
+          "threshold": 0.7,
+          "confusion_matrix": {
+            "true_negatives": 196,
+            "false_positives": 0,
+            "false_negatives": 0,
+            "true_positives": 1
+          },
+          "support": {
+            "total": 197,
+            "positive_count": 1,
+            "negative_count": 196,
+            "positive_rate": 0.0051
+          }
+        },
+        "deltas": {
+          "pr_auc_delta": 0.0,
+          "roc_auc_delta": 0.0,
+          "precision_delta": 0.0,
+          "recall_delta": 0.0,
+          "f1_delta": 0.0,
+          "fpr_delta": 0.0,
+          "fp_delta": 0,
+          "tp_delta": 0
+        }
+      }
+    }
+  }
+}

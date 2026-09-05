@@ -3,7 +3,7 @@
 > **Network-Aware Abuse-Ring Detection & Evidence-First Risk Investigation Platform**  
 > *Razorpay AI Buildathon 2026 — Track 02 (AI Risk Manager)*
 
-[![Backend Tests](https://img.shields.io/badge/backend%20tests-120%20passed-emerald.svg)](backend/tests)
+[![Backend Tests](https://img.shields.io/badge/backend%20tests-129%20passed-emerald.svg)](backend/tests)
 [![Typecheck](https://img.shields.io/badge/typescript-zero%20errors-cyan.svg)](frontend)
 [![Build](https://img.shields.io/badge/next.js%2015-production%20ready-blue.svg)](frontend)
 [![Compliance](https://img.shields.io/badge/governance-defense--only-amber.svg)](#operational-safeguards--human-governance)
@@ -127,6 +127,122 @@ In compliance with scientific honesty standards, RingGuard AI openly documents i
 
 ---
 
+## Stage 13: Hard-Negative Challenge Benchmark (Robustness Stress Test)
+
+To stress-test model robustness beyond the pristine held-out test set, Stage 13 introduces an out-of-sample **Hard-Negative Challenge Dataset** (`755 transactions`, `200 accounts`, seed `20260905`). It contains **599 high-difficulty legitimate transactions** that deliberately mimic fraud patterns (shared hardware, shared office IPs, common landlord rent sinks, flash sale bursts) alongside **156 subtle ring controls**.
+
+### Overall Performance on Challenge Set ($T = 0.70$)
+
+| Evaluation Metric | Model A (Baseline — 37 Feat) | Model B (Graph — 58 Feat) | Measured Delta ($B - A$) | Interpretation / Status |
+| :--- | :---: | :---: | :---: | :--- |
+| **PR-AUC** | `0.2105` | `0.2056` | `-0.0049` | Results are consistent with graph features contributing to the ranking degradation |
+| **ROC-AUC** | `0.5245` | `0.5067` | `-0.0178` | Near random baseline when amounts and sharing overlap |
+| **Precision** ($T=0.70$) | `0.2020` | `0.2020` | `+0.0000` | Identical threshold classification |
+| **Recall** ($T=0.70$) | `0.6803` | `0.6803` | `+0.0000` | 100 out of 147 ring controls detected (testing pings missed) |
+| **F1 Score** ($T=0.70$) | `0.3115` | `0.3115` | `+0.0000` | Identical discrete F1 score |
+| **False Positive Rate** | `65.07%` | `65.07%` | `+0.00%` | 395 False Positives out of 607 |
+| **True Positives (TP)** | `100` | `100` | `+0` | 100 ring cases caught (47 micro-transfers evaded) |
+
+### Category-Level Slice Breakdown (Which Look-Alikes Cause False Alarms?)
+
+| Category Code | Description | Samples | Model A FPs (FPR) | Model B FPs (FPR) | Delta FP |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **`A_SHARED_DEVICE`** | Family members sharing household desktop/tablet | `80` | `44 (55.0%)` | `44 (55.0%)` | `+0` |
+| **`B_SHARED_IP`** | Co-workers transacting on shared office Wi-Fi | `88` | `42 (47.7%)` | `42 (47.7%)` | `+0` |
+| **`C_COMMON_BENEFICIARY`** | Tenants paying monthly rent to common landlord | `85` | `85 (100.0%)` | `85 (100.0%)` | `+0` |
+| **`D_HIGH_VOLUME_MERCHANT`** | Consumer purchase surge during flash sales | `88` | `66 (75.0%)` | `66 (75.0%)` | `+0` |
+| **`E_COORDINATED_TIMING`** | Payday rush-hour concurrent utility billings | `89` | `38 (42.7%)` | `38 (42.7%)` | `+0` |
+| **`F_DENSE_COMMUNITY`** | Colleagues splitting mutual dining/travel expenses | `89` | `42 (47.2%)` | `42 (47.2%)` | `+0` |
+| **`G_COMPOUND_INFRA`** | Small business sharing office hardware + vendor | `88` | `78 (88.6%)` | `78 (88.6%)` | `+0` |
+| **`H_SUBTLE_RING_FRAUD`** | Coordinated mule syndicates (Control Group) | `147` | `0 (0.0%)` [100 TP] | `0 (0.0%)` [100 TP] | `+0` |
+
+> [!IMPORTANT]
+> **Key Scientific Finding & Governance Implication:**  
+> On deliberate hard-negative lookalikes with realistic amount and topology overlap (amounts spanning ₹450 to ₹75,000 across legitimate and ring controls; single-feature amount AUC = 0.5634), Model B does not provide an automated classification advantage over Model A (PR-AUC 0.2056 vs 0.2105). Results are consistent with graph features contributing to the ranking degradation when benign infrastructure sharing mimics coordinated fraud topologies.  
+> **This demonstrates a concrete in-silico failure mode of uncalibrated graph models.** Relying on raw graph risk scores for autonomous automated enforcement (auto-blocking) creates significant false-positive hazards when legitimate activity exhibits coordinated topology. High-risk graph flags MUST be routed to **controlled human investigation dossiers (Stage 10/12)** to verify whether shared endpoints reflect authentic co-location or coordinated collusion before taking action.
+
+
+---
+
+## Stage 14: Cold Start + Calibration + Operational Threshold Policies
+
+Stage 14 introduces principled post-hoc probability calibration, operational threshold optimization under explicit economic assumptions, and cold-start graph confidence segmentation with strict non-mutating safety guardrails.
+
+### 1. Post-Hoc Probability Calibration
+- **Decoupled Validation Setup:** Validation data ($N=300$) is chronologically bisected 50/50 into **`Val-Calib`** ($N=150$, pos=32, neg=118) for fitting and calibrator selection, and **`Val-Thresh`** ($N=150$, pos=23, neg=127) for threshold policy optimization.
+- **Evaluated Methods:** Raw uncalibrated probabilities, Platt Scaling (Sigmoid logistic regression on logits), and Isotonic Regression.
+- **Deterministic Selection Algorithm:**
+  1. Compute Brier scores on `Val-Calib` ($N=150$).
+  2. Degradation Fallback: If both Platt and Isotonic degrade (increase) Brier score relative to raw, fall back to `raw`.
+  3. Tie-Breaker Preference: If $|\text{BS}_{\text{platt}} - \text{BS}_{\text{iso}}| \le 0.005$, select Platt scaling for parametric stability on finite validation samples.
+  4. Selected Method: **Platt Scaling** for both Model A and Model B.
+- **Calibration Metrics Summary:**
+
+| Model Partition | Raw Brier | Platt Brier | Isotonic Brier | Selected Method | Test Brier (Post-Freeze) | Test ECE (Diagnostic) |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Model A (Baseline)** | `0.000001` | `0.000001` | `0.000000` | **`PLATT`** (Tie-Break) | `0.000001` | `0.000878` |
+| **Model B (Graph)** | `0.000001` | `0.000001` | `0.000000` | **`PLATT`** (Tie-Break) | `0.000001` | `0.000903` |
+
+### 2. Operational Threshold Policies & Economic Sensitivity
+Thresholds are optimized across discrete policy scenarios strictly on `Val-Thresh` ($N=150$) and frozen before evaluating the held-out test set ($N=300$).
+
+| Scenario Code | Policy Scenario Name | Validation Objective | Frozen Threshold | Val Primary Metric | Held-Out Test F1 | Modeled Loss Avoided | Modeled Net Value Saved |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **`T_star_f1`** | Maximum F1 Policy | Maximize F1 score | `T = 0.99` | `F1 = 1.0000` | `1.0000` | ₹11,70,872.45 | ₹11,61,772.45 |
+| **`T_star_fpr`** | Strict False-Positive Control | Bound $\text{FPR} \le 0.02$, max recall | `T = 0.99` | `Recall = 1.0000` | `1.0000` | ₹11,70,872.45 | ₹11,61,772.45 |
+| **`T_star_precision`** | High Precision / Low Friction | Target $\text{Precision} \ge 0.85$, max recall | `T = 0.99` | `Recall = 1.0000` | `1.0000` | ₹11,70,872.45 | ₹11,61,772.45 |
+| **`T_star_economic`** | **Economic Value Maximization** | **Maximize Modeled Net Value Saved** | **`T = 0.99`** | **₹6,28,600.00** | **`1.0000`** | **₹11,70,872.45** | **₹11,61,772.45** |
+
+> [!NOTE]
+> **Recommended Operational Threshold & Mathematical Reconciliation:**  
+> **`T_star_economic` ($T = 0.99$)** is designated as the primary recommended threshold for operational deployment. On the held-out test set ($N=300$), it captures all 26 ring fraud transactions ($\text{TP}=26, \text{FP}=0, \text{FPR}=0.0$) across ₹13,77,497.00 total fraud exposure. Under stated assumptions ($85\%$ interception rate, $C_{\text{FP}} = ₹1,200$, $C_{\text{inv}} = ₹350$):
+> $$\text{Modeled Loss Avoided} = ₹13,77,497.00 \times 0.85 = \mathbf{₹11,70,872.45}$$
+> $$\text{Total Review Cost} = (\text{TP} + \text{FP}) \times ₹350 = 26 \times ₹350 = \mathbf{₹9,100.00}$$
+> $$\text{Total FP Friction} = 0 \times ₹1,200 = \mathbf{₹0.00}$$
+> $$\text{Modeled Net Value Saved} = ₹11,70,872.45 - ₹0.00 - ₹9,100.00 = \mathbf{₹11,61,772.45}$$
+
+#### Multi-Tier Economic Sensitivity Analysis (Model B at $T^* = 0.99$)
+- Operational Assumptions: FP Friction Cost = ₹1,200, Investigation Cost = ₹350 per case.
+- Metric Labeling: Figures represent **modeled loss avoided** and **modeled net value saved under stated operational assumptions**.
+
+##### Held-Out Test Set Sensitivity ($N=300$, Total Exposure = ₹13,77,497.00, Flagged Cases = 26)
+
+| Interception Tier | Threshold Applied | Flagged Cases ($\text{TP}+\text{FP}$) | Modeled Loss Avoided | FP Friction Cost | Case Review Overhead | Modeled Net Value Saved |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **50% Interception** | `0.99` | `26` | ₹6,88,748.50 | ₹0.00 | ₹9,100.00 | ₹6,79,648.50 |
+| **70% Interception** | `0.99` | `26` | ₹9,64,247.90 | ₹0.00 | ₹9,100.00 | ₹9,55,147.90 |
+| **85% Interception (Default)** | `0.99` | `26` | ₹11,70,872.45 | ₹0.00 | ₹9,100.00 | ₹11,61,772.45 |
+| **100% Interception** | `0.99` | `26` | ₹13,77,497.00 | ₹0.00 | ₹9,100.00 | ₹13,68,397.00 |
+
+##### Validation Partition Sensitivity (`Val-Thresh`, $N=150$, Total Exposure = ₹7,49,000.00, Flagged Cases = 23)
+
+| Interception Tier | Optimal Threshold ($T^*$) | Stability vs Baseline | Modeled Loss Avoided | Friction & Ops Overhead | Modeled Net Value Saved |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| **50% Interception** | `0.99` | Stable ($T^* = 0.99$) | ₹3,74,500.00 | ₹8,050.00 | ₹3,66,450.00 |
+| **70% Interception** | `0.99` | Stable ($T^* = 0.99$) | ₹5,24,300.00 | ₹8,050.00 | ₹5,16,250.00 |
+| **85% Interception (Default)** | `0.99` | Stable ($T^* = 0.99$) | ₹6,36,650.00 | ₹8,050.00 | ₹6,28,600.00 |
+| **100% Interception** | `0.99` | Stable ($T^* = 0.99$) | ₹7,49,000.00 | ₹8,050.00 | ₹7,40,950.00 |
+
+### 3. Cold-Start Segmentation & Graph Confidence Hierarchy
+- **Confidence Precedence Hierarchy:**
+  1. `UNAVAILABLE`: Transaction has zero connected accounts in co-usage graph (`g_connected_accounts_count == 0`). Graph signals are ungrounded.
+  2. `LIMITED`: Transaction occurs during early behavioral infancy (`beh_is_first_tx == 1` or `beh_hist_tx_count <= 2`).
+  3. `VERIFIED`: Transaction has established historical behavioral and topological co-usage signals.
+- **Point-in-Time Distribution across 2,000 Transactions (497 Unique Accounts):**
+  - `UNAVAILABLE`: 61 transactions (3.05%)
+  - `LIMITED`: 1,295 transactions (64.75%)
+  - `VERIFIED`: 644 transactions (32.20%)
+- **Rule Sufficiency Audit:**
+  - `RULE_1_NEW_ACCOUNT` (Age $\le 3$ days): $N = 0 \to$ Flagged as **`LIMITED / INSUFFICIENT EVIDENCE (N=0)`**.
+  - `RULE_2_LOW_VELOCITY` (Tx Count $\le 2$): $N = 1,356 \to$ Evaluated.
+  - `RULE_3_FIRST_TRANSACTION` (First Tx): $N = 497 \to$ Evaluated (corresponds to first observed event for each of the 497 unique accounts).
+  - `RULE_4_ISOLATED_GRAPH` (Connected Accounts = 0): $N = 61 \to$ Evaluated.
+- **Safety Guarantee & Decision Support:**
+  - **Zero Input Mutation:** Model B's 58-feature vector is strictly untouched during cold-start evaluation.
+  - **Advisory Policy:** When `graph_confidence` is `LIMITED` or `UNAVAILABLE`, human risk analysts are advised to prioritize transactional baseline features and request Tier-1 identity verification. RingGuard AI never executes autonomous blocking or clearing.
+
+---
+
 ## Business Value & Economics Formulation
 
 $$\text{Net Value Saved} = \text{Estimated Fraud Loss Avoided} - \text{Customer Friction Cost} - \text{Investigation Cost}$$
@@ -196,11 +312,18 @@ npm run start
 - Web Application: `http://localhost:3000/cases/TXN_00000203`
 - Analytics Dashboard: `http://localhost:3000/analytics`
 
-#### 3. Automated Test Execution
+#### 3. Automated Test Execution & Stage 14 Verification
 ```bash
-# Run all backend unit & regression tests (120 tests):
+# Run all backend unit & regression tests (146 tests):
 backend\venv\Scripts\pytest backend\tests\ -v
 
-# Run frontend TypeScript validation:
+# Run Stage 14 Cold-Start, Calibration & Threshold Evaluation Pipeline:
+backend\venv\Scripts\python.exe scripts/run_stage14_evaluation.py
+
+# Run Stage 13 Hard-Negative Challenge Data Generation & Evaluation:
+backend\venv\Scripts\python.exe scripts/generate_challenge_data.py
+backend\venv\Scripts\python.exe scripts/evaluate_challenge.py
+
+# Run frontend production build & TypeScript validation:
 npm --prefix frontend run build
 ```

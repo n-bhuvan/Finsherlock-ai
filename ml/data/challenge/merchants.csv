@@ -1,0 +1,31 @@
+merchant_id,merchant_name,merchant_category,merchant_risk_rating
+MER_000001,"Jain, Arya and Prasad Utilities",UTILITIES_BILLS,LOW
+MER_000002,Sandal and Sons Food,FOOD_GROCERY,LOW
+MER_000003,"Iyengar, Dutt and Nanda Ecommerce",ECOMMERCE,LOW
+MER_000004,Wason-Bhargava Ecommerce,ECOMMERCE,LOW
+MER_000005,Chakrabarti-Merchant Food,FOOD_GROCERY,LOW
+MER_000006,"Luthra, Sahota and Singh Gaming",GAMING_ENTERTAINMENT,ELEVATED
+MER_000007,Dayal Inc Food,FOOD_GROCERY,LOW
+MER_000008,Dayal Ltd Utilities,UTILITIES_BILLS,LOW
+MER_000009,Modi and Sons Food,FOOD_GROCERY,LOW
+MER_000010,Bhavsar LLC Ecommerce,ECOMMERCE,LOW
+MER_000011,Bhatti PLC Utilities,UTILITIES_BILLS,LOW
+MER_000012,"Konda, Konda and Kale Food",FOOD_GROCERY,LOW
+MER_000013,Tara and Sons Food,FOOD_GROCERY,LOW
+MER_000014,Morar-Sridhar Food,FOOD_GROCERY,LOW
+MER_000015,Dayal-Chowdhury Ecommerce,ECOMMERCE,LOW
+MER_000016,Natarajan LLC Financial,FINANCIAL_SERVICES,MEDIUM
+MER_000017,Thakur PLC Utilities,UTILITIES_BILLS,LOW
+MER_000018,Walia-Ghose Ecommerce,ECOMMERCE,LOW
+MER_000019,Dhawan PLC Food,FOOD_GROCERY,LOW
+MER_000020,"Ratta, Golla and Bhatt Ecommerce",ECOMMERCE,LOW
+MER_000021,Anne Group Ecommerce,ECOMMERCE,LOW
+MER_000022,Ramanathan Ltd Ecommerce,ECOMMERCE,LOW
+MER_000023,"Sanghvi, Gupta and Sachdeva Food",FOOD_GROCERY,LOW
+MER_000024,"Goswami, Pillay and Kota Jewelry",JEWELRY_LUXURY,ELEVATED
+MER_000025,"Mital, Aurora and Varma Utilities",UTILITIES_BILLS,LOW
+MER_000026,"Gandhi, Ramanathan and Jain Travel",TRAVEL_HOSPITALITY,MEDIUM
+MER_000027,Gulati Group Utilities,UTILITIES_BILLS,LOW
+MER_000028,Hans and Sons Food,FOOD_GROCERY,LOW
+MER_000029,Narain Ltd Travel,TRAVEL_HOSPITALITY,MEDIUM
+MER_000030,Rao and Sons Jewelry,JEWELRY_LUXURY,ELEVATED

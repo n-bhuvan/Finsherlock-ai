@@ -1,0 +1,773 @@
+{
+  "dataset_summary": {
+    "name": "ringguard_challenge_v1",
+    "seed": 20260905,
+    "total_transactions": 754,
+    "legitimate_hard_negatives": 607,
+    "ring_fraud_controls": 147,
+    "category_count": 8
+  },
+  "overall_metrics_t_0_70": {
+    "model_a": {
+      "pr_auc": 0.2105,
+      "roc_auc": 0.5245,
+      "precision": 0.202,
+      "recall": 0.6803,
+      "f1": 0.3115,
+      "false_positive_rate": 0.6507,
+      "threshold": 0.7,
+      "confusion_matrix": {
+        "true_negatives": 212,
+        "false_positives": 395,
+        "false_negatives": 47,
+        "true_positives": 100
+      },
+      "support": {
+        "total": 754,
+        "positive_count": 147,
+        "negative_count": 607,
+        "positive_rate": 0.195
+      }
+    },
+    "model_b": {
+      "pr_auc": 0.2056,
+      "roc_auc": 0.5067,
+      "precision": 0.202,
+      "recall": 0.6803,
+      "f1": 0.3115,
+      "false_positive_rate": 0.6507,
+      "threshold": 0.7,
+      "confusion_matrix": {
+        "true_negatives": 212,
+        "false_positives": 395,
+        "false_negatives": 47,
+        "true_positives": 100
+      },
+      "support": {
+        "total": 754,
+        "positive_count": 147,
+        "negative_count": 607,
+        "positive_rate": 0.195
+      }
+    },
+    "deltas": {
+      "pr_auc_delta": -0.0049,
+      "roc_auc_delta": -0.0178,
+      "precision_delta": 0.0,
+      "recall_delta": 0.0,
+      "f1_delta": 0.0,
+      "fpr_delta": 0.0,
+      "fp_delta": 0,
+      "tp_delta": 0
+    }
+  },
+  "overall_metrics_t_0_50": {
+    "model_a": {
+      "pr_auc": 0.2105,
+      "roc_auc": 0.5245,
+      "precision": 0.202,
+      "recall": 0.6803,
+      "f1": 0.3115,
+      "false_positive_rate": 0.6507,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "true_negatives": 212,
+        "false_positives": 395,
+        "false_negatives": 47,
+        "true_positives": 100
+      },
+      "support": {
+        "total": 754,
+        "positive_count": 147,
+        "negative_count": 607,
+        "positive_rate": 0.195
+      }
+    },
+    "model_b": {
+      "pr_auc": 0.2056,
+      "roc_auc": 0.5067,
+      "precision": 0.202,
+      "recall": 0.6803,
+      "f1": 0.3115,
+      "false_positive_rate": 0.6507,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "true_negatives": 212,
+        "false_positives": 395,
+        "false_negatives": 47,
+        "true_positives": 100
+      },
+      "support": {
+        "total": 754,
+        "positive_count": 147,
+        "negative_count": 607,
+        "positive_rate": 0.195
+      }
+    },
+    "deltas": {
+      "pr_auc_delta": -0.0049,
+      "roc_auc_delta": -0.0178,
+      "precision_delta": 0.0,
+      "recall_delta": 0.0,
+      "f1_delta": 0.0,
+      "fpr_delta": 0.0,
+      "fp_delta": 0,
+      "tp_delta": 0
+    }
+  },
+  "category_slices": [
+    {
+      "challenge_category": "A_SHARED_DEVICE",
+      "category_name": "Shared-Device Legitimate Users",
+      "description": "Family members sharing home desktop/tablet for independent household bills",
+      "total_transactions": 80,
+      "num_legitimate": 80,
+      "num_ring": 0,
+      "threshold": 0.7,
+      "model_a": {
+        "fp_count": 44,
+        "fpr": 0.55,
+        "tp_count": 0,
+        "mean_probability": 0.55
+      },
+      "model_b": {
+        "fp_count": 44,
+        "fpr": 0.55,
+        "tp_count": 0,
+        "mean_probability": 0.5518
+      },
+      "deltas": {
+        "fp_delta": 0,
+        "fpr_delta": 0.0,
+        "mean_prob_delta": 0.0018
+      }
+    },
+    {
+      "challenge_category": "B_SHARED_IP",
+      "category_name": "Shared-IP Legitimate Users",
+      "description": "Co-workers on office Wi-Fi transacting from distinct mobile devices",
+      "total_transactions": 88,
+      "num_legitimate": 88,
+      "num_ring": 0,
+      "threshold": 0.7,
+      "model_a": {
+        "fp_count": 42,
+        "fpr": 0.4773,
+        "tp_count": 0,
+        "mean_probability": 0.4778
+      },
+      "model_b": {
+        "fp_count": 42,
+        "fpr": 0.4773,
+        "tp_count": 0,
+        "mean_probability": 0.479
+      },
+      "deltas": {
+        "fp_delta": 0,
+        "fpr_delta": 0.0,
+        "mean_prob_delta": 0.0013
+      }
+    },
+    {
+      "challenge_category": "C_COMMON_BENEFICIARY",
+      "category_name": "Legitimate Common Beneficiaries",
+      "description": "Apartment residents paying monthly rent/society dues to common landlord",
+      "total_transactions": 85,
+      "num_legitimate": 85,
+      "num_ring": 0,
+      "threshold": 0.7,
+      "model_a": {
+        "fp_count": 85,
+        "fpr": 1.0,
+        "tp_count": 0,
+        "mean_probability": 0.9991
+      },
+      "model_b": {
+        "fp_count": 85,
+        "fpr": 1.0,
+        "tp_count": 0,
+        "mean_probability": 0.9993
+      },
+      "deltas": {
+        "fp_delta": 0,
+        "fpr_delta": 0.0,
+        "mean_prob_delta": 0.0002
+      }
+    },
+    {
+      "challenge_category": "D_HIGH_VOLUME_MERCHANT",
+      "category_name": "High-Volume Merchant Flash Sales",
+      "description": "Consumer purchase surge during e-commerce discount campaign",
+      "total_transactions": 88,
+      "num_legitimate": 88,
+      "num_ring": 0,
+      "threshold": 0.7,
+      "model_a": {
+        "fp_count": 66,
+        "fpr": 0.75,
+        "tp_count": 0,
+        "mean_probability": 0.7499
+      },
+      "model_b": {
+        "fp_count": 66,
+        "fpr": 0.75,
+        "tp_count": 0,
+        "mean_probability": 0.7503
+      },
+      "deltas": {
+        "fp_delta": 0,
+        "fpr_delta": 0.0,
+        "mean_prob_delta": 0.0004
+      }
+    },
+    {
+      "challenge_category": "E_COORDINATED_TIMING",
+      "category_name": "Coordinated Timing Rush Hour",
+      "description": "Simultaneous payday utility bills and personal transfers across independent users",
+      "total_transactions": 89,
+      "num_legitimate": 89,
+      "num_ring": 0,
+      "threshold": 0.7,
+      "model_a": {
+        "fp_count": 38,
+        "fpr": 0.427,
+        "tp_count": 0,
+        "mean_probability": 0.4276
+      },
+      "model_b": {
+        "fp_count": 38,
+        "fpr": 0.427,
+        "tp_count": 0,
+        "mean_probability": 0.4294
+      },
+      "deltas": {
+        "fp_delta": 0,
+        "fpr_delta": 0.0,
+        "mean_prob_delta": 0.0018
+      }
+    },
+    {
+      "challenge_category": "F_DENSE_COMMUNITY",
+      "category_name": "Dense Legitimate Community",
+      "description": "Friends/colleagues repeatedly splitting dining and travel expenses",
+      "total_transactions": 89,
+      "num_legitimate": 89,
+      "num_ring": 0,
+      "threshold": 0.7,
+      "model_a": {
+        "fp_count": 42,
+        "fpr": 0.4719,
+        "tp_count": 0,
+        "mean_probability": 0.4727
+      },
+      "model_b": {
+        "fp_count": 42,
+        "fpr": 0.4719,
+        "tp_count": 0,
+        "mean_probability": 0.4733
+      },
+      "deltas": {
+        "fp_delta": 0,
+        "fpr_delta": 0.0,
+        "mean_prob_delta": 0.0006
+      }
+    },
+    {
+      "challenge_category": "G_COMPOUND_INFRA",
+      "category_name": "Compound Multi-Signal Lookalikes",
+      "description": "Family-run small business sharing office hardware and vendor account legitimately",
+      "total_transactions": 88,
+      "num_legitimate": 88,
+      "num_ring": 0,
+      "threshold": 0.7,
+      "model_a": {
+        "fp_count": 78,
+        "fpr": 0.8864,
+        "tp_count": 0,
+        "mean_probability": 0.886
+      },
+      "model_b": {
+        "fp_count": 78,
+        "fpr": 0.8864,
+        "tp_count": 0,
+        "mean_probability": 0.8868
+      },
+      "deltas": {
+        "fp_delta": 0,
+        "fpr_delta": 0.0,
+        "mean_prob_delta": 0.0008
+      }
+    },
+    {
+      "challenge_category": "H_SUBTLE_RING_FRAUD",
+      "category_name": "Subtle Evasive Ring Fraud",
+      "description": "Coordinated mule syndicate channeling structured funds through shared proxy and mule sink",
+      "total_transactions": 147,
+      "num_legitimate": 0,
+      "num_ring": 147,
+      "threshold": 0.7,
+      "model_a": {
+        "fp_count": 0,
+        "fpr": 0.0,
+        "tp_count": 100,
+        "mean_probability": 0.6803
+      },
+      "model_b": {
+        "fp_count": 0,
+        "fpr": 0.0,
+        "tp_count": 100,
+        "mean_probability": 0.6813
+      },
+      "deltas": {
+        "fp_delta": 0,
+        "fpr_delta": 0.0,
+        "mean_prob_delta": 0.001
+      }
+    }
+  ],
+  "threshold_sweep": [
+    {
+      "threshold": 0.1,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.15,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.2,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.25,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.3,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.35,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.4,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.45,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.5,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.55,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.6,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.65,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.7,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.75,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.8,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.85,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    },
+    {
+      "threshold": 0.9,
+      "model_a": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "model_b": {
+        "precision": 0.202,
+        "recall": 0.6803,
+        "f1": 0.3115,
+        "fpr": 0.6507,
+        "fp_count": 395,
+        "tp_count": 100
+      },
+      "deltas": {
+        "precision_delta": 0.0,
+        "recall_delta": 0.0,
+        "f1_delta": 0.0,
+        "fpr_delta": 0.0,
+        "fp_delta": 0
+      }
+    }
+  ],
+  "disclaimer": "Hard-Negative Challenge Set / Robustness Stress Test. Evaluated strictly against frozen Model A and Model B without retraining. Separate from the official held-out benchmark."
+}

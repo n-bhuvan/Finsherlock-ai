@@ -7,11 +7,16 @@ Exposes transparent business economics calculations separating:
 3. Derived economic estimates (Net Value Saved = Estimated Loss Avoided - Friction Cost - Investigation Cost)
 """
 
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 from fastapi import APIRouter, Query
 from pydantic import BaseModel, Field
 
+from app.services.challenge_service import ChallengeEvaluationService
+from app.services.calibration_service import CalibrationEvaluationService
+
 router = APIRouter()
+challenge_service = ChallengeEvaluationService()
+calibration_service = CalibrationEvaluationService()
 
 
 class ObservedBenchmarkValues(BaseModel):
@@ -117,3 +122,45 @@ def get_business_economics(
         operational_modeling_assumptions=assumptions,
         derived_economic_estimates=derived,
     )
+
+
+@router.get(
+    "/challenge",
+    summary="Get Hard-Negative Challenge Evaluation",
+    description="Returns persisted empirical out-of-sample robustness benchmark metrics for Model A and Model B.",
+)
+def get_challenge_evaluation() -> Dict[str, Any]:
+    """Returns actual persisted evaluation results from the Hard-Negative Challenge suite."""
+    return challenge_service.get_challenge_evaluation()
+
+
+@router.get(
+    "/calibration",
+    summary="Get Probability Calibration Results",
+    description="Returns persisted Platt scaling and Isotonic regression calibration evaluation and reliability curves.",
+)
+def get_calibration_evaluation() -> Dict[str, Any]:
+    """Returns actual persisted probability calibration metrics and reliability curves."""
+    return calibration_service.get_calibration_results()
+
+
+@router.get(
+    "/threshold-policies",
+    summary="Get Threshold Optimization & Economic Policies",
+    description="Returns validation-derived frozen threshold policies and economic sensitivity analysis.",
+)
+def get_threshold_policies() -> Dict[str, Any]:
+    """Returns validation-derived frozen threshold policies and post-freeze held-out evaluation."""
+    return calibration_service.get_threshold_policies()
+
+
+@router.get(
+    "/cold-start",
+    summary="Get Cold-Start Graph Confidence Segmentation",
+    description="Returns cold-start rule audit, confidence distribution, and separate performance slices.",
+)
+def get_cold_start_evaluation() -> Dict[str, Any]:
+    """Returns cold-start graph confidence segmentation and separate slice evaluation metrics."""
+    return calibration_service.get_cold_start_evaluation()
+
+

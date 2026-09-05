@@ -1,0 +1,605 @@
+{
+  "metadata": {
+    "stage": 14,
+    "title": "Threshold Policy Optimization & Economic Sensitivity",
+    "model_evaluated": "Model B (Graph-Enhanced, Calibrated)",
+    "unit_of_evaluation": "TRANSACTION",
+    "validation_partition": "Val-Thresh (N=150, rows 1550-1699)",
+    "test_partition": "Held-Out Test (N=300, rows 1700-1999)",
+    "modeling_assumptions": {
+      "default_interception_rate": 0.85,
+      "fp_friction_cost_inr": 1200.0,
+      "investigation_case_cost_inr": 350.0,
+      "exposure_formula": "Modeled Net Value Saved = Modeled Loss Avoided (Exposure * Interception) - (FP * CFP) - ((TP + FP) * Cinv)",
+      "disclosure": "Financial figures represent modeled loss avoided and modeled net value saved under stated operational assumptions."
+    }
+  },
+  "validation_derived_policies": {
+    "T_star_f1": {
+      "scenario_name": "Maximum F1 Policy",
+      "threshold": 0.99,
+      "status": "FEASIBLE",
+      "primary_metric": "f1",
+      "primary_value": 1.0,
+      "description": "Standard balance between precision and recall"
+    },
+    "T_star_fpr": {
+      "scenario_name": "Strict False-Positive Control (FPR <= 0.02)",
+      "threshold": 0.99,
+      "status": "FEASIBLE",
+      "primary_metric": "recall",
+      "primary_value": 1.0,
+      "description": "Regulated low-friction policy bounding false positive rate at or below 2%"
+    },
+    "T_star_precision": {
+      "scenario_name": "High Precision / Low Friction (Precision >= 0.85)",
+      "threshold": 0.99,
+      "status": "FEASIBLE",
+      "primary_metric": "recall",
+      "primary_value": 1.0,
+      "description": "High-confidence investigation queue targeting at least 85% precision"
+    },
+    "T_star_economic": {
+      "scenario_name": "Economic Value Maximization Policy (RECOMMENDED OPERATIONAL THRESHOLD)",
+      "threshold": 0.99,
+      "status": "FEASIBLE",
+      "primary_metric": "modeled_net_value_saved",
+      "primary_value": 628600.0,
+      "description": "Primary recommended operational threshold maximizing modeled net value saved under stated assumptions",
+      "is_recommended": true
+    }
+  },
+  "validation_sweep_summary": {
+    "step_count": 99,
+    "min_threshold": 0.01,
+    "max_threshold": 0.99,
+    "sweep_sample": [
+      {
+        "threshold": 0.01,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.06,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.11,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.16,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.21,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.26,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.31,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.36,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.41,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.46,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.51,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.56,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.61,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.66,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.71,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.76,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.81,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.86,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.91,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      },
+      {
+        "threshold": 0.96,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "fpr": 0.0,
+        "tp": 23,
+        "fp": 0,
+        "tn": 127,
+        "fn": 0,
+        "modeled_net_value_saved": 628600.0,
+        "modeled_loss_avoided": 636650.0
+      }
+    ]
+  },
+  "economic_sensitivity_analysis": [
+    {
+      "interception_tier_label": "50% Interception",
+      "interception_rate": 0.5,
+      "optimal_threshold": 0.99,
+      "is_stable_with_baseline": true,
+      "modeled_loss_avoided": 374500.0,
+      "modeled_friction_cost": 0.0,
+      "modeled_investigation_cost": 8050.0,
+      "modeled_net_value_saved": 366450.0
+    },
+    {
+      "interception_tier_label": "70% Interception",
+      "interception_rate": 0.7,
+      "optimal_threshold": 0.99,
+      "is_stable_with_baseline": true,
+      "modeled_loss_avoided": 524300.0,
+      "modeled_friction_cost": 0.0,
+      "modeled_investigation_cost": 8050.0,
+      "modeled_net_value_saved": 516250.0
+    },
+    {
+      "interception_tier_label": "85% Interception",
+      "interception_rate": 0.85,
+      "optimal_threshold": 0.99,
+      "is_stable_with_baseline": true,
+      "modeled_loss_avoided": 636650.0,
+      "modeled_friction_cost": 0.0,
+      "modeled_investigation_cost": 8050.0,
+      "modeled_net_value_saved": 628600.0
+    },
+    {
+      "interception_tier_label": "100% Interception",
+      "interception_rate": 1.0,
+      "optimal_threshold": 0.99,
+      "is_stable_with_baseline": true,
+      "modeled_loss_avoided": 749000.0,
+      "modeled_friction_cost": 0.0,
+      "modeled_investigation_cost": 8050.0,
+      "modeled_net_value_saved": 740950.0
+    }
+  ],
+  "held_out_test_sensitivity_analysis": [
+    {
+      "interception_tier_label": "50% Interception",
+      "interception_rate": 0.5,
+      "threshold_applied": 0.99,
+      "tp_count": 26,
+      "fp_count": 0,
+      "flagged_case_count": 26,
+      "tp_exposure_amount": 1377497.0,
+      "modeled_loss_avoided": 688748.5,
+      "modeled_friction_cost": 0.0,
+      "modeled_investigation_cost": 9100.0,
+      "modeled_net_value_saved": 679648.5
+    },
+    {
+      "interception_tier_label": "70% Interception",
+      "interception_rate": 0.7,
+      "threshold_applied": 0.99,
+      "tp_count": 26,
+      "fp_count": 0,
+      "flagged_case_count": 26,
+      "tp_exposure_amount": 1377497.0,
+      "modeled_loss_avoided": 964247.9,
+      "modeled_friction_cost": 0.0,
+      "modeled_investigation_cost": 9100.0,
+      "modeled_net_value_saved": 955147.9
+    },
+    {
+      "interception_tier_label": "85% Interception",
+      "interception_rate": 0.85,
+      "threshold_applied": 0.99,
+      "tp_count": 26,
+      "fp_count": 0,
+      "flagged_case_count": 26,
+      "tp_exposure_amount": 1377497.0,
+      "modeled_loss_avoided": 1170872.45,
+      "modeled_friction_cost": 0.0,
+      "modeled_investigation_cost": 9100.0,
+      "modeled_net_value_saved": 1161772.45
+    },
+    {
+      "interception_tier_label": "100% Interception",
+      "interception_rate": 1.0,
+      "threshold_applied": 0.99,
+      "tp_count": 26,
+      "fp_count": 0,
+      "flagged_case_count": 26,
+      "tp_exposure_amount": 1377497.0,
+      "modeled_loss_avoided": 1377497.0,
+      "modeled_friction_cost": 0.0,
+      "modeled_investigation_cost": 9100.0,
+      "modeled_net_value_saved": 1368397.0
+    }
+  ],
+  "held_out_test_evaluation": {
+    "T_star_f1": {
+      "policy_name": "Maximum F1 Policy",
+      "status": "EVALUATED",
+      "threshold_applied": 0.99,
+      "metrics": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "confusion_matrix": {
+          "true_negatives": 274,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "true_positives": 26
+        }
+      },
+      "modeled_economics": {
+        "interception_rate_assumed": 0.85,
+        "tp_count": 26,
+        "fp_count": 0,
+        "flagged_case_count": 26,
+        "tp_exposure_amount": 1377497.0,
+        "modeled_loss_avoided": 1170872.45,
+        "modeled_friction_cost": 0.0,
+        "modeled_investigation_cost": 9100.0,
+        "modeled_net_value_saved": 1161772.45
+      },
+      "is_recommended": false
+    },
+    "T_star_fpr": {
+      "policy_name": "Strict False-Positive Control (FPR <= 0.02)",
+      "status": "EVALUATED",
+      "threshold_applied": 0.99,
+      "metrics": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "confusion_matrix": {
+          "true_negatives": 274,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "true_positives": 26
+        }
+      },
+      "modeled_economics": {
+        "interception_rate_assumed": 0.85,
+        "tp_count": 26,
+        "fp_count": 0,
+        "flagged_case_count": 26,
+        "tp_exposure_amount": 1377497.0,
+        "modeled_loss_avoided": 1170872.45,
+        "modeled_friction_cost": 0.0,
+        "modeled_investigation_cost": 9100.0,
+        "modeled_net_value_saved": 1161772.45
+      },
+      "is_recommended": false
+    },
+    "T_star_precision": {
+      "policy_name": "High Precision / Low Friction (Precision >= 0.85)",
+      "status": "EVALUATED",
+      "threshold_applied": 0.99,
+      "metrics": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "confusion_matrix": {
+          "true_negatives": 274,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "true_positives": 26
+        }
+      },
+      "modeled_economics": {
+        "interception_rate_assumed": 0.85,
+        "tp_count": 26,
+        "fp_count": 0,
+        "flagged_case_count": 26,
+        "tp_exposure_amount": 1377497.0,
+        "modeled_loss_avoided": 1170872.45,
+        "modeled_friction_cost": 0.0,
+        "modeled_investigation_cost": 9100.0,
+        "modeled_net_value_saved": 1161772.45
+      },
+      "is_recommended": false
+    },
+    "T_star_economic": {
+      "policy_name": "Economic Value Maximization Policy (RECOMMENDED OPERATIONAL THRESHOLD)",
+      "status": "EVALUATED",
+      "threshold_applied": 0.99,
+      "metrics": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "confusion_matrix": {
+          "true_negatives": 274,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "true_positives": 26
+        }
+      },
+      "modeled_economics": {
+        "interception_rate_assumed": 0.85,
+        "tp_count": 26,
+        "fp_count": 0,
+        "flagged_case_count": 26,
+        "tp_exposure_amount": 1377497.0,
+        "modeled_loss_avoided": 1170872.45,
+        "modeled_friction_cost": 0.0,
+        "modeled_investigation_cost": 9100.0,
+        "modeled_net_value_saved": 1161772.45
+      },
+      "is_recommended": true
+    }
+  },
+  "standard_threshold_benchmarks": {
+    "threshold_0_70_production_baseline": {
+      "threshold": 0.7,
+      "metrics": {
+        "pr_auc": 1.0,
+        "roc_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "threshold": 0.7,
+        "confusion_matrix": {
+          "true_negatives": 274,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "true_positives": 26
+        },
+        "support": {
+          "total": 300,
+          "positive_count": 26,
+          "negative_count": 274,
+          "positive_rate": 0.0867
+        }
+      },
+      "modeled_economics": {
+        "interception_rate_assumed": 0.85,
+        "tp_count": 26,
+        "fp_count": 0,
+        "flagged_case_count": 26,
+        "tp_exposure_amount": 1377497.0,
+        "modeled_loss_avoided": 1170872.45,
+        "modeled_friction_cost": 0.0,
+        "modeled_investigation_cost": 9100.0,
+        "modeled_net_value_saved": 1161772.45
+      }
+    },
+    "threshold_0_50_default": {
+      "threshold": 0.5,
+      "metrics": {
+        "pr_auc": 1.0,
+        "roc_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "false_positive_rate": 0.0,
+        "threshold": 0.5,
+        "confusion_matrix": {
+          "true_negatives": 274,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "true_positives": 26
+        },
+        "support": {
+          "total": 300,
+          "positive_count": 26,
+          "negative_count": 274,
+          "positive_rate": 0.0867
+        }
+      },
+      "modeled_economics": {
+        "interception_rate_assumed": 0.85,
+        "tp_count": 26,
+        "fp_count": 0,
+        "flagged_case_count": 26,
+        "tp_exposure_amount": 1377497.0,
+        "modeled_loss_avoided": 1170872.45,
+        "modeled_friction_cost": 0.0,
+        "modeled_investigation_cost": 9100.0,
+        "modeled_net_value_saved": 1161772.45
+      }
+    }
+  }
+}

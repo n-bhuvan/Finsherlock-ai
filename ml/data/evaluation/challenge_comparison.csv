@@ -1,0 +1,9 @@
+category,category_name,total_samples,model_a_fp_count,model_a_fpr,model_b_fp_count,model_b_fpr,fp_delta,fpr_delta
+A_SHARED_DEVICE,Shared-Device Legitimate Users,80,44,0.55,44,0.55,0,0.0
+B_SHARED_IP,Shared-IP Legitimate Users,88,42,0.4773,42,0.4773,0,0.0
+C_COMMON_BENEFICIARY,Legitimate Common Beneficiaries,85,85,1.0,85,1.0,0,0.0
+D_HIGH_VOLUME_MERCHANT,High-Volume Merchant Flash Sales,88,66,0.75,66,0.75,0,0.0
+E_COORDINATED_TIMING,Coordinated Timing Rush Hour,89,38,0.427,38,0.427,0,0.0
+F_DENSE_COMMUNITY,Dense Legitimate Community,89,42,0.4719,42,0.4719,0,0.0
+G_COMPOUND_INFRA,Compound Multi-Signal Lookalikes,88,78,0.8864,78,0.8864,0,0.0
+H_SUBTLE_RING_FRAUD,Subtle Evasive Ring Fraud,147,0,0.0,0,0.0,0,0.0

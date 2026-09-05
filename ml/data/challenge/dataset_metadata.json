@@ -1,0 +1,23 @@
+{
+  "dataset_name": "ringguard_challenge_v1",
+  "dataset_version": "1.0.0",
+  "generator_version": "0.3.0",
+  "random_seed": 20260905,
+  "synthetic": true,
+  "seed": 20260905,
+  "generated_at": "2026-09-05T12:15:48.061019",
+  "total_transactions": 754,
+  "total_accounts": 200,
+  "legitimate_hard_negatives": 607,
+  "ring_fraud_controls": 147,
+  "category_distribution": {
+    "H_SUBTLE_RING_FRAUD": 147,
+    "E_COORDINATED_TIMING": 89,
+    "F_DENSE_COMMUNITY": 89,
+    "G_COMPOUND_INFRA": 88,
+    "B_SHARED_IP": 88,
+    "D_HIGH_VOLUME_MERCHANT": 88,
+    "C_COMMON_BENEFICIARY": 85,
+    "A_SHARED_DEVICE": 80
+  }
+}

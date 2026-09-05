@@ -2,8 +2,12 @@
 
 import { BarChart3, Database, ShieldAlert, CheckCircle2, Cpu } from "lucide-react";
 import { ModelComparisonTable } from "@/components/analytics/ModelComparisonTable";
+import { HardNegativeChallengePanel } from "@/components/analytics/HardNegativeChallengePanel";
 import { FeatureDistributionChart } from "@/components/analytics/FeatureDistributionChart";
 import { BusinessEconomicsPanel } from "@/components/analytics/BusinessEconomicsPanel";
+import { CalibrationPanel } from "@/components/analytics/CalibrationPanel";
+import { ThresholdPolicyPanel } from "@/components/analytics/ThresholdPolicyPanel";
+import { ColdStartPanel } from "@/components/analytics/ColdStartPanel";
 
 export default function AnalyticsPage() {
   return (
@@ -17,7 +21,7 @@ export default function AnalyticsPage() {
           </h1>
         </div>
         <p className="text-slate-400 text-xs font-sans max-w-3xl leading-relaxed">
-          Presents verified benchmark metrics from offline synthetic evaluation artifacts (Stages 6 &amp; 7). Compares Model A (Baseline 37 features) against Model B (Graph-Enhanced 58 features).
+          Presents verified benchmark metrics from offline synthetic evaluation artifacts (Stages 6, 7, 13, &amp; 14). Compares Model A (Baseline 37 features) against Model B (Graph-Enhanced 58 features), robustness under hard negatives, probability calibration, and operational threshold policies.
         </p>
       </section>
 
@@ -27,7 +31,19 @@ export default function AnalyticsPage() {
       {/* 3. Held-Out Evaluation Benchmark Table (Truthful Delta: 0.0) */}
       <ModelComparisonTable />
 
-      {/* 4. Business Economics & ROI Modeling (Build Spec Section 21) */}
+      {/* 4. Hard-Negative Challenge Set (Robustness Stress Test - Stage 13) */}
+      <HardNegativeChallengePanel />
+
+      {/* 5. Post-Hoc Probability Calibration (Stage 14) */}
+      <CalibrationPanel />
+
+      {/* 6. Threshold Policy Optimization & Economic Sensitivity (Stage 14) */}
+      <ThresholdPolicyPanel />
+
+      {/* 7. Cold-Start Segmentation & Graph Confidence (Stage 14) */}
+      <ColdStartPanel />
+
+      {/* 8. Business Economics & ROI Modeling (Build Spec Section 21) */}
       <BusinessEconomicsPanel />
 
       {/* 4. Operational Value Analysis */}
