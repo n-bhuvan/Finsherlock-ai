@@ -29,6 +29,7 @@ import { AIExplanationPanel } from "@/components/cases/AIExplanationPanel";
 import { SystemicRiskPanel } from "@/components/cases/SystemicRiskPanel";
 import { PortfolioPriorityCard } from "@/components/cases/PortfolioPriorityCard";
 import { AdaptiveInvestigationTrace } from "@/components/cases/AdaptiveInvestigationTrace";
+import { CounterfactualPanel } from "@/components/cases/CounterfactualPanel";
 import { CaseSelector } from "@/components/cases/CaseSelector";
 import { HumanDecision } from "@/components/cases/HumanDecision";
 import { EvidenceList } from "@/components/evidence/EvidenceList";
@@ -342,6 +343,9 @@ export default function CaseInvestigationPage({ params }: PageProps) {
 
       {/* 4.7. Adaptive Uncertainty-Driven Investigation Trace (V2 Stage 17) */}
       <AdaptiveInvestigationTrace transactionId={transactionId} />
+
+      {/* 4.8. Counterfactual Attribution & What-If Simulation (V2 Stage 18) */}
+      <CounterfactualPanel transactionId={transactionId} />
 
       {/* 5. Core Investigation Workspace: Graph & Tools | Evidence & Timeline */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">

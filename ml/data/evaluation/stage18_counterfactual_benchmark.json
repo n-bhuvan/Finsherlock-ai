@@ -1,0 +1,248 @@
+{
+  "status": "Available",
+  "metadata": {
+    "stage": 18,
+    "title": "Stage 18 Counterfactual Attribution and Intervention Benchmark",
+    "evaluation_date": "2026-09-05T20:27:03+0530",
+    "sample_size": 300,
+    "attribution_engine": "XGBoost Native TreeSHAP (pred_contribs=True)",
+    "intervention_suite_size": 7,
+    "attribution_determinism_rate": 1.0,
+    "intervention_determinism_rate": 1.0,
+    "production_risk_unchanged_rate": 1.0
+  },
+  "slices": {
+    "overall": {
+      "slice_name": "Overall (Held-Out Test)",
+      "sample_count": 300,
+      "average_original_risk": 0.0871,
+      "top_attributions_distribution": {
+        "tx_amount": 300
+      },
+      "interventions_summary": {
+        "INT_REMOVE_SHARED_DEVICES": {
+          "average_risk_delta": -0.0,
+          "max_risk_reduction": -0.0001,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_SHARED_IPS": {
+          "average_risk_delta": -0.0001,
+          "max_risk_reduction": -0.0002,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_COMMON_BENEFICIARIES": {
+          "average_risk_delta": 0.0,
+          "max_risk_reduction": 0.0,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_AMOUNT_TO_MEDIAN": {
+          "average_risk_delta": -0.0854,
+          "max_risk_reduction": -0.9964,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_VELOCITY_BURST": {
+          "average_risk_delta": -0.0,
+          "max_risk_reduction": -0.0003,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_ISOLATE_NETWORK": {
+          "average_risk_delta": 0.0015,
+          "max_risk_reduction": 0.0001,
+          "plausibility": "HYPOTHETICAL"
+        },
+        "INT_BASELINE_COMPARISON": {
+          "average_risk_delta": -0.0869,
+          "max_risk_reduction": -0.9979,
+          "plausibility": "HYPOTHETICAL"
+        }
+      },
+      "average_largest_reduction_delta": -0.0869
+    },
+    "ring_fraud": {
+      "slice_name": "Ring Fraud Cases",
+      "sample_count": 26,
+      "average_original_risk": 0.9977,
+      "top_attributions_distribution": {
+        "tx_amount": 26
+      },
+      "interventions_summary": {
+        "INT_REMOVE_SHARED_DEVICES": {
+          "average_risk_delta": -0.0001,
+          "max_risk_reduction": -0.0001,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_SHARED_IPS": {
+          "average_risk_delta": -0.0001,
+          "max_risk_reduction": -0.0002,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_COMMON_BENEFICIARIES": {
+          "average_risk_delta": 0.0,
+          "max_risk_reduction": 0.0,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_AMOUNT_TO_MEDIAN": {
+          "average_risk_delta": -0.9963,
+          "max_risk_reduction": -0.9964,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_VELOCITY_BURST": {
+          "average_risk_delta": -0.0001,
+          "max_risk_reduction": -0.0003,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_ISOLATE_NETWORK": {
+          "average_risk_delta": 0.0001,
+          "max_risk_reduction": 0.0001,
+          "plausibility": "HYPOTHETICAL"
+        },
+        "INT_BASELINE_COMPARISON": {
+          "average_risk_delta": -0.9975,
+          "max_risk_reduction": -0.9979,
+          "plausibility": "HYPOTHETICAL"
+        }
+      },
+      "average_largest_reduction_delta": -0.9975
+    },
+    "hard_negatives": {
+      "slice_name": "Hard Negatives (High Exposure)",
+      "sample_count": 30,
+      "average_original_risk": 0.001,
+      "top_attributions_distribution": {
+        "tx_amount": 30
+      },
+      "interventions_summary": {
+        "INT_REMOVE_SHARED_DEVICES": {
+          "average_risk_delta": -0.0,
+          "max_risk_reduction": -0.0001,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_SHARED_IPS": {
+          "average_risk_delta": -0.0001,
+          "max_risk_reduction": -0.0001,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_COMMON_BENEFICIARIES": {
+          "average_risk_delta": 0.0,
+          "max_risk_reduction": 0.0,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_AMOUNT_TO_MEDIAN": {
+          "average_risk_delta": -0.0003,
+          "max_risk_reduction": -0.0005,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_VELOCITY_BURST": {
+          "average_risk_delta": 0.0,
+          "max_risk_reduction": 0.0,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_ISOLATE_NETWORK": {
+          "average_risk_delta": 0.0021,
+          "max_risk_reduction": 0.0012,
+          "plausibility": "HYPOTHETICAL"
+        },
+        "INT_BASELINE_COMPARISON": {
+          "average_risk_delta": -0.0008,
+          "max_risk_reduction": -0.0013,
+          "plausibility": "HYPOTHETICAL"
+        }
+      },
+      "average_largest_reduction_delta": -0.0008
+    },
+    "cold_start": {
+      "slice_name": "Cold Start (Limited Graph)",
+      "sample_count": 103,
+      "average_original_risk": 0.2426,
+      "top_attributions_distribution": {
+        "tx_amount": 103
+      },
+      "interventions_summary": {
+        "INT_REMOVE_SHARED_DEVICES": {
+          "average_risk_delta": -0.0,
+          "max_risk_reduction": -0.0001,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_SHARED_IPS": {
+          "average_risk_delta": -0.0001,
+          "max_risk_reduction": -0.0002,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_COMMON_BENEFICIARIES": {
+          "average_risk_delta": 0.0,
+          "max_risk_reduction": 0.0,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_AMOUNT_TO_MEDIAN": {
+          "average_risk_delta": -0.239,
+          "max_risk_reduction": -0.9964,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_VELOCITY_BURST": {
+          "average_risk_delta": -0.0,
+          "max_risk_reduction": -0.0003,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_ISOLATE_NETWORK": {
+          "average_risk_delta": 0.0013,
+          "max_risk_reduction": 0.0001,
+          "plausibility": "HYPOTHETICAL"
+        },
+        "INT_BASELINE_COMPARISON": {
+          "average_risk_delta": -0.2424,
+          "max_risk_reduction": -0.9979,
+          "plausibility": "HYPOTHETICAL"
+        }
+      },
+      "average_largest_reduction_delta": -0.2424
+    },
+    "mature": {
+      "slice_name": "Mature (Verified Graph)",
+      "sample_count": 197,
+      "average_original_risk": 0.0057,
+      "top_attributions_distribution": {
+        "tx_amount": 197
+      },
+      "interventions_summary": {
+        "INT_REMOVE_SHARED_DEVICES": {
+          "average_risk_delta": -0.0,
+          "max_risk_reduction": -0.0001,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_SHARED_IPS": {
+          "average_risk_delta": -0.0,
+          "max_risk_reduction": -0.0002,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REMOVE_COMMON_BENEFICIARIES": {
+          "average_risk_delta": 0.0,
+          "max_risk_reduction": 0.0,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_AMOUNT_TO_MEDIAN": {
+          "average_risk_delta": -0.0051,
+          "max_risk_reduction": -0.9963,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_REDUCE_VELOCITY_BURST": {
+          "average_risk_delta": -0.0,
+          "max_risk_reduction": -0.0002,
+          "plausibility": "PLAUSIBLE"
+        },
+        "INT_ISOLATE_NETWORK": {
+          "average_risk_delta": 0.0016,
+          "max_risk_reduction": 0.0001,
+          "plausibility": "HYPOTHETICAL"
+        },
+        "INT_BASELINE_COMPARISON": {
+          "average_risk_delta": -0.0055,
+          "max_risk_reduction": -0.9979,
+          "plausibility": "HYPOTHETICAL"
+        }
+      },
+      "average_largest_reduction_delta": -0.0055
+    }
+  },
+  "methodology_notes": "Model-native TreeSHAP feature attribution and semantically coupled hypothetical interventions evaluated across all 300 held-out test transactions. Production risk scores strictly preserved.",
+  "disclaimer": "Counterfactual results are model-sensitivity simulations, not causal claims and not predictions of what would necessarily happen in the real world."
+}
